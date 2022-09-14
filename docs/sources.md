@@ -15,6 +15,7 @@
 - https://habr.com/ru/company/inforion/blog/330064/
 - https://habr.com/ru/post/480608/
 - https://habr.com/ru/post/527874/
+- https://habr.com/ru/post/281879/
 
 
   # Статьи про тестирование производительности
