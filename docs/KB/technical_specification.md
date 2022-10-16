@@ -1,12 +1,12 @@
 # Языки программирования для проведения сравнения
 
-- Kotlin JVM
+- Kotlin JVM +
 - Kotlin Native
-- Python CPython
-- Python Cython
-- C#
-- Rust
-- C
+- Python CPython +
+- Python Cython 
+- C# +
+- Rust +
+- C +
 
 ## Обоснование выбора
 
