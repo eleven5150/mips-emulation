@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BencherPipeline",
+  "description": "Pipeline definition for Bencher",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Schema reference"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "pipeline": {
+      "$ref": "#/definitions/Pipeline"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "pipeline"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Pipeline": {
+      "type": "array",
+      "description": "Pipeline stages",
+      "items": {
+        "type": "dictionary"
+      }
+    }
+  }
+}
