@@ -6,9 +6,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Union
 
+from extensions.json_extensions import get_parsed_config_generic
 from extensions.path_extensions import path_must_exist
+from pipeline import Pipeline, get_pipeline
+from tests import TestsConfig, get_tests_config
 
-TESTS_CONFIG: str = "tests/tests.conf.json"
+TESTS_CONFIG: str = "tests/tests-config.json"
 
 
 @dataclass
@@ -43,9 +46,7 @@ class ProgLang:
 
 
 def get_languages_and_tests() -> List[ProgLang]:
-    root_dir: Path = Path(os.getcwd())
-    tests_config_path: Path = Path(root_dir / TESTS_CONFIG)
-    path_must_exist(tests_config_path)
+
     with open(tests_config_path) as tests_config:
         tests_config_data = json.load(tests_config)
     prog_langs: List[ProgLang] = list()
@@ -56,18 +57,14 @@ def get_languages_and_tests() -> List[ProgLang]:
 
 def parse_args(arguments: list):
     parser = argparse.ArgumentParser(description="Bench tool or comparing the speed of programming languages")
-    parser.add_argument('-t', '--tests',
-                        nargs='+',
-                        default=[],
-                        help='List of tests to pass')
-    parser.add_argument('-l', '--languages',
-                        nargs='+',
-                        default=[],
-                        help='List of test languages')
+    parser.add_argument('-p', '--pipeline',
+                        type=str,
+                        required=True,
+                        help='Pipeline for testing')
     parser.add_argument('-o', '--output_file',
                         type=str,
                         help='Path to file with test result')
-    parser.add_argument('-p', '--picture',
+    parser.add_argument('-i', '--image',
                         action='store_true',
                         help='Creates an image graph.jpeg with a graph comparing execution speeds. ')
 
@@ -76,7 +73,9 @@ def parse_args(arguments: list):
 
 def main(raw_arguments: list) -> None:
     args = parse_args(raw_arguments[1:])
-    prog_langs: List[ProgLang] = get_languages_and_tests()
+    pipeline: Pipeline = get_pipeline(args.pipeline)
+    tests_config: TestsConfig = get_tests_config()
+    print(tests_config)
 
 
 if __name__ == '__main__':
