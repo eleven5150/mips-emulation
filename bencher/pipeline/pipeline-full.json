@@ -1,0 +1,13 @@
+{
+  "$schema": "pipeline.schema.json",
+  "name": "Full Pipeline",
+  "description": "Pipeline with full processing",
+  "pipeline": {
+    "kotlin_jvm": [
+      "prime_number"
+    ],
+    "python_cpython": [
+      "prime_number"
+    ]
+  }
+}

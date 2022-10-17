@@ -1,10 +1,10 @@
 import dataclasses
 import re
 from pathlib import Path
-from typing import List, Generator
+from typing import List, Generator, Dict
 
-from extensions import json_extensions
-from extensions.path_extensions import path_listdir
+from extensions.json_extensions import DataclassDaciteStrictMixin, get_parsed_config_generic
+from extensions.path_extensions import path_listdir, path_must_exist
 
 PIPELINE_CONFIG_ROOT_DIR = Path(__file__).resolve().parent
 SCHEMA_JSON_FILEPATH = PIPELINE_CONFIG_ROOT_DIR / 'pipeline.schema.json'
@@ -13,20 +13,14 @@ if not SCHEMA_JSON_FILEPATH.exists():
 
 
 @dataclasses.dataclass
-class Pipeline(json_extensions.DataclassDaciteStrictMixin):
+class Pipeline(DataclassDaciteStrictMixin):
     name: str
     description: str
-    pipeline: List[str]
+    pipeline: Dict[str, List]
 
     def __iter__(self) -> Generator[str, None, None]:
-        for name in self.pipeline:
-            yield name
-
-
-class ImageToolPipelineNotFound(RuntimeError):
-    def __init__(self, name: str, path: Path):
-        super().__init__(f'Pipeline {name} not found. '
-                         f'Searched path: {path}')
+        for key, value in self.pipeline:
+            yield value
 
 
 def __get_pipeline_path(name: str) -> Path:
@@ -48,11 +42,11 @@ def get_all_pipeline_names() -> List[str]:
 
 def get_pipeline(name: str) -> Pipeline:
     path = __get_pipeline_path(name)
-    if not path.exists():
-        raise ImageToolPipelineNotFound(name, path)
+    path_must_exist(path)
 
-    return json_extensions.get_parsed_config_generic(
+    return get_parsed_config_generic(
         cls=Pipeline,
         data_path=path,
         schema_path=SCHEMA_JSON_FILEPATH
     )
+

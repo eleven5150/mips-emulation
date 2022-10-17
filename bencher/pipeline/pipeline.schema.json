@@ -26,10 +26,17 @@
   "additionalProperties": false,
   "definitions": {
     "Pipeline": {
-      "type": "array",
+      "type": "object",
       "description": "Pipeline stages",
       "items": {
-        "type": "dictionary"
+        "$ref": "#/definitions/PipelineItem"
+      }
+    },
+    "PipelineItem": {
+      "type": "object",
+      "description": "Language with tests",
+      "items": {
+        "type": "array"
       }
     }
   }
