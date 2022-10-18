@@ -3,11 +3,11 @@
 /benchmark.code-workspace
 
 # compiled bin files
-/tests/prime-number/c#/bin
-/tests/prime-number/c#/obj
-/tests/prime-number/f#/bin
-/tests/prime-number/f#/obj
-/tests/prime-number/objective-c/cmd.d
+/tests/prime_number/c#/bin
+/tests/prime_number/c#/obj
+/tests/prime_number/f#/bin
+/tests/prime_number/f#/obj
+/tests/prime_number/objective-c/cmd.d
 *_bin
 *.o
 *.class
