@@ -2,6 +2,20 @@ import os
 from pathlib import Path
 from typing import Union, Iterable
 
+# Didn't find how to retrieve this string in-runtime
+MODULE_NAME = 'extensions.'
+
+
+def get_root_directory() -> Path:
+    # Module directory
+    file_path = Path(__file__).absolute().parent
+
+    for i in range(MODULE_NAME.count('.')):
+        file_path = file_path.parent
+
+    return file_path
+
+
 
 class PathDoesNotExist(RuntimeError):
     def __init__(self, path: Union[str, Path]) -> None:
