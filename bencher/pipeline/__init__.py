@@ -18,10 +18,6 @@ class Pipeline(DataclassDaciteStrictMixin):
     description: str
     pipeline: Dict[str, List]
 
-    def __iter__(self) -> Generator[str, None, None]:
-        for key, value in self.pipeline:
-            yield value
-
 
 def __get_pipeline_path(name: str) -> Path:
     return PIPELINE_CONFIG_ROOT_DIR / f'pipeline-{name}.json'
