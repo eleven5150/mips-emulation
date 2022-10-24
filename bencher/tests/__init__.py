@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Any
 from typing import Generator
 
 from extensions.json_extensions import get_parsed_config_generic, DataclassDaciteStrictMixin
@@ -14,7 +14,7 @@ SCHEMA_JSON_FILEPATH = TESTS_CONFIG_ROOT_DIR / 'tests-config.schema.json'
 class TestsConfigData(DataclassDaciteStrictMixin):
     name: str
     description: str
-    languages: Dict[str, Dict[str, Dict[str, str]]]
+    languages: Dict[str, Dict[str, Dict[str, Any]]]
 
     def __iter__(self) -> Generator[str, None, None]:
         for key, value in self.languages:

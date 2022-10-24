@@ -3,12 +3,11 @@ import sys
 import argparse
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Dict
+from typing import Dict, Any
 
 from extensions.path_extensions import path_must_exist, get_root_directory
-from pipeline import Pipeline, get_pipeline
+from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests import TestsConfigData, get_tests_config_data
-
 
 TESTS_CONFIG: str = "tests/tests-config.json"
 
@@ -33,25 +32,45 @@ class TestResult:
 @dataclass
 class Test:
     path: Path
-    cmd: list
+    commands: list
     result: TestResult
 
     @classmethod
-    def data_to_test(cls, data: Dict[str, str]) -> "Test":
+    def data_to_test(cls, data: Dict[str, Any]) -> "Test":
         test_path: Path = Path(get_root_directory() / data["path"])
         path_must_exist(Path(test_path))
+        commands_raw: list = data["cmd"]
         return Test(
             path=test_path,
-            cmd=data["cmd"].split(" "),
+            commands=commands_raw,
             result=TestResult()
         )
 
-    def exec_test(self):
-        result_data = subprocess.run(
-            self.cmd,
-            capture_output=True
-        )
-        self.result.parse_stdout(result_data.stdout)
+    def exec_test(self) -> None:
+        self.convert_commands()
+        for cmd in self.commands:
+            print(f"Command -> '{cmd}'")
+            result_data = subprocess.run(
+                cmd,
+                capture_output=True,
+            )
+            print(result_data.stderr)
+
+        # self.result.parse_stdout(result_data.stdout)
+
+    def convert_commands(self) -> None:
+        converted_cmds: list = list()
+        for cmd in self.commands:
+            cmd_split_raw: list = cmd.format(get_root_directory()).split(" ")
+            for arg in cmd_split_raw:
+                if "'" in arg:
+                    cmd_split_raw[cmd_split_raw.index(arg):len(cmd_split_raw)] = [
+                        " ".join(cmd_split_raw[cmd_split_raw.index(arg):len(cmd_split_raw)])]
+                    cmd_split_raw[len(cmd_split_raw) - 1] = cmd_split_raw[len(cmd_split_raw) - 1][:-1]
+                    cmd_split_raw[len(cmd_split_raw) - 1] = cmd_split_raw[len(cmd_split_raw) - 1][1:]
+            converted_cmds.append(cmd_split_raw)
+        self.commands = converted_cmds
+
 
 @dataclass
 class ProgLang:
@@ -95,6 +114,7 @@ def parse_args(arguments: list):
     parser.add_argument('-p', '--pipeline',
                         type=str,
                         required=True,
+                        choices=get_all_pipeline_names(),
                         help='Pipeline for testing')
     parser.add_argument('-o', '--output_file',
                         type=str,
@@ -112,10 +132,6 @@ def main(raw_arguments: list) -> None:
     tests_config_data: TestsConfigData = get_tests_config_data()
     tests_config: TestsConfig = TestsConfig.data_to_tests_config(tests_config_data)
     tests_config.exec_pipeline(pipeline)
-    # for language_name in pipeline.pipeline:
-    #     for test_name in pipeline.pipeline[language_name]:
-    #         print(f"{language_name} -> {test_name}")
-
 
 
 if __name__ == '__main__':
