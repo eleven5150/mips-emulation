@@ -1,0 +1,4 @@
+attrs==22.1.0
+dacite==1.6.0
+jsonschema==4.16.0
+pyrsistent==0.18.1
