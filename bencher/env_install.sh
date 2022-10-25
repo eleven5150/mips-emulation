@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 update_repos(){
         sudo apt update && sudo apt upgrade -y
