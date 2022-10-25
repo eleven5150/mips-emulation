@@ -6,8 +6,8 @@
     "kotlin_jvm": {
       "prime_number": {
         "path": "tests/prime_number/kotlin_jvm/cmd.kt",
-        "cmd": [
-          "docker run bench:latest kotlinc -version 2>&1",
+        "commands": [
+          "docker run bench:latest kotlinc -version",
           "docker run -v {}:/app bench:latest kotlinc /app/tests/prime_number/kotlin_jvm/cmd.kt -include-runtime -d /app/tests/prime_number/kotlin_jvm/cmd.jar",
           "docker run -v {}:/app bench:latest bash -c 'time -p java -jar /app/tests/prime_number/kotlin_jvm/cmd.jar 10 2>&1'"
         ]
@@ -16,9 +16,9 @@
     "python_cpython": {
       "prime_number": {
         "path": "tests/prime_number/python/cmd.py",
-        "cmd": [
-          "docker run bench:latest python3 --version 2>&1",
-          "docker run -v {}:/app bench:latest bash -c 'time -p python3 /app/tests/prime-number/python/cmd.py 10 2>&1'"
+        "commands": [
+          "docker run bench:latest python3 --version",
+          "docker run -v {}:/app bench:latest bash -c 'time -p python3 /app/tests/prime_number/python/cmd.py 10 2>&1'"
         ]
       }
     }

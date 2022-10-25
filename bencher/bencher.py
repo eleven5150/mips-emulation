@@ -14,19 +14,26 @@ TESTS_CONFIG: str = "tests/tests-config.json"
 
 @dataclass
 class TestResult:
-    version: str
-    real_time: int
-    user_time: int
-    sys_time: int
+    real_time: float
+    user_time: float
+    sys_time: float
 
     def __init__(self):
-        self.version = "unknown"
         self.real_time = 0
         self.user_time = 0
         self.sys_time = 0
 
-    def parse_stdout(self, result_data: bytes):
-        print(result_data)
+    def parse_stdout(self, result_data: bytes) -> None:
+        if result_data == b"":
+            raise ValueError("Error! Test execution returned empty data")
+        datas: list = str(result_data, encoding="ascii").split("\n")
+        for line in datas:
+            if "real" in line:
+                self.real_time = line.split(" ")[1]
+            if "user" in line:
+                self.user_time = line.split(" ")[1]
+            if "sys" in line:
+                self.sys_time = line.split(" ")[1]
 
 
 @dataclass
@@ -39,7 +46,7 @@ class Test:
     def data_to_test(cls, data: Dict[str, Any]) -> "Test":
         test_path: Path = Path(get_root_directory() / data["path"])
         path_must_exist(Path(test_path))
-        commands_raw: list = data["cmd"]
+        commands_raw: list = data["commands"]
         return Test(
             path=test_path,
             commands=commands_raw,
@@ -48,15 +55,15 @@ class Test:
 
     def exec_test(self) -> None:
         self.convert_commands()
+        result_data: bytes = bytes()
         for cmd in self.commands:
-            print(f"Command -> '{cmd}'")
-            result_data = subprocess.run(
+            # print(f"Command -> '{cmd}'")
+            result_data = subprocess.check_output(
                 cmd,
-                capture_output=True,
+                stderr=subprocess.STDOUT
             )
-            print(result_data.stderr)
 
-        # self.result.parse_stdout(result_data.stdout)
+        self.result.parse_stdout(result_data)
 
     def convert_commands(self) -> None:
         converted_cmds: list = list()
@@ -96,6 +103,14 @@ class TestsConfig:
         for language_name in pipeline.pipeline:
             for test_name in pipeline.pipeline[language_name]:
                 self.languages[language_name].tests[test_name].exec_test()
+                print(self.get_test_result(language_name, test_name))
+
+    def get_test_result(self, language_name: str, test_name: str) -> str:
+        return f"Language -> {language_name}\n" \
+               f"Test -> {test_name}\n" \
+               f"Real time -> {self.languages[language_name].tests[test_name].result.real_time} s\n" \
+               f"User-mode time -> {self.languages[language_name].tests[test_name].result.user_time} s\n" \
+               f"Kernel-mode time -> {self.languages[language_name].tests[test_name].result.sys_time} s\n"
 
     @classmethod
     def data_to_tests_config(cls, data: TestsConfigData) -> "TestsConfig":
