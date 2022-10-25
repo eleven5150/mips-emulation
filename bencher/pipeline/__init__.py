@@ -18,6 +18,14 @@ class Pipeline(DataclassDaciteStrictMixin):
     description: str
     pipeline: Dict[str, List]
 
+    def print_pipeline(self) -> None:
+        print("Pipeline:")
+        for language_name in self.pipeline:
+            print(f"\t Language - {language_name}:")
+            for test in self.pipeline[language_name]:
+                print(f"\t\t{test}")
+        print("\n")
+
 
 def __get_pipeline_path(name: str) -> Path:
     return PIPELINE_CONFIG_ROOT_DIR / f'pipeline-{name}.json'
@@ -25,7 +33,6 @@ def __get_pipeline_path(name: str) -> Path:
 
 def get_all_pipeline_names() -> List[str]:
     file_wildcard = re.compile(r"pipeline-([^.]+)\.json")
-
     return [
         m.group(1)
         for m in (

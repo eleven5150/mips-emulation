@@ -1,3 +1,4 @@
+import logging
 import subprocess
 import sys
 import argparse
@@ -10,6 +11,18 @@ from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests import TestsConfigData, get_tests_config_data
 
 TESTS_CONFIG: str = "tests/tests-config.json"
+
+
+class Colors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 
 @dataclass
@@ -25,7 +38,7 @@ class TestResult:
 
     def parse_stdout(self, result_data: bytes) -> None:
         if result_data == b"":
-            raise ValueError("Error! Test execution returned empty data")
+            raise ValueError(f"{Colors.FAIL}Error! Test execution returned empty data{Colors.ENDC}")
         datas: list = str(result_data, encoding="ascii").split("\n")
         for line in datas:
             if "real" in line:
@@ -57,11 +70,12 @@ class Test:
         self.convert_commands()
         result_data: bytes = bytes()
         for cmd in self.commands:
-            # print(f"Command -> '{cmd}'")
+            logging.debug(f"\t{Colors.WARNING}Command -> {' '.join(cmd)}{Colors.ENDC}")
             result_data = subprocess.check_output(
                 cmd,
                 stderr=subprocess.STDOUT
             )
+            logging.debug(f"\t{Colors.WARNING}Return -> {str(result_data, encoding='ascii')}{Colors.ENDC}")
 
         self.result.parse_stdout(result_data)
 
@@ -102,15 +116,19 @@ class TestsConfig:
     def exec_pipeline(self, pipeline: Pipeline):
         for language_name in pipeline.pipeline:
             for test_name in pipeline.pipeline[language_name]:
+                logging.debug(f"{Colors.WARNING}{language_name} -> {test_name}{Colors.ENDC}")
                 self.languages[language_name].tests[test_name].exec_test()
-                print(self.get_test_result(language_name, test_name))
+                logging.info(self.get_test_result(language_name, test_name))
 
     def get_test_result(self, language_name: str, test_name: str) -> str:
-        return f"Language -> {language_name}\n" \
-               f"Test -> {test_name}\n" \
-               f"Real time -> {self.languages[language_name].tests[test_name].result.real_time} s\n" \
-               f"User-mode time -> {self.languages[language_name].tests[test_name].result.user_time} s\n" \
-               f"Kernel-mode time -> {self.languages[language_name].tests[test_name].result.sys_time} s\n"
+        real_time: float = self.languages[language_name].tests[test_name].result.real_time
+        user_time: float = self.languages[language_name].tests[test_name].result.user_time
+        sys_time: float = self.languages[language_name].tests[test_name].result.sys_time
+        return f"{Colors.OKGREEN}Language -> {language_name}{Colors.ENDC}\n" \
+               f"{Colors.OKGREEN}Test -> {test_name}{Colors.ENDC}\n" \
+               f"{Colors.OKGREEN}Real time -> {real_time} s{Colors.ENDC}\n" \
+               f"{Colors.OKGREEN}User-mode time -> {user_time} s{Colors.ENDC}\n" \
+               f"{Colors.OKGREEN}Kernel-mode time -> {sys_time} s{Colors.ENDC}\n"
 
     @classmethod
     def data_to_tests_config(cls, data: TestsConfigData) -> "TestsConfig":
@@ -136,14 +154,26 @@ def parse_args(arguments: list):
                         help='Path to file with test result')
     parser.add_argument('-i', '--image',
                         action='store_true',
-                        help='Creates an image graph.jpeg with a graph comparing execution speeds. ')
+                        help='Creates an image graph.jpeg with a graph comparing execution speeds')
+    parser.add_argument('-d', '--debug',
+                        action='store_true',
+                        help='Enables debug mode')
 
     return parser.parse_args(arguments)
 
 
 def main(raw_arguments: list) -> None:
     args = parse_args(raw_arguments[1:])
+
+    if args.debug:
+        logging.basicConfig(format='%(message)s', level=logging.DEBUG)
+    else:
+        logging.basicConfig(format='%(message)s', level=logging.INFO)
+
     pipeline: Pipeline = get_pipeline(args.pipeline)
+    logging.info(f"Pipeline name -> {pipeline.name}")
+    logging.info(f"Pipeline description -> {pipeline.description}")
+    pipeline.print_pipeline()
     tests_config_data: TestsConfigData = get_tests_config_data()
     tests_config: TestsConfig = TestsConfig.data_to_tests_config(tests_config_data)
     tests_config.exec_pipeline(pipeline)
