@@ -1,117 +1,132 @@
+import argparse
 import logging
 import subprocess
 import sys
-import argparse
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Any
+# TODO: не надо юзать Dict, List, Set и т.п. из typing
+#  3.9.10+ держит dict[str, Any], если версия ниже нужно поднять
+from typing import Dict, Any, Optional
 
-from extensions.path_extensions import path_must_exist, get_root_directory
+from extensions.path_extensions import path, get_root_directory
 from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests import TestsConfigData, get_tests_config_data
 
 TESTS_CONFIG: str = "tests/tests-config.json"
 
 
-class Colors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+# TODO: Все раскрасски нужно убрать либо в методы, либо переделать на grep-console
+#  точнее нужно обязательно ее поставить и уже в сообщении выводить инфу для расскрашивания
+#  И да совершенно непонятно, почему лог сообщения уровня debug содержит warning? Это как?
+# https://plugins.jetbrains.com/plugin/7125-grep-console
 
 
 @dataclass
 class TestResult:
-    real_time: float
-    user_time: float
-    sys_time: float
+    real_time: float = 0.0
+    user_time: float = 0.0
+    sys_time: float = 0.0
 
-    def __init__(self):
-        self.real_time = 0
-        self.user_time = 0
-        self.sys_time = 0
-
-    def parse_stdout(self, result_data: bytes) -> None:
-        if result_data == b"":
-            raise ValueError(f"{Colors.FAIL}Error! Test execution returned empty data{Colors.ENDC}")
-        datas: list = str(result_data, encoding="ascii").split("\n")
-        for line in datas:
+    @classmethod
+    def from_stdout(cls, data: bytes) -> "TestResult":
+        if not data:
+            raise ValueError(f"Error! Test execution returned empty data")
+        real_time = user_time = sys_time = None
+        for line in data.decode("ascii").splitlines():
             if "real" in line:
-                self.real_time = line.split(" ")[1]
+                real_time = float(line.split(" ")[1])
             if "user" in line:
-                self.user_time = line.split(" ")[1]
+                user_time = float(line.split(" ")[1])
             if "sys" in line:
-                self.sys_time = line.split(" ")[1]
+                sys_time = float(line.split(" ")[1])
+        return cls(real_time, user_time, sys_time)
+
+
+@dataclass
+class Command:
+    cmd: list[str]
+
+    @classmethod
+    def from_string(cls, cmd: str) -> "Command":
+        cmd_split_raw = cmd.format(get_root_directory()).split(" ")
+        for arg in cmd_split_raw:
+            if "'" in arg:
+                # TODO: однозначно нужно передалать - тут просто не понятно что происходит
+                cmd_split_raw[cmd_split_raw.index(arg):len(cmd_split_raw)] = [
+                    " ".join(cmd_split_raw[cmd_split_raw.index(arg):len(cmd_split_raw)])]
+                cmd_split_raw[len(cmd_split_raw) - 1] = cmd_split_raw[len(cmd_split_raw) - 1][:-1]
+                cmd_split_raw[len(cmd_split_raw) - 1] = cmd_split_raw[len(cmd_split_raw) - 1][1:]
+        return cls(cmd_split_raw)
+
+    def exec(self) -> TestResult:
+        logging.debug(f"\tCommand -> {' '.join(self.cmd)}")
+        process = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = process.communicate()
+        assert process.returncode == 0, f"'{self.cmd} execution failed with status {process.returncode}"
+        logging.debug(f"\tReturn -> {out}")
+        return TestResult.from_stdout(out)
 
 
 @dataclass
 class Test:
     path: Path
-    commands: list
-    result: TestResult
+    commands: list[Command]
+    # TODO: Зачем эти состояния хранить в классе? пусть возвращаются из exec
+    result: Optional[TestResult] = None
 
     @classmethod
-    def data_to_test(cls, data: Dict[str, Any]) -> "Test":
-        test_path: Path = Path(get_root_directory() / data["path"])
-        path_must_exist(Path(test_path))
-        commands_raw: list = data["commands"]
+    def from_config(cls, data: dict[str, Any]) -> "Test":
+        # TODO: вообще эти проверки на путь вероятнее всего не нужны, они у тебя походу все
+        #  равно не обрабатываются, а Path сам чекнет, что пути нету, короче so-so
         return Test(
-            path=test_path,
-            commands=commands_raw,
-            result=TestResult()
+            path=path(Path(get_root_directory()) / data["path"]),
+            commands=[Command.from_string(it) for it in data["commands"]],
         )
 
     def exec_test(self) -> None:
-        self.convert_commands()
-        result_data: bytes = bytes()
-        for cmd in self.commands:
-            logging.debug(f"\t{Colors.WARNING}Command -> {' '.join(cmd)}{Colors.ENDC}")
-            result_data = subprocess.check_output(
-                cmd,
-                stderr=subprocess.STDOUT
-            )
-            logging.debug(f"\t{Colors.WARNING}Return -> {str(result_data, encoding='ascii')}{Colors.ENDC}")
+        # TODO: не очень понятно как предполагается извлекать результаты, если несколько команд?
+        #  по последней команде? Тогда лучше так и прописать в код, что все выполняем без разбора
+        #  результата, а ластовую разбираем. Тот костыль с объявлением в начале - ужасен
+        #  И да парсить тогда их надо по разному, вероятно нужно сделать несколько типов команд
+        #  наследованных от одного протокола и также несколько типов результатов
+        results = [it.exec() for it in self.commands]
+        return TestResult.from_command_result(results)
 
-        self.result.parse_stdout(result_data)
 
-    def convert_commands(self) -> None:
-        converted_cmds: list = list()
-        for cmd in self.commands:
-            cmd_split_raw: list = cmd.format(get_root_directory()).split(" ")
-            for arg in cmd_split_raw:
-                if "'" in arg:
-                    cmd_split_raw[cmd_split_raw.index(arg):len(cmd_split_raw)] = [
-                        " ".join(cmd_split_raw[cmd_split_raw.index(arg):len(cmd_split_raw)])]
-                    cmd_split_raw[len(cmd_split_raw) - 1] = cmd_split_raw[len(cmd_split_raw) - 1][:-1]
-                    cmd_split_raw[len(cmd_split_raw) - 1] = cmd_split_raw[len(cmd_split_raw) - 1][1:]
-            converted_cmds.append(cmd_split_raw)
+    # TODO: Метод больше не нужен, оставил из-за других комментариев
+    def convert_commands(cls, commands: list[str]) -> None:
+        # TODO: не надо просто так писать тип переменной при объявлении, тем более без указания внутреннего типа
+        #  это только сбивает PyCharm - у него есть шанс :) вывести внутренний тип
+        #  Попробуй убрать тип и посмотри, что выведет PyCharm list[list[str]]
+        #  Если ты напишешь просто list - то вся инфа о внутреннем типе будет потеряна
+        #  Такие аннотации только сбивают, либо надо писать тип полностью, либо не писать
+        converted_cmds = list()
+
+        # TODO: вот эта ваша любовь к глобальным переменным и запихиваний состояний куда угодно
+        #  нужно переделать и убрать из состояния класса
+        #  Да из команды можно класс сделать, а не
         self.commands = converted_cmds
 
 
+
+# TODO: Дальше не смотрел
 @dataclass
 class ProgLang:
     tests: Dict[str, Test]
 
     @classmethod
-    def data_to_prog_lang(cls, language_data: Dict[str, Dict[str, str]]) -> "ProgLang":
+    def data_to_prog_lang(cls, language_data: dict[str, dict[str, str]]) -> "ProgLang":
         tests: Dict[str, Test] = dict()
         for test_name in language_data:
-            tests.update({test_name: Test.data_to_test(language_data[test_name])})
-        return ProgLang(
-            tests=tests
-        )
+            tests.update({test_name: Test.from_config(language_data[test_name])})
+        return ProgLang(tests=tests)
 
 
 @dataclass
 class TestsConfig:
     name: str
     description: str
-    languages: Dict[str, ProgLang]
+    languages: dict[str, ProgLang]
 
     def exec_pipeline(self, pipeline: Pipeline):
         for language_name in pipeline.pipeline:
@@ -121,9 +136,11 @@ class TestsConfig:
                 logging.info(self.get_test_result(language_name, test_name))
 
     def get_test_result(self, language_name: str, test_name: str) -> str:
-        real_time: float = self.languages[language_name].tests[test_name].result.real_time
-        user_time: float = self.languages[language_name].tests[test_name].result.user_time
-        sys_time: float = self.languages[language_name].tests[test_name].result.sys_time
+        # TODO: Выглядит ужасно
+        real_time = self.languages[language_name].tests[test_name].result.real_time
+        user_time = self.languages[language_name].tests[test_name].result.user_time
+        sys_time = self.languages[language_name].tests[test_name].result.sys_time
+        # https://plugins.jetbrains.com/plugin/7125-grep-console
         return f"{Colors.OKGREEN}Language -> {language_name}{Colors.ENDC}\n" \
                f"{Colors.OKGREEN}Test -> {test_name}{Colors.ENDC}\n" \
                f"{Colors.OKGREEN}Real time -> {real_time} s{Colors.ENDC}\n" \
