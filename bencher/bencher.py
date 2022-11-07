@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
+from extensions.logging_extensions import Color, init_logging
 from extensions.path_extensions import path_must_exist, get_root_directory
 from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests import TestsConfigData, get_tests_config_data
@@ -86,11 +87,6 @@ class Test:
         )
 
     def exec_test(self) -> None:
-        # TODO: не очень понятно как предполагается извлекать результаты, если несколько команд?
-        #  по последней команде? Тогда лучше так и прописать в код, что все выполняем без разбора
-        #  результата, а ластовую разбираем. Тот костыль с объявлением в начале - ужасен
-        #  И да парсить тогда их надо по разному, вероятно нужно сделать несколько типов команд
-        #  наследованных от одного протокола и также несколько типов результатов
         results = [it.exec() for it in self.commands]
         self.result = TestResult.from_stdout(results[-1])
 
@@ -163,9 +159,9 @@ def main(raw_arguments: list) -> None:
     args = parse_args(raw_arguments[1:])
 
     if args.debug:
-        logging.basicConfig(format='%(message)s', level=logging.DEBUG)
+        init_logging(logging.DEBUG)
     else:
-        logging.basicConfig(format='%(message)s', level=logging.INFO)
+        init_logging(logging.INFO)
 
     pipeline: Pipeline = get_pipeline(args.pipeline)
     logging.info(f"Pipeline name -> {pipeline.name}")
