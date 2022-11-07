@@ -8,12 +8,7 @@ from typing import Iterable
 MODULE_NAME = 'extensions.'
 
 
-# TODO: extension-ы уровня БОГ
-
-
 def get_root_directory() -> Path:
-    # TODO: что-то очень странное - что оно делает?
-    # Module directory
     file_path = Path(__file__).absolute().parent
 
     for i in range(MODULE_NAME.count('.')):
@@ -27,7 +22,7 @@ class PathDoesNotExist(RuntimeError):
         super().__init__(f'Path {my_path} does not exist')
 
 
-def path(my_path: str | Path):
+def path_must_exist(my_path: str | Path):
     p = Path(my_path).absolute()
     if not p.exists():
         raise PathDoesNotExist(my_path)
