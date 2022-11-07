@@ -1,13 +1,12 @@
 import json
 from pathlib import Path
-from typing import Dict, Any, List
 
 import jsonschema
 import dacite
 
 
 class DataclassDaciteMixinAbstract:
-    __keys_to_clean: List[str] = [
+    __keys_to_clean: list[str] = [
         '$schema',
         '$ref',
         '$comment',
@@ -15,7 +14,7 @@ class DataclassDaciteMixinAbstract:
     ]
 
     @classmethod
-    def _clean_dict(cls, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _clean_dict(cls, data: dict[str, any]) -> dict[str, any]:
         result = data.copy()
         for key in cls.__keys_to_clean:
             if key not in result:
@@ -28,7 +27,7 @@ class DataclassDaciteMixinAbstract:
 
 class DataclassDaciteStrictMixin(DataclassDaciteMixinAbstract):
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def from_dict(cls, data: dict[str, any]):
         return dacite.from_dict(
             data_class=cls,
             data=cls._clean_dict(data),

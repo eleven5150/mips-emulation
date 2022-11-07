@@ -1,7 +1,6 @@
 import dataclasses
 import re
 from pathlib import Path
-from typing import List, Generator, Dict
 
 from extensions.json_extensions import DataclassDaciteStrictMixin, get_parsed_config_generic
 from extensions.path_extensions import path_listdir, path_must_exist
@@ -16,7 +15,7 @@ if not SCHEMA_JSON_FILEPATH.exists():
 class Pipeline(DataclassDaciteStrictMixin):
     name: str
     description: str
-    pipeline: Dict[str, List]
+    pipeline: dict[str, list]
 
     def print_pipeline(self) -> None:
         print("Pipeline:")
@@ -31,7 +30,7 @@ def __get_pipeline_path(name: str) -> Path:
     return PIPELINE_CONFIG_ROOT_DIR / f'pipeline-{name}.json'
 
 
-def get_all_pipeline_names() -> List[str]:
+def get_all_pipeline_names() -> list[str]:
     file_wildcard = re.compile(r"pipeline-([^.]+)\.json")
     return [
         m.group(1)

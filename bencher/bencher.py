@@ -4,9 +4,7 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-# TODO: не надо юзать Dict, List, Set и т.п. из typing
-#  3.9.10+ держит dict[str, Any], если версия ниже нужно поднять
-from typing import Dict, Any, Optional
+from typing import Optional
 
 from extensions.path_extensions import path, get_root_directory
 from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
@@ -75,7 +73,7 @@ class Test:
     result: Optional[TestResult] = None
 
     @classmethod
-    def from_config(cls, data: dict[str, Any]) -> "Test":
+    def from_config(cls, data: dict[str, any]) -> "Test":
         # TODO: вообще эти проверки на путь вероятнее всего не нужны, они у тебя походу все
         #  равно не обрабатываются, а Path сам чекнет, что пути нету, короче so-so
         return Test(
@@ -112,11 +110,11 @@ class Test:
 # TODO: Дальше не смотрел
 @dataclass
 class ProgLang:
-    tests: Dict[str, Test]
+    tests: dict[str, Test]
 
     @classmethod
     def data_to_prog_lang(cls, language_data: dict[str, dict[str, str]]) -> "ProgLang":
-        tests: Dict[str, Test] = dict()
+        tests: dict[str, Test] = dict()
         for test_name in language_data:
             tests.update({test_name: Test.from_config(language_data[test_name])})
         return ProgLang(tests=tests)
@@ -149,7 +147,7 @@ class TestsConfig:
 
     @classmethod
     def data_to_tests_config(cls, data: TestsConfigData) -> "TestsConfig":
-        target_languages: Dict[str, ProgLang] = dict()
+        target_languages: dict[str, ProgLang] = dict()
         for language_name in data.languages:
             target_languages.update({language_name: ProgLang.data_to_prog_lang(data.languages[language_name])})
         return TestsConfig(
