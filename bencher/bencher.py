@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
-from extensions.path_extensions import path, get_root_directory
+from extensions.path_extensions import path_must_exist, get_root_directory
 from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests import TestsConfigData, get_tests_config_data
 
@@ -39,6 +39,11 @@ class TestResult:
                 sys_time = float(line.split(" ")[1])
         return cls(real_time, user_time, sys_time)
 
+    def get_format_result(self) -> str:
+        return f"Real time -> {self.real_time} s\n" \
+               f"User-mode time -> {self.user_time} s\n" \
+               f"Kernel-mode time -> {self.sys_time} s\n"
+
 
 @dataclass
 class Command:
@@ -56,28 +61,27 @@ class Command:
                 cmd_split_raw[len(cmd_split_raw) - 1] = cmd_split_raw[len(cmd_split_raw) - 1][1:]
         return cls(cmd_split_raw)
 
-    def exec(self) -> TestResult:
+    def exec(self) -> bytes:
         logging.debug(f"\tCommand -> {' '.join(self.cmd)}")
-        process = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         out, err = process.communicate()
         assert process.returncode == 0, f"'{self.cmd} execution failed with status {process.returncode}"
         logging.debug(f"\tReturn -> {out}")
-        return TestResult.from_stdout(out)
+        return out
 
 
 @dataclass
 class Test:
     path: Path
     commands: list[Command]
-    # TODO: Зачем эти состояния хранить в классе? пусть возвращаются из exec
     result: Optional[TestResult] = None
 
     @classmethod
     def from_config(cls, data: dict[str, any]) -> "Test":
-        # TODO: вообще эти проверки на путь вероятнее всего не нужны, они у тебя походу все
-        #  равно не обрабатываются, а Path сам чекнет, что пути нету, короче so-so
+        test_path: Path = Path(get_root_directory() / data["path"])
+        path_must_exist(Path(test_path))
         return Test(
-            path=path(Path(get_root_directory()) / data["path"]),
+            path=test_path,
             commands=[Command.from_string(it) for it in data["commands"]],
         )
 
@@ -88,26 +92,9 @@ class Test:
         #  И да парсить тогда их надо по разному, вероятно нужно сделать несколько типов команд
         #  наследованных от одного протокола и также несколько типов результатов
         results = [it.exec() for it in self.commands]
-        return TestResult.from_command_result(results)
+        self.result = TestResult.from_stdout(results[-1])
 
 
-    # TODO: Метод больше не нужен, оставил из-за других комментариев
-    def convert_commands(cls, commands: list[str]) -> None:
-        # TODO: не надо просто так писать тип переменной при объявлении, тем более без указания внутреннего типа
-        #  это только сбивает PyCharm - у него есть шанс :) вывести внутренний тип
-        #  Попробуй убрать тип и посмотри, что выведет PyCharm list[list[str]]
-        #  Если ты напишешь просто list - то вся инфа о внутреннем типе будет потеряна
-        #  Такие аннотации только сбивают, либо надо писать тип полностью, либо не писать
-        converted_cmds = list()
-
-        # TODO: вот эта ваша любовь к глобальным переменным и запихиваний состояний куда угодно
-        #  нужно переделать и убрать из состояния класса
-        #  Да из команды можно класс сделать, а не
-        self.commands = converted_cmds
-
-
-
-# TODO: Дальше не смотрел
 @dataclass
 class ProgLang:
     tests: dict[str, Test]
@@ -129,21 +116,16 @@ class TestsConfig:
     def exec_pipeline(self, pipeline: Pipeline):
         for language_name in pipeline.pipeline:
             for test_name in pipeline.pipeline[language_name]:
-                logging.debug(f"{Colors.WARNING}{language_name} -> {test_name}{Colors.ENDC}")
+                logging.debug(f"{language_name} -> {test_name}")
                 self.languages[language_name].tests[test_name].exec_test()
                 logging.info(self.get_test_result(language_name, test_name))
 
     def get_test_result(self, language_name: str, test_name: str) -> str:
-        # TODO: Выглядит ужасно
-        real_time = self.languages[language_name].tests[test_name].result.real_time
-        user_time = self.languages[language_name].tests[test_name].result.user_time
-        sys_time = self.languages[language_name].tests[test_name].result.sys_time
-        # https://plugins.jetbrains.com/plugin/7125-grep-console
-        return f"{Colors.OKGREEN}Language -> {language_name}{Colors.ENDC}\n" \
-               f"{Colors.OKGREEN}Test -> {test_name}{Colors.ENDC}\n" \
-               f"{Colors.OKGREEN}Real time -> {real_time} s{Colors.ENDC}\n" \
-               f"{Colors.OKGREEN}User-mode time -> {user_time} s{Colors.ENDC}\n" \
-               f"{Colors.OKGREEN}Kernel-mode time -> {sys_time} s{Colors.ENDC}\n"
+        result = self.languages[language_name].tests[test_name].result.get_format_result()
+        return f"Language -> {language_name}\n" \
+               f"Test -> {test_name}\n" \
+               f"{result}" \
+
 
     @classmethod
     def data_to_tests_config(cls, data: TestsConfigData) -> "TestsConfig":
