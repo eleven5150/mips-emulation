@@ -47,15 +47,9 @@ class Command:
 
     @classmethod
     def from_string(cls, cmd: str) -> "Command":
-        cmd_split_raw = cmd.format(get_root_directory()).split(" ")
-        for arg in cmd_split_raw:
-            if "'" in arg:
-                # TODO: однозначно нужно передалать - тут просто не понятно что происходит
-                cmd_split_raw[cmd_split_raw.index(arg):len(cmd_split_raw)] = [
-                    " ".join(cmd_split_raw[cmd_split_raw.index(arg):len(cmd_split_raw)])]
-                cmd_split_raw[len(cmd_split_raw) - 1] = cmd_split_raw[len(cmd_split_raw) - 1][:-1]
-                cmd_split_raw[len(cmd_split_raw) - 1] = cmd_split_raw[len(cmd_split_raw) - 1][1:]
-        return cls(cmd_split_raw)
+        cmd_split_raw: list[str] = cmd.format(get_root_directory()).split(" ")
+        cmd_converted: list[str] = cls.convert_arguments_in_single_quotes(cmd_split_raw)
+        return cls(cmd_converted)
 
     def exec(self) -> bytes:
         LOGGER.debug(f"\tCommand -> {' '.join(self.cmd)}")
@@ -64,6 +58,19 @@ class Command:
         assert process.returncode == 0, Color.error(f"'{self.cmd} execution failed with status {process.returncode}")
         LOGGER.debug(f"\tReturn -> {out}")
         return out
+
+    @staticmethod
+    def convert_arguments_in_single_quotes(cmd_split_raw: list[str]) -> list[str]:
+        cmd_converted: list[str] = list()
+        for arg in cmd_split_raw:
+            if "'" in arg:
+                start_quote: int = cmd_split_raw.index(arg)
+                merged_argument: str = " ".join(cmd_split_raw[start_quote:])
+                converted_argument: str = merged_argument[1:-1]
+                cmd_converted.append(converted_argument)
+                break
+            cmd_converted.append(arg)
+        return cmd_converted
 
 
 @dataclass
