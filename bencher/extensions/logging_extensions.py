@@ -1,17 +1,19 @@
 import logging
 from dataclasses import dataclass
 
+LOGGER = logging.getLogger("bencher")
+
 
 class CustomFormatter(logging.Formatter):
     def __init__(self, fmt):
         super().__init__()
         self.fmt = fmt
         self.FORMATS = {
-            logging.DEBUG: Color.cyan + self.fmt + Color.reset,
-            logging.INFO: Color.grey + self.fmt + Color.reset,
-            logging.WARNING: Color.yellow + self.fmt + Color.reset,
-            logging.ERROR: Color.red + self.fmt + Color.reset,
-            logging.CRITICAL: Color.bold_red + self.fmt + Color.reset
+            logging.DEBUG: Color.debug(self.fmt),
+            logging.INFO: Color.info(self.fmt),
+            logging.WARNING: Color.warning(self.fmt),
+            logging.ERROR: Color.error(self.fmt),
+            logging.CRITICAL: Color.critical(self.fmt)
         }
 
     def format(self, record):
@@ -31,22 +33,35 @@ class Color:
 
     reset = '\033[0m'
 
+    @classmethod
+    def debug(cls, string: str) -> str:
+        return f"{cls.cyan}{string}{cls.reset}"
 
-def init_logging(loglevel: int):
-    print(loglevel)
-    # Create custom logger logging all five levels
-    logger = logging.getLogger(__name__)
-    logger.setLevel(loglevel)
+    @classmethod
+    def info(cls, string: str) -> str:
+        return f"{cls.grey}{string}{cls.reset}"
 
-    # Define format for logs
+    @classmethod
+    def warning(cls, string: str) -> str:
+        return f"{cls.yellow}{string}{cls.reset}"
+
+    @classmethod
+    def error(cls, string: str) -> str:
+        return f"{cls.red}{string}{cls.reset}"
+
+    @classmethod
+    def critical(cls, string: str) -> str:
+        return f"{cls.bold_red}{string}{cls.reset}"
+
+
+def init_logging(loglevel: int) -> None:
+    LOGGER.setLevel(loglevel)
+
     fmt = '%(message)s'
 
-    # Create stdout handler for logging to the console (logs all five levels)
     stdout_handler = logging.StreamHandler()
     stdout_handler.setLevel(loglevel)
     stdout_handler.setFormatter(CustomFormatter(fmt))
 
-    # Add both handlers to the logger
-    logger.addHandler(stdout_handler)
-    logging.info("kek")
+    LOGGER.addHandler(stdout_handler)
 

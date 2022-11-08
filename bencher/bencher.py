@@ -6,18 +6,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
-from extensions.logging_extensions import Color, init_logging
+from extensions.logging_extensions import Color, init_logging, LOGGER
 from extensions.path_extensions import path_must_exist, get_root_directory
 from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests import TestsConfigData, get_tests_config_data
 
+
 TESTS_CONFIG: str = "tests/tests-config.json"
-
-
-# TODO: Все раскрасски нужно убрать либо в методы, либо переделать на grep-console
-#  точнее нужно обязательно ее поставить и уже в сообщении выводить инфу для расскрашивания
-#  И да совершенно непонятно, почему лог сообщения уровня debug содержит warning? Это как?
-# https://plugins.jetbrains.com/plugin/7125-grep-console
 
 
 @dataclass
@@ -29,7 +24,7 @@ class TestResult:
     @classmethod
     def from_stdout(cls, data: bytes) -> "TestResult":
         if not data:
-            raise ValueError(f"Error! Test execution returned empty data")
+            raise ValueError(Color.error("Error! Test execution returned empty data"))
         real_time = user_time = sys_time = None
         for line in data.decode("ascii").splitlines():
             if "real" in line:
@@ -63,11 +58,11 @@ class Command:
         return cls(cmd_split_raw)
 
     def exec(self) -> bytes:
-        logging.debug(f"\tCommand -> {' '.join(self.cmd)}")
+        LOGGER.debug(f"\tCommand -> {' '.join(self.cmd)}")
         process = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         out, err = process.communicate()
-        assert process.returncode == 0, f"'{self.cmd} execution failed with status {process.returncode}"
-        logging.debug(f"\tReturn -> {out}")
+        assert process.returncode == 0, Color.error(f"'{self.cmd} execution failed with status {process.returncode}")
+        LOGGER.debug(f"\tReturn -> {out}")
         return out
 
 
@@ -112,9 +107,9 @@ class TestsConfig:
     def exec_pipeline(self, pipeline: Pipeline):
         for language_name in pipeline.pipeline:
             for test_name in pipeline.pipeline[language_name]:
-                logging.debug(f"{language_name} -> {test_name}")
+                LOGGER.debug(f"{language_name} -> {test_name}")
                 self.languages[language_name].tests[test_name].exec_test()
-                logging.info(self.get_test_result(language_name, test_name))
+                LOGGER.info(self.get_test_result(language_name, test_name))
 
     def get_test_result(self, language_name: str, test_name: str) -> str:
         result = self.languages[language_name].tests[test_name].result.get_format_result()
@@ -164,8 +159,8 @@ def main(raw_arguments: list) -> None:
         init_logging(logging.INFO)
 
     pipeline: Pipeline = get_pipeline(args.pipeline)
-    logging.info(f"Pipeline name -> {pipeline.name}")
-    logging.info(f"Pipeline description -> {pipeline.description}")
+    LOGGER.info(f"Pipeline name -> {pipeline.name}")
+    LOGGER.info(f"Pipeline description -> {pipeline.description}")
     pipeline.print_pipeline()
     tests_config_data: TestsConfigData = get_tests_config_data()
     tests_config: TestsConfig = TestsConfig.data_to_tests_config(tests_config_data)
