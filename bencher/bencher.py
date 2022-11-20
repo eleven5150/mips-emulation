@@ -94,7 +94,7 @@ class Test:
 
     def exec_test(self, pipeline_name: str) -> None:
         results = [it.exec() for it in self.commands]
-        if pipeline_name is "Version":
+        if pipeline_name == "Versions":
             LOGGER.info(results[-1])
         else:
             self.result = TestResult.from_stdout(results[-1])
@@ -123,9 +123,11 @@ class TestsConfig:
             for test_name in pipeline.pipeline[language_name]:
                 LOGGER.debug(f"{language_name} -> {test_name}")
                 self.languages[language_name].tests[test_name].exec_test(pipeline.name)
-                LOGGER.info(self.get_test_result(language_name, test_name))
+                if pipeline.name != "Versions":
+                    LOGGER.info(self.get_test_result(language_name, test_name))
 
     def get_test_result(self, language_name: str, test_name: str) -> str:
+
         result = self.languages[language_name].tests[test_name].result.get_format_result()
         return f"Language -> {language_name}\n" \
                f"Test -> {test_name}\n" \
