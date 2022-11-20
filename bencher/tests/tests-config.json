@@ -3,22 +3,131 @@
   "name": "Languages Bencher",
   "description": "Configuration for speed comparison of programming languages for emulator development",
   "languages": {
-    "kotlin_jvm": {
-      "prime_number": {
-        "path": "tests/prime_number/kotlin_jvm/cmd.kt",
+    "c": {
+      "hello_world": {
+        "path": "tests/c/hello_world/test.c",
         "commands": [
-          "docker run bench:latest kotlinc -version",
-          "docker run -v {}:/app bench:latest kotlinc /app/tests/prime_number/kotlin_jvm/cmd.kt -include-runtime -d /app/tests/prime_number/kotlin_jvm/cmd.jar",
-          "docker run -v {}:/app bench:latest bash -c 'time -p java -jar /app/tests/prime_number/kotlin_jvm/cmd.jar 10 2>&1'"
+          "gcc -Ofast /app/tests/c/hello_world/test.c -o /app/tests/c/hello_world/test.elf",
+          "bash -c 'time -p /app/tests/c/hello_world/test.elf 2>&1'"
+        ]
+      },
+      "version": {
+        "path": "tests/c/hello_world/test.c",
+        "commands": [
+          "gcc --version 2>&1"
+        ]
+      },
+      "prime_number": {
+        "path": "tests/c/prime_number/test.c",
+        "commands": [
+          "gcc -Ofast /app/tests/c/prime_number/test.c -o /app/tests/c/prime_number/test.elf",
+          "bash -c 'time -p /app/tests/c/prime_number/test.elf 10 2>&1'"
+        ]
+      }
+    },
+    "c#": {
+      "hello_world": {
+        "path": "tests/c#/hello_world/test.cs",
+        "commands": [
+          "dotnet build --self-contained -a x64 /app/tests/c#/hello_world/ > /dev/null",
+          "bash -c 'time -p dotnet run --project /app/tests/c#/hello_world/ 2>&1'"
+        ]
+      },
+      "version": {
+        "path": "tests/c#/hello_world/test.cs",
+        "commands": [
+          "dotnet --list-sdks 2>&1"
+        ]
+      },
+      "prime_number": {
+        "path": "tests/c#/prime_number/test.c",
+        "commands": [
+          "dotnet build --self-contained -a x64 /app/tests/c#/prime_number/ > /dev/null",
+          "bash -c 'time -p dotnet run --project /app/tests/c#/prime_number/ 10 2>&1'"
+        ]
+      }
+    },
+    "javascript": {
+      "hello_world": {
+        "path": "tests/javascript/hello_world/test.js",
+        "commands": [
+          "bash -c 'time -p nodejs /app/tests/javascript/hello_world/test.js 2>&1'"
+        ]
+      },
+      "version": {
+        "path": "tests/javascript/hello_world/test.js",
+        "commands": [
+          "nodejs --version 2>&1"
+        ]
+      },
+      "prime_number": {
+        "path": "tests/javascript/prime_number/test.js",
+        "commands": [
+          "bash -c 'time -p nodejs /app/tests/javascript/prime_number/test.js 10 2>&1'"
+        ]
+      }
+    },
+    "kotlin_jvm": {
+      "hello_world": {
+        "path": "tests/kotlin_jvm/hello_world/test.kt",
+        "commands": [
+          "kotlinc /app/tests/kotlin_jvm/hello_world/test.kt -include-runtime -d /app/tests/kotlin_jvm/hello_world/test.jar",
+          "bash -c 'time -p java -jar /app/tests/kotlin_jvm/hello_world/test.jar 2>&1'"
+        ]
+      },
+      "version": {
+        "path": "tests/kotlin_jvm/hello_world/test.kt",
+        "commands": [
+          "kotlinc -version 2>&1"
+        ]
+      },
+      "prime_number": {
+        "path": "tests/kotlin_jvm/prime_number/test.kt",
+        "commands": [
+          "kotlinc /app/tests/kotlin_jvm/prime_number/test.kt -include-runtime -d /app/tests/kotlin_jvm/prime_number/test.jar",
+          "bash -c 'time -p java -jar /app/tests/kotlin_jvm/prime_number/test.jar 10 2>&1'"
         ]
       }
     },
     "python_cpython": {
-      "prime_number": {
-        "path": "tests/prime_number/python/cmd.py",
+      "hello_world": {
+        "path": "tests/python_cpython/hello_world/test.py",
         "commands": [
-          "docker run bench:latest python3 --version",
-          "docker run -v {}:/app bench:latest bash -c 'time -p python3 /app/tests/prime_number/python/cmd.py 10 2>&1'"
+          "bash -c 'time -p python3 /app/tests/python_cpython/hello_world/test.py 2>&1'"
+        ]
+      },
+      "version": {
+        "path": "tests/python_cpython/hello_world/test.py",
+        "commands": [
+          "python3 --version 2>&1"
+        ]
+      },
+      "prime_number": {
+        "path": "tests/python_cpython/prime_number/test.py",
+        "commands": [
+          "bash -c 'time -p python3 /app/tests/python_cpython/prime_number/test.py 10 2>&1'"
+        ]
+      }
+    },
+    "rust": {
+      "hello_world": {
+        "path": "tests/rust/hello_world/test.rs",
+        "commands": [
+          "rustc -C opt-level=3 /app/tests/rust/hello_world/test.rs -o /app/tests/rust/hello_world/test.elf",
+          "bash -c 'time -p /app/tests/rust/hello_world/test.elf 2>&1'"
+        ]
+      },
+      "version": {
+        "path": "tests/rust/hello_world/test.rs",
+        "commands": [
+          "rustc --version 2>&1"
+        ]
+      },
+      "prime_number": {
+        "path": "tests/rust/prime_number/test.rs",
+        "commands": [
+          "rustc -C opt-level=3 /app/tests/rust/prime_number/test.rs -o /app/tests/rust/prime_number/test.elf",
+          "bash -c 'time -p /app/tests/rust/prime_number/test.elf 2>&1'"
         ]
       }
     }
