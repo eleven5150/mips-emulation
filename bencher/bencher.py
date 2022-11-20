@@ -13,6 +13,7 @@ from tests import TestsConfigData, get_tests_config_data
 
 
 TESTS_CONFIG: str = "tests/tests-config.json"
+DOCKER_COMMAND: str = "docker run -v {}:/app bench:latest"
 
 
 @dataclass
@@ -47,7 +48,8 @@ class Command:
 
     @classmethod
     def from_string(cls, cmd: str) -> "Command":
-        cmd_split_raw: list[str] = cmd.format(get_root_directory()).split(" ")
+        cmd_split_raw: list[str] = DOCKER_COMMAND.format(get_root_directory()).split(" ")
+        cmd_split_raw.extend(cmd.split(" "))
         cmd_converted: list[str] = cls.convert_arguments_in_single_quotes(cmd_split_raw)
         return cls(cmd_converted)
 
