@@ -92,9 +92,12 @@ class Test:
             commands=[Command.from_string(it) for it in data["commands"]],
         )
 
-    def exec_test(self) -> None:
+    def exec_test(self, pipeline_name: str) -> None:
         results = [it.exec() for it in self.commands]
-        self.result = TestResult.from_stdout(results[-1])
+        if pipeline_name is "Version":
+            LOGGER.info(results[-1])
+        else:
+            self.result = TestResult.from_stdout(results[-1])
 
 
 @dataclass
@@ -119,7 +122,7 @@ class TestsConfig:
         for language_name in pipeline.pipeline:
             for test_name in pipeline.pipeline[language_name]:
                 LOGGER.debug(f"{language_name} -> {test_name}")
-                self.languages[language_name].tests[test_name].exec_test()
+                self.languages[language_name].tests[test_name].exec_test(pipeline.name)
                 LOGGER.info(self.get_test_result(language_name, test_name))
 
     def get_test_result(self, language_name: str, test_name: str) -> str:
@@ -156,7 +159,6 @@ def parse_args(arguments: list):
     parser.add_argument('-d', '--debug',
                         action='store_true',
                         help='Enables debug mode')
-
     return parser.parse_args(arguments)
 
 
