@@ -11,7 +11,6 @@ from extensions.path_extensions import path_must_exist, get_root_directory
 from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests import TestsConfigData, get_tests_config_data
 
-
 TESTS_CONFIG: str = "tests/tests-config.json"
 DOCKER_COMMAND: str = "docker run -v {}:/app bench:latest"
 
@@ -57,7 +56,10 @@ class Command:
         LOGGER.debug(f"\tCommand -> {' '.join(self.cmd)}")
         process = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         out, err = process.communicate()
-        assert process.returncode == 0, Color.error(f"'{self.cmd} execution failed with status {process.returncode}")
+        assert process.returncode == 0, Color.error(
+            f"'{' '.join(self.cmd)} execution failed with status {process.returncode}\n\n"
+            f"Error message: {str(out, encoding='ascii')}"
+        )
         LOGGER.debug(f"\tReturn -> {out}")
         return out
 
@@ -124,8 +126,7 @@ class TestsConfig:
         result = self.languages[language_name].tests[test_name].result.get_format_result()
         return f"Language -> {language_name}\n" \
                f"Test -> {test_name}\n" \
-               f"{result}" \
-
+               f"{result}"
 
     @classmethod
     def data_to_tests_config(cls, data: TestsConfigData) -> "TestsConfig":
