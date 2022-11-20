@@ -29,8 +29,8 @@
       "hello_world": {
         "path": "tests/c#/hello_world/test.cs",
         "commands": [
-          "dotnet build --self-contained -a x64 /app/tests/c#/hello_world/ > /dev/null",
-          "bash -c 'time -p dotnet run --project /app/tests/c#/hello_world/ 2>&1'"
+          "dotnet build --self-contained -a x64 /app/tests/c#/hello_world > /dev/null",
+          "bash -c 'time -p dotnet run --project /app/tests/c#/hello_world// 2>&1'"
         ]
       },
       "version": {
@@ -40,10 +40,10 @@
         ]
       },
       "prime_number": {
-        "path": "tests/c#/prime_number/test.c",
+        "path": "tests/c#/prime_number/test.cs",
         "commands": [
-          "dotnet build --self-contained -a x64 /app/tests/c#/prime_number/ > /dev/null",
-          "bash -c 'time -p dotnet run --project /app/tests/c#/prime_number/ 10 2>&1'"
+          "dotnet build --self-contained -a x64 /app/tests/c#/prime_number",
+          "bash -c 'time -p dotnet run --project /app/tests/c#/prime_number 10 2>&1'"
         ]
       }
     },
