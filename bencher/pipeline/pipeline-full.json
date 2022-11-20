@@ -1,6 +1,6 @@
 {
   "$schema": "pipeline.schema.json",
-  "name": "Full Pipeline",
+  "name": "Full",
   "description": "Pipeline with full processing",
   "pipeline": {
     "kotlin_jvm": [
