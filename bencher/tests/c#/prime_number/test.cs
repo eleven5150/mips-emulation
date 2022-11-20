@@ -2,7 +2,7 @@ using System;
 
 namespace c_
 {
-    class cmd
+    class test
     {
         static void Main(string[] args)
         {
