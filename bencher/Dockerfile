@@ -17,11 +17,18 @@ RUN apt install -y rustc
 RUN apt install -y gcc
 RUN apt install -y wget
 # Kotlin JVM
-RUN wget https://github.com/JetBrains/kotlin/releases/download/v1.7.10/kotlin-compiler-1.7.10.zip \
+RUN wget https://github.com/JetBrains/kotlin/releases/download/v1.7.21/kotlin-compiler-1.7.21.zip \
     && apt install unzip \
-    && unzip kotlin-compiler-1.7.10.zip -d /root \
-    && rm -f kotlin-compiler-1.7.10.zip \
-    && ln -s /root/kotlinc/bin/kotlinc /usr/local/bin/kotlinc   
+    && unzip kotlin-compiler-1.7.21.zip -d /root \
+    && rm -f kotlin-compiler-1.7.21.zip \
+    && ln -s /root/kotlinc/bin/kotlinc /usr/local/bin/kotlinc \
+# Kotlin Native
+RUN wget https://github.com/JetBrains/kotlin/releases/download/v1.7.21/kotlin-native-linux-x86_64-1.7.21.tar.gz \
+    && apt install tar \
+    && tar -xvzf kotlin-native-linux-x86_64-1.7.21.tar.gz -C /root \
+    && rm -f kotlin-native-linux-x86_64-1.7.21.tar.gz \
+    && ln -s /root/kotlin-native-linux-x86_64-1.7.21/bin/kotlinc-native /usr/local/bin/kotlinc-native \
+    && ln -s /root/kotlin-native-linux-x86_64-1.7.21/bin/run_konan /usr/local/bin/run_konan
 # C Sharp
 RUN apt install -y aspnetcore-runtime-6.0 \
     && apt install -y dotnet-sdk-6.0
