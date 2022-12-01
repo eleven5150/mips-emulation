@@ -56,10 +56,10 @@ class Command:
         LOGGER.debug(f"\tCommand -> {' '.join(self.cmd)}")
         process = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         out, err = process.communicate()
-        assert process.returncode == 0, Color.error(
-            f"'{' '.join(self.cmd)} execution failed with status {process.returncode}\n\n"
-            f"Error message: {str(out, encoding='ascii')}"
-        )
+        # assert process.returncode == 0, Color.error(
+        #     f"'{' '.join(self.cmd)} execution failed with status {process.returncode}\n\n"
+        #     f"Error message: {str(out, encoding='ascii')}"
+        # )
         LOGGER.debug(f"\tReturn -> {out}")
         return out
 
@@ -92,10 +92,12 @@ class Test:
             commands=[Command.from_string(it) for it in data["commands"]],
         )
 
-    def exec_test(self, pipeline_name: str) -> None:
+    def exec_test(self, pipeline_name: str, language_name: str) -> None:
         results = [it.exec() for it in self.commands]
         if pipeline_name == "Versions":
-            LOGGER.info(results[-1])
+            LOGGER.info(f"Language -> {language_name}")
+            LOGGER.info(f"Version:\n"
+                        f"{results[-1].decode('ascii')}")
         else:
             self.result = TestResult.from_stdout(results[-1])
 
@@ -122,7 +124,7 @@ class TestsConfig:
         for language_name in pipeline.pipeline:
             for test_name in pipeline.pipeline[language_name]:
                 LOGGER.debug(f"{language_name} -> {test_name}")
-                self.languages[language_name].tests[test_name].exec_test(pipeline.name)
+                self.languages[language_name].tests[test_name].exec_test(pipeline.name, language_name)
                 if pipeline.name != "Versions":
                     LOGGER.info(self.get_test_result(language_name, test_name))
 
