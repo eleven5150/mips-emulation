@@ -78,7 +78,7 @@
       "version": {
         "path": "tests/kotlin_jvm/hello_world/test.kt",
         "commands": [
-          "kotlinc -version 2>&1"
+          "kotlinc -version"
         ]
       },
       "prime_number": {
