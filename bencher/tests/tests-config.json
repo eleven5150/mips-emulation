@@ -60,7 +60,7 @@
       "version" : {
       "path": "tests/cython/hello_world/test.pyx",
         "commands": [
-          "cython3 --version 2>&1"
+          "cython3 --version"
         ]
     }
     },
