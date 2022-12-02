@@ -33,5 +33,5 @@ RUN wget https://github.com/JetBrains/kotlin/releases/download/v1.7.21/kotlin-na
 RUN apt install -y aspnetcore-runtime-6.0 \
     && apt install -y dotnet-sdk-6.0
 # Cython
-RUN apt install -y cythone3
+RUN apt install -y cython3
 
