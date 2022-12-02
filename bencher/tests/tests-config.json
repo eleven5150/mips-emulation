@@ -89,23 +89,23 @@
         ]
       }
     },
-    "python_cpython": {
+    "python": {
       "hello_world": {
-        "path": "tests/python_cpython/hello_world/test.py",
+        "path": "tests/python/hello_world/test.py",
         "commands": [
-          "bash -c 'time -p python3 /app/tests/python_cpython/hello_world/test.py 2>&1'"
+          "bash -c 'time -p python3 /app/tests/python/hello_world/test.py 2>&1'"
         ]
       },
       "version": {
-        "path": "tests/python_cpython/hello_world/test.py",
+        "path": "tests/python/hello_world/test.py",
         "commands": [
           "python3 --version 2>&1"
         ]
       },
       "prime_number": {
-        "path": "tests/python_cpython/prime_number/test.py",
+        "path": "tests/python/prime_number/test.py",
         "commands": [
-          "bash -c 'time -p python3 /app/tests/python_cpython/prime_number/test.py 10 2>&1'"
+          "bash -c 'time -p python3 /app/tests/python/prime_number/test.py 10 2>&1'"
         ]
       }
     },
