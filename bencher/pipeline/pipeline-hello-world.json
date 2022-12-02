@@ -1,0 +1,31 @@
+{
+  "$schema": "pipeline.schema.json",
+  "name": "Hello world",
+  "description": "Pipeline with hello world tests",
+  "pipeline": {
+    "c": [
+      "hello_world"
+    ],
+    "c#": [
+      "hello_world"
+    ],
+    "cython": [
+      "hello_world"
+    ],
+    "javascript": [
+      "hello_world"
+    ],
+    "kotlin_jvm": [
+      "hello_world"
+    ],
+    "kotlin_native": [
+      "hello_world"
+    ],
+    "python": [
+      "hello_world"
+    ],
+    "rust": [
+      "hello_world"
+    ]
+  }
+}
