@@ -6,7 +6,7 @@
     "kotlin_jvm": [
       "prime_number"
     ],
-    "python_cpython": [
+    "python": [
       "prime_number"
     ]
   }

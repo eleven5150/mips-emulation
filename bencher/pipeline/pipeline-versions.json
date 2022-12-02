@@ -9,13 +9,19 @@
     "c#": [
       "version"
     ],
+    "cython": [
+      "version"
+    ],
     "javascript": [
       "version"
     ],
     "kotlin_jvm": [
       "version"
     ],
-    "python_cpython": [
+    "kotlin_native": [
+      "version"
+    ],
+    "python": [
       "version"
     ],
     "rust": [
