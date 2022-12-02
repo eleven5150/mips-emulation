@@ -47,6 +47,23 @@
         ]
       }
     },
+    "cython": {
+      "hello_world": {
+        "path": "tests/cython/hello_world/test.pyx",
+        "commands": [
+          "cython3 --embed -3 -o /app/tests/cython/hello_world/test.c",
+          "gcc -o /app/tests/cython/hello_world/test.o -c /app/tests/cython/hello_world/test.c $(python-config --cflags)",
+          "gcc -o /app/tests/cython/hello_world/test.elf /app/tests/cython/hello_world/test.o $(python-config --ldflags)",
+          "bash -c 'time -p /app/tests/cython/hello_world/test.elf 2>&1'"
+        ]
+      },
+      "version" : {
+      "path": "tests/cython/hello_world/test.pyx",
+        "commands": [
+          "cython3 --version 2>&1"
+        ]
+    }
+    },
     "javascript": {
       "hello_world": {
         "path": "tests/javascript/hello_world/test.js",
@@ -86,6 +103,20 @@
         "commands": [
           "kotlinc /app/tests/kotlin_jvm/prime_number/test.kt -include-runtime -d /app/tests/kotlin_jvm/prime_number/test.jar",
           "bash -c 'time -p java -jar /app/tests/kotlin_jvm/prime_number/test.jar 10 2>&1'"
+        ]
+      }
+    },
+    "kotlin_native": {
+      "hello_world": {
+        "path": "tests/kotlin_native/hello_world/test.kt",
+        "commands": [
+          "kotlinc-native /app/tests/kotlin_native/hello_world/test.kt -o /app/tests/kotlin_native/hello_world/test"
+        ]
+      },
+      "version": {
+        "path": "tests/kotlin_native/hello_world/test.kt",
+        "commands": [
+          "kotlinc-native -version"
         ]
       }
     },
