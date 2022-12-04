@@ -111,7 +111,7 @@
         "path": "tests/kotlin_native/hello_world/test.kt",
         "commands": [
           "kotlinc-native /app/tests/kotlin_native/hello_world/test.kt -o /app/tests/kotlin_native/hello_world/test",
-          "/app/tests/kotlin_native/hello_world/test.kexe"
+          "bash -c 'time -p /app/tests/kotlin_native/hello_world/test.kexe'"
         ]
       },
       "version": {
