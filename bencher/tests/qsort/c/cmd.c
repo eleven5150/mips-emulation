@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 
     quick_sort(dataset, 0, data_size - 1);  // Sorting the array
 
-    //print(dataset, data_size);
+    print_array(dataset, data_size);
 
     return 0;
 }

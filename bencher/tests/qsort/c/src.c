@@ -46,7 +46,7 @@ void quick_sort(int arr[], int low, int high)
 }
 
 // Prints sorted array
-void print(int array[], int n)
+void print_array(int array[], int n)
 {
     for(int i = 0; i < n; i++)
     {
