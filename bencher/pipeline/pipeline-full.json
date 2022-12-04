@@ -3,10 +3,34 @@
   "name": "Full",
   "description": "Pipeline with full processing",
   "pipeline": {
-    "kotlin_jvm": [
+    "c": [
+      "hello_world",
       "prime_number"
     ],
+    "c#": [
+      "hello_world",
+      "prime_number"
+    ],
+    "cython": [
+      "hello_world"
+    ],
+    "javascript": [
+      "hello_world",
+      "prime_number"
+    ],
+    "kotlin_jvm": [
+      "hello_world",
+      "prime_number"
+    ],
+    "kotlin_native": [
+      "hello_world"
+    ],
     "python": [
+      "hello_world",
+      "prime_number"
+    ],
+    "rust": [
+      "hello_world",
       "prime_number"
     ]
   }
