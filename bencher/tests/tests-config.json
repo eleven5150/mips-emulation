@@ -21,6 +21,19 @@
           "docker run -v {}:/app bench:latest bash -c 'time -p python3 /app/tests/prime_number/python/cmd.py 10 2>&1'"
         ]
       }
+    },
+    "c": {
+      "qsort": {
+        "path": "tests/qsort/c/cmd.c",
+        "commands": [
+          "gcc -o gen_data gen_data.c",
+          "./gen_data 10000",
+          "gcc -o cmd_tst cmd.c src.c",
+          "docker run -v {}:/app bench:latest bash -c 'time -p /app/tests/qsort/c/cmd_tst 10000 2>&1'",
+          "rm gen_data",
+          "rm cmd_tst"
+        ]
+      }
     }
   }
 }
