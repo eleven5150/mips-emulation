@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Any
-from typing import Generator
+from typing import Generator, Dict, Any
 
 from extensions.json_extensions import get_parsed_config_generic, DataclassDaciteStrictMixin
 from extensions.path_extensions import path_must_exist, get_root_directory

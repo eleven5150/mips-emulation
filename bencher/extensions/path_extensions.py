@@ -1,13 +1,14 @@
+from __future__ import annotations
+
 import os
 from pathlib import Path
-from typing import Union, Iterable
+from typing import Iterable
 
 # Didn't find how to retrieve this string in-runtime
 MODULE_NAME = 'extensions.'
 
 
 def get_root_directory() -> Path:
-    # Module directory
     file_path = Path(__file__).absolute().parent
 
     for i in range(MODULE_NAME.count('.')):
@@ -16,22 +17,20 @@ def get_root_directory() -> Path:
     return file_path
 
 
-
 class PathDoesNotExist(RuntimeError):
-    def __init__(self, path: Union[str, Path]) -> None:
-        super().__init__(
-            f'Path {path} '
-            f'does not exist'
-        )
+    def __init__(self, my_path: str | Path) -> None:
+        super().__init__(f'Path {my_path} does not exist')
 
 
-def path_must_exist(path: Union[str, Path]):
-    p = Path(path).absolute()
+def path_must_exist(my_path: str | Path):
+    p = Path(my_path).absolute()
     if not p.exists():
-        raise PathDoesNotExist(path)
+        raise PathDoesNotExist(my_path)
+    return p
 
 
-def path_listdir(path: Union[str, Path]) -> Iterable[Path]:
-    path = Path(path)
-    for p in os.listdir(path):
-        yield path / p
+def path_listdir(my_path: str | Path) -> Iterable[Path]:
+    my_path = Path(my_path)
+    for p in os.listdir(my_path):
+        yield my_path / p
+
