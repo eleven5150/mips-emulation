@@ -110,7 +110,8 @@
       "hello_world": {
         "path": "tests/kotlin_native/hello_world/test.kt",
         "commands": [
-          "kotlinc-native /app/tests/kotlin_native/hello_world/test.kt -o /app/tests/kotlin_native/hello_world/test"
+          "kotlinc-native /app/tests/kotlin_native/hello_world/test.kt -o /app/tests/kotlin_native/hello_world/test",
+          "/app/tests/kotlin_native/hello_world/test.kexe"
         ]
       },
       "version": {
