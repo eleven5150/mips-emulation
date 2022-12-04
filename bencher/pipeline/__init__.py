@@ -25,6 +25,19 @@ class Pipeline(DataclassDaciteStrictMixin):
                 print(f"\t\t{test}")
         print("\n")
 
+    def get_languages_names_for_test(self, test: str) -> tuple[str]:
+        languages_names: list[str] = list()
+        for language_name in self.pipeline:
+            if test in self.pipeline[language_name]:
+                languages_names.append(language_name)
+        return tuple(languages_names)
+
+    def get_unique_tests(self) -> set[str]:
+        unique_languages: set[str] = set()
+        for language_name in self.pipeline:
+            for test in self.pipeline[language_name]:
+                unique_languages.add(test)
+        return unique_languages
 
 def __get_pipeline_path(name: str) -> Path:
     return PIPELINE_CONFIG_ROOT_DIR / f'pipeline-{name}.json'
