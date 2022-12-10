@@ -21,14 +21,7 @@
         "path": "tests/c/prime_number/test.c",
         "commands": [
           "gcc -Ofast /app/tests/c/prime_number/test.c -o /app/tests/c/prime_number/test.elf",
-          "bash -c 'time -p /app/tests/c/prime_number/test.elf 10 2>&1'"
-        ]
-      },
-      "qsort": {
-        "path": "tests/c/qsort/test_main.c",
-        "commands": [
-          "gcc -Ofast /app/tests/c/qsort/src.c /app/tests/c/qsort/test_main.c -o /app/tests/c/qsort/tst",
-          "bash -c 'time -p /app/tests/c/qsort/tst 1000000 2>&1'"
+          "bash -c 'time -p /app/tests/c/prime_number/test.elf 1000 2>&1'"
         ]
       },
       "matmul": {
@@ -36,6 +29,13 @@
         "commands": [
           "gcc -Ofast /app/tests/c/matmul/src.c /app/tests/c/matmul/test_main.c -o /app/tests/c/matmul/tst",
           "bash -c 'time -p /app/tests/c/matmul/tst 1000 2>&1'"
+        ]
+      },
+      "qsort": {
+        "path": "tests/c/qsort/test_main.c",
+        "commands": [
+          "gcc -Ofast /app/tests/c/qsort/src.c /app/tests/c/qsort/test_main.c -o /app/tests/c/qsort/tst",
+          "bash -c 'time -p /app/tests/c/qsort/tst 1000000 2>&1'"
         ]
       }
     },
@@ -56,8 +56,19 @@
       "prime_number": {
         "path": "tests/c#/prime_number/test.cs",
         "commands": [
-          "dotnet build --self-contained -a x64 /app/tests/c#/prime_number",
-          "bash -c 'time -p dotnet run --project /app/tests/c#/prime_number 10 2>&1'"
+          "bash -c 'time -p dotnet run /app/tests/c#/prime_number 1000 2>&1'"
+        ]
+      },
+      "matmul": {
+        "path": "tests/c#/matmul/test.cs",
+        "commands": [
+          "bash -c 'time -p dotnet run /app/tests/c#/matmul 1000 2>&1'"
+        ]
+      },
+      "qsort": {
+        "path": "tests/c#/qsort/test.cs",
+        "commands": [
+          "bash -c 'time -p dotnet run /app/tests/c#/qsort 1000000 2>&1'"
         ]
       }
     },

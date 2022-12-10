@@ -4,6 +4,12 @@
   "description": "Pipeline with full processing",
   "pipeline": {
     "c": [
+      "prime_number",
+      "qsort",
+      "matmul"
+    ],
+    "c#": [
+      "prime_number",
       "qsort",
       "matmul"
     ]
