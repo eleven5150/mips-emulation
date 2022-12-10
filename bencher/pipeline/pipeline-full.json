@@ -3,11 +3,9 @@
   "name": "Full",
   "description": "Pipeline with full processing",
   "pipeline": {
-    "kotlin_jvm": [
-      "prime_number"
-    ],
-    "python": [
-      "prime_number"
+    "c": [
+      "qsort",
+      "matmul"
     ]
   }
 }

@@ -6,7 +6,7 @@
     "c": {
       "hello_world": {
         "path": "tests/c/hello_world/test.c",
-        "commands": [
+        "commands": [ 
           "gcc -Ofast /app/tests/c/hello_world/test.c -o /app/tests/c/hello_world/test.elf",
           "bash -c 'time -p /app/tests/c/hello_world/test.elf 2>&1'"
         ]
@@ -22,6 +22,20 @@
         "commands": [
           "gcc -Ofast /app/tests/c/prime_number/test.c -o /app/tests/c/prime_number/test.elf",
           "bash -c 'time -p /app/tests/c/prime_number/test.elf 10 2>&1'"
+        ]
+      },
+      "qsort": {
+        "path": "tests/c/qsort/test_main.c",
+        "commands": [
+          "gcc -Ofast /app/tests/c/qsort/src.c /app/tests/c/qsort/test_main.c -o /app/tests/c/qsort/tst",
+          "bash -c 'time -p /app/tests/c/qsort/tst 1000000 2>&1'"
+        ]
+      },
+      "matmul": {
+        "path": "tests/c/matmul/test_main.c",
+        "commands": [
+          "gcc -Ofast /app/tests/c/matmul/src.c /app/tests/c/matmul/test_main.c -o /app/tests/c/matmul/tst",
+          "bash -c 'time -p /app/tests/c/matmul/tst 1000 2>&1'"
         ]
       }
     },
@@ -159,19 +173,6 @@
         "commands": [
           "rustc -C opt-level=3 /app/tests/rust/prime_number/test.rs -o /app/tests/rust/prime_number/test.elf",
           "bash -c 'time -p /app/tests/rust/prime_number/test.elf 2>&1'"
-        ]
-      }
-    },
-    "c": {
-      "qsort": {
-        "path": "tests/qsort/c/cmd.c",
-        "commands": [
-          "gcc -o gen_data gen_data.c",
-          "./gen_data 10000",
-          "gcc -o cmd_tst cmd.c src.c",
-          "docker run -v {}:/app bench:latest bash -c 'time -p /app/tests/qsort/c/cmd_tst 10000 2>&1'",
-          "rm gen_data",
-          "rm cmd_tst"
         ]
       }
     }
