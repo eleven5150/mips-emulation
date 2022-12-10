@@ -69,7 +69,9 @@ void get_data(char* file_name, int* array, size_t size)
     // Reading numbers into array, which will be sorted further
     size_t i = 0;
     while(i < size) {
-        fscanf(file_ptr, "%d", &array[i]);
+        if (fscanf(file_ptr, "%d", &array[i]) == EOF) {
+            printf("Error while reading from file.\n");
+        };
         ++i;
     }
 
