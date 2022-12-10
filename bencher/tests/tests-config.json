@@ -25,16 +25,16 @@
         ]
       },
       "matmul": {
-        "path": "tests/c/matmul/test_main.c",
+        "path": "tests/c/matmul/test.c",
         "commands": [
-          "gcc -Ofast /app/tests/c/matmul/src.c /app/tests/c/matmul/test_main.c -o /app/tests/c/matmul/tst",
+          "gcc -Ofast /app/tests/c/matmul/src.c /app/tests/c/matmul/test.c -o /app/tests/c/matmul/tst",
           "bash -c 'time -p /app/tests/c/matmul/tst 1000 2>&1'"
         ]
       },
       "qsort": {
-        "path": "tests/c/qsort/test_main.c",
+        "path": "tests/c/qsort/test.c",
         "commands": [
-          "gcc -Ofast /app/tests/c/qsort/src.c /app/tests/c/qsort/test_main.c -o /app/tests/c/qsort/tst",
+          "gcc -Ofast /app/tests/c/qsort/src.c /app/tests/c/qsort/test.c -o /app/tests/c/qsort/tst",
           "bash -c 'time -p /app/tests/c/qsort/tst 1000000 2>&1'"
         ]
       }
