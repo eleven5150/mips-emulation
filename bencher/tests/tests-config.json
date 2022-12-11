@@ -27,15 +27,15 @@
       "matmul": {
         "path": "tests/c/matmul/test.c",
         "commands": [
-          "gcc -Ofast /app/tests/c/matmul/src.c /app/tests/c/matmul/test.c -o /app/tests/c/matmul/tst",
-          "bash -c 'time -p /app/tests/c/matmul/tst 1000 2>&1'"
+          "gcc -Ofast /app/tests/c/matmul/src.c /app/tests/c/matmul/test.c -o /app/tests/c/matmul/test.elf",
+          "bash -c 'time -p /app/tests/c/matmul/test.elf 1000 2>&1'"
         ]
       },
       "qsort": {
         "path": "tests/c/qsort/test.c",
         "commands": [
-          "gcc -Ofast /app/tests/c/qsort/src.c /app/tests/c/qsort/test.c -o /app/tests/c/qsort/tst",
-          "bash -c 'time -p /app/tests/c/qsort/tst 1000000 2>&1'"
+          "gcc -Ofast /app/tests/c/qsort/src.c /app/tests/c/qsort/test.c -o /app/tests/c/qsort/test.elf",
+          "bash -c 'time -p /app/tests/c/qsort/test.elf 1000000 2>&1'"
         ]
       }
     },
@@ -43,8 +43,7 @@
       "hello_world": {
         "path": "tests/c#/hello_world/test.cs",
         "commands": [
-          "dotnet build --nologo --self-contained -a x64 /app/tests/c#/hello_world/ ",
-          "bash -c 'time -p dotnet run --project /app/tests/c#/hello_world/ 2>&1'"
+          "bash -c 'time -p dotnet run /app/tests/c#/hello_world/ 2>&1'"
         ]
       },
       "version": {
