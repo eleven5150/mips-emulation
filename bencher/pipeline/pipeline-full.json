@@ -6,12 +6,36 @@
     "c": [
       "prime_number",
       "qsort",
-      "matmul"
+      "matmul",
+      "hello_world"
     ],
     "c#": [
       "prime_number",
       "qsort",
       "matmul"
+      "hello_world"
+    ],
+    "cython": [
+      "hello_world"
+    ],
+    "javascript": [
+      "hello_world",
+      "prime_number"
+    ],
+    "kotlin_jvm": [
+      "hello_world",
+      "prime_number"
+    ],
+    "kotlin_native": [
+      "hello_world"
+    ],
+    "python": [
+      "hello_world",
+      "prime_number"
+    ],
+    "rust": [
+      "hello_world",
+      "prime_number"
     ]
   }
 }

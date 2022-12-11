@@ -5,6 +5,8 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
+import matplotlib.pyplot as plt
+import numpy as np
 
 from extensions.logging_extensions import Color, init_logging, LOGGER
 from extensions.path_extensions import path_must_exist, get_root_directory
@@ -56,6 +58,7 @@ class Command:
         LOGGER.debug(f"\tCommand -> {' '.join(self.cmd)}")
         process = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         out, err = process.communicate()
+        # TODO fix this
         # assert process.returncode == 0, Color.error(
         #     f"'{' '.join(self.cmd)} execution failed with status {process.returncode}\n\n"
         #     f"Error message: {str(out, encoding='ascii')}"
@@ -146,6 +149,13 @@ class TestsConfig:
             languages=target_languages
         )
 
+    def get_results_by_test_and_lang(self, test: str, languages: tuple[str]) -> tuple[str]:
+        test_results: list[str] = list()
+        for lang in languages:
+            test_results.append(str(self.languages[lang].tests[test].result.real_time))
+
+        return tuple(test_results)
+
 
 def parse_args(arguments: list):
     parser = argparse.ArgumentParser(description="Bench tool or comparing the speed of programming languages")
@@ -181,6 +191,24 @@ def main(raw_arguments: list) -> None:
     tests_config_data: TestsConfigData = get_tests_config_data()
     tests_config: TestsConfig = TestsConfig.data_to_tests_config(tests_config_data)
     tests_config.exec_pipeline(pipeline)
+
+    if args.image:
+        plt.rcdefaults()
+        unique_tests: set[str] = pipeline.get_unique_tests()
+        fig, ax = plt.subplots(len(unique_tests))
+        for idx, test in enumerate(unique_tests):
+            languages_names: tuple[str] = pipeline.get_languages_names_for_test(test)
+
+            y_pos = np.arange(len(languages_names))
+            time_result = tests_config.get_results_by_test_and_lang(test, languages_names)
+
+            ax[idx].barh(y_pos, time_result, align='center')
+            ax[idx].set_yticks(y_pos, labels=languages_names)
+            ax[idx].invert_yaxis()
+            ax[idx].set_xlabel('Time')
+            ax[idx].set_title(f'Results for test: {test}')
+
+        plt.savefig("output.jpg", dpi=600)
 
 
 if __name__ == '__main__':
