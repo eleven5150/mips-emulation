@@ -4,12 +4,16 @@
   "description": "Pipeline with full processing",
   "pipeline": {
     "c": [
-      "hello_world",
-      "prime_number"
+      "prime_number",
+      "qsort",
+      "matmul",
+      "hello_world"
     ],
     "c#": [
-      "hello_world",
-      "prime_number"
+      "prime_number",
+      "qsort",
+      "matmul"
+      "hello_world"
     ],
     "cython": [
       "hello_world"
