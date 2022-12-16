@@ -4,6 +4,17 @@
 
 .idea/
 
+bencher/tests/c#/hello_world/bin
+bencher/tests/c#/hello_world/obj
+
+bencher/tests/c#/matmul/bin
+bencher/tests/c#/matmul/obj
+
+bencher/tests/c#/qsort/bin
+bencher/tests/c#/qsort/obj
+
+bencher/tests/c#/prime_number/bin
+bencher/tests/c#/prime_number/obj
 
 bencher/venv/
 
@@ -11,3 +22,9 @@ bencher/tests/c/qsort/dataset.txt
 
 
 *.elf
+
+bencher/tests/c#/qsort/dataset.txt
+
+bencher/tests/c/qsort/tst
+
+bencher/tests/c/matmul/tst

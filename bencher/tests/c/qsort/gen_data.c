@@ -30,7 +30,7 @@ void write_data(char* file_name, int* data, size_t size)
     FILE* file_ptr = fopen(file_name, "w");
 
     if(file_ptr == NULL) {
-        perror("Error while opening file!!!\n");
+        perror("Error while opening file.\n");
         exit(0);
     }
 
