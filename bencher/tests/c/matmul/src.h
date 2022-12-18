@@ -17,3 +17,5 @@ double **mm_gen(int n, double seed);
 double **mm_mul(int n, double *const *a, double *const *b);
 
 double calc(int n);
+
+void get_data(char* file_name, double** array, size_t size);

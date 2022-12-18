@@ -1,7 +1,8 @@
 #include "src.h"
 
 int main(int argc, char *argv[]) {
-  int n = argc > 1 ? atoi(argv[1]) : 100;
+  int size = argc > 1 ? atoi(argv[1]) : 100;
+  printf("%d\n", size);
 
   double left = calc(101);
 
@@ -11,7 +12,26 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
 
-  double results = calc(n);
+  char* file_name = "app/datasets/matmul/dataset.txt";
 
-  printf("%f\n", results);
+  double** m_a = mm_init(size);
+  double** m_b = mm_init(size);
+  double** m_c = mm_init(size);
+
+  get_data(file_name, m_a, size);
+
+  m_b = m_a;
+
+  m_c = mm_mul(size, m_a, m_b);
+
+  // Prints resulting matrix
+  /*for (size_t i = 0; i < size; ++i) {
+    for (size_t j = 0; j < size; ++j) {
+      printf("%lf ", m_c[i][j]);
+    }
+    printf("\n");
+  }*/
+
+  return 0;
+
 }

@@ -61,3 +61,34 @@ double calc(int n) {
   mm_destroy(n, m);
   return result;
 }
+
+void get_data(char* file_name, double** array, size_t size)
+{
+  // Opening file for data reading
+    FILE *file_ptr = fopen(file_name, "r");
+
+    if (file_ptr == NULL)
+    {
+        perror("Error while opening file.\n");
+        exit(0);
+    }
+    
+    // Reading numbers into matrix
+    size_t i = 0;
+    size_t j = 0;
+
+    while(i < size) {
+
+      while(j < size) {
+
+        if (fscanf(file_ptr, "%lf", &array[i][j]) == EOF) {
+            printf("Error while reading from file.\n");
+        };
+        ++j;
+      }
+        j = 0;
+        ++i;
+    }
+
+    fclose(file_ptr);
+}
