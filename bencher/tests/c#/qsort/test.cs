@@ -52,7 +52,7 @@ class Prog
 
         int[] dataset = new int[data_size];
 
-        string file_name = "dataset.txt";
+        string file_name = "app/datasets/qsort/dataset.txt";
 
         // Writing values from file to string - needs to be converted in int further
         string raw_data = File.ReadAllText(file_name);
