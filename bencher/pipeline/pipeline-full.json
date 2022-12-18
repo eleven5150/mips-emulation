@@ -16,11 +16,14 @@
       "hello_world"
     ],
     "cython": [
-      "hello_world"
+      "hello_world",
+      "qsort"
     ],
     "javascript": [
       "hello_world",
-      "prime_number"
+      "prime_number",
+      "qsort",
+      "matmul"
     ],
     "kotlin_jvm": [
       "hello_world",
@@ -31,11 +34,15 @@
     ],
     "python": [
       "hello_world",
-      "prime_number"
+      "prime_number",
+      "qsort",
+      "matmul"
     ],
     "rust": [
       "hello_world",
-      "prime_number"
+      "prime_number",
+      "qsort",
+      "matmul"
     ]
   }
 }

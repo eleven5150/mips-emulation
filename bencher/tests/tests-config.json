@@ -81,6 +81,24 @@
           "bash -c 'time -p /app/tests/cython/hello_world/test.elf 2>&1'"
         ]
       },
+      "qsort": {
+        "path": "tests/cython/qsort/test.pyx",
+        "commands": [
+          "cython3 --embed -3 -o /app/tests/cython/qsort/test.c /app/tests/cython/qsort/test.pyx",
+          "bash -c 'gcc -o /app/tests/cython/qsort/test.o -c /app/tests/cython/qsort/test.c $(python3-config --cflags)'",
+          "bash -c 'gcc -o /app/tests/cython/qsort/test.elf /app/tests/cython/qsort/test.o $(python3-config --ldflags) -lpython3.10'",
+          "bash -c 'time -p /app/tests/cython/qsort/test.elf 2>&1'"
+        ]
+      },
+      "matmul": {
+        "path": "tests/cython/qsort/test.pyx",
+        "commands": [
+          "cython3 --embed -3 -o /app/tests/cython/matmul/test.c /app/tests/cython/matmul/test.pyx",
+          "bash -c 'gcc -o /app/tests/cython/matmul/test.o -c /app/tests/cython/matmul/test.c $(python3-config --cflags)'",
+          "bash -c 'gcc -o /app/tests/cython/matmul/test.elf /app/tests/cython/matmul/test.o $(python3-config --ldflags) -lpython3.10'",
+          "bash -c 'time -p /app/tests/cython/matmul/test.elf 2>&1'"
+        ]
+      },
       "version" : {
       "path": "tests/cython/hello_world/test.pyx",
         "commands": [
@@ -93,6 +111,18 @@
         "path": "tests/javascript/hello_world/test.js",
         "commands": [
           "bash -c 'time -p nodejs /app/tests/javascript/hello_world/test.js 2>&1'"
+        ]
+      },
+      "qsort": {
+        "path": "tests/javascript/qsort/test.js",
+        "commands": [
+          "bash -c 'time -p nodejs /app/tests/javascript/qsort/test.js 2>&1'"
+        ]
+      },
+      "matmul": {
+        "path": "tests/javascript/matmul/test.js",
+        "commands": [
+          "bash -c 'time -p nodejs /app/tests/javascript/matmul/test.js 2>&1'"
         ]
       },
       "version": {
@@ -152,6 +182,18 @@
           "bash -c 'time -p python3 /app/tests/python/hello_world/test.py 2>&1'"
         ]
       },
+      "qsort": {
+        "path": "tests/python/qsort/test.py",
+        "commands": [
+          "bash -c 'time -p python3 /app/tests/python/qsort/test.py 2>&1'"
+        ]
+      },
+      "matmul": {
+        "path": "tests/python/matmul/test.py",
+        "commands": [
+          "bash -c 'time -p python3 /app/tests/python/matmul/test.py 2>&1'"
+        ]
+      },
       "version": {
         "path": "tests/python/hello_world/test.py",
         "commands": [
@@ -184,6 +226,20 @@
         "commands": [
           "rustc -C opt-level=3 /app/tests/rust/prime_number/test.rs -o /app/tests/rust/prime_number/test.elf",
           "bash -c 'time -p /app/tests/rust/prime_number/test.elf 2>&1'"
+        ]
+      },
+      "qsort": {
+        "path": "tests/rust/hello_world/test.rs",
+        "commands": [
+          "rustc -C opt-level=3 /app/tests/rust/qsort/test.rs -o /app/tests/rust/qsort/test.elf",
+          "bash -c 'time -p /app/tests/rust/qsort/test.elf 2>&1'"
+        ]
+      },
+      "matmul": {
+        "path": "tests/rust/matmul/test.rs",
+        "commands": [
+          "rustc -C opt-level=3 /app/tests/rust/matmul/test.rs -o /app/tests/rust/matmul/test.elf",
+          "bash -c 'time -p /app/tests/rust/matmul/test.elf 2>&1'"
         ]
       }
     }
