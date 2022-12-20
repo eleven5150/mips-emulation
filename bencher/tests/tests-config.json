@@ -77,8 +77,8 @@
         "path": "tests/cython/hello_world/test.pyx",
         "commands": [
           "cython3 --embed -3 -o /app/tests/cython/hello_world/test.c /app/tests/cython/hello_world/test.pyx",
-          "bash -c 'gcc -o /app/tests/cython/hello_world/test.o -c /app/tests/cython/hello_world/test.c $(python-config --cflags)'",
-          "bash -c 'gcc -o /app/tests/cython/hello_world/test.elf /app/tests/cython/hello_world/test.o $(python-config --ldflags)'",
+          "bash -c 'gcc -o /app/tests/cython/hello_world/test.o -c /app/tests/cython/hello_world/test.c $(python3-config --cflags)'",
+          "bash -c 'gcc -o /app/tests/cython/hello_world/test.elf /app/tests/cython/hello_world/test.o $(python3-config --ldflags) -lpython3.10'",
           "bash -c 'time -p /app/tests/cython/hello_world/test.elf 2>&1'"
         ]
       },
@@ -135,7 +135,8 @@
       "hello_world": {
         "path": "tests/kotlin_native/hello_world/test.kt",
         "commands": [
-          "kotlinc-native /app/tests/kotlin_native/hello_world/test.kt -o /app/tests/kotlin_native/hello_world/test"
+          "kotlinc-native /app/tests/kotlin_native/hello_world/test.kt -o /app/tests/kotlin_native/hello_world/test",
+          "bash -c 'time -p /app/tests/kotlin_native/hello_world/test.kexe'"
         ]
       },
       "version": {
