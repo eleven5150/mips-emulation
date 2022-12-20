@@ -15,7 +15,7 @@ int main(int argc, char** argv)
        return 1;
     }*/
 
-    char* file_name = "app/tests/c/qsort/dataset.txt";
+    char* file_name = "app/datasets/qsort/dataset.txt";
 
     get_data(file_name, dataset, data_size);  // Reading data from file, then copying it in array
 
