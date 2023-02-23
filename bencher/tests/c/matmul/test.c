@@ -1,17 +1,49 @@
-#include "src.h"
+#include "matrix.h"
+#include "stdio.h"
+#include "string.h"
+#include "stdlib.h"
+
+#define MATRIX_DIMENSION 100
+
+
 
 int main(int argc, char *argv[]) {
-  int n = argc > 1 ? atoi(argv[1]) : 100;
+    if (argc < 1) {
+        printf("Filepath required");
+        exit(EXIT_FAILURE);
+    }
 
-  double left = calc(101);
+    char *matrix_a_file = argv[1];
+    unsigned int **matrix_a = matrix_init(MATRIX_DIMENSION);
 
-  double right = -18.67;
-  if (fabs(left - right) > 0.1) {
-    fprintf(stderr, "%f != %f\n", left, right);
-    exit(EXIT_FAILURE);
-  }
+    FILE *fstream = fopen(matrix_a_file, "r");
+    if (fstream == NULL) {
+        printf("file opening failed\n");
+        exit(EXIT_FAILURE);
+    }
 
-  double results = calc(n);
+    fseek(fstream, 0, SEEK_END);
+    int file_size = ftell(fstream);
+    fseek(fstream, 0, SEEK_SET);
 
-  printf("%f\n", results);
+    char *buffer = malloc(file_size * sizeof(char));
+    int i = 0, j = 0;
+    char *record, *line;
+    while ((line = fgets(buffer, file_size, fstream)) != NULL) {
+        record = strtok(line, ",");
+        while (record != NULL) {
+            matrix_a[i][j] = (unsigned int) atoi(record);
+            record = strtok(NULL, ",");
+            j++;
+        }
+        ++i;
+        j = 0;
+    }
+
+//    for (i = 0; i < 100; i++) {
+//        for (j = 0; j < 100; j++) {
+//            printf("%u\t", matrix_a[i][j]);
+//        }
+//        printf("\n");
+//    }
 }
