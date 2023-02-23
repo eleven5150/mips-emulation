@@ -64,7 +64,7 @@ class Command:
         #     f"'{' '.join(self.cmd)} execution failed with status {process.returncode}\n\n"
         #     f"Error message: {str(out, encoding='ascii')}"
         # )
-        LOGGER.debug(f"\tReturn -> {out}")
+        LOGGER.debug(f"\tReturn -> {str(out, encoding='ascii')}")
         return out
 
     @staticmethod
