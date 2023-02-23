@@ -27,8 +27,8 @@
       "matmul": {
         "path": "tests/c/matmul/test.c",
         "commands": [
-          "gcc -Ofast /app/tests/c/matmul/src.c /app/tests/c/matmul/test.c -o /app/tests/c/matmul/test.elf",
-          "bash -c 'time -p /app/tests/c/matmul/test.elf 1000 2>&1'"
+          "gcc -Ofast /app/tests/c/matmul/matrix.c /app/tests/c/matmul/test.c -o /app/tests/c/matmul/test.elf",
+          "bash -c 'time -p /app/tests/c/matmul/test.elf /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
       "qsort": {
