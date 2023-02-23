@@ -8,6 +8,7 @@ from typing import Optional
 import matplotlib.pyplot as plt
 import numpy as np
 
+from data.generators.matrix_generator import generate_matrices
 from extensions.logging_extensions import Color, init_logging, LOGGER
 from extensions.path_extensions import path_must_exist, get_root_directory
 from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
@@ -170,6 +171,9 @@ def parse_args(arguments: list):
     parser.add_argument('-i', '--image',
                         action='store_true',
                         help='Creates an image graph.jpeg with a graph comparing execution speeds')
+    parser.add_argument('-g', '--generate',
+                        action='store_true',
+                        help='Generates a new data for tests')
     parser.add_argument('-d', '--debug',
                         action='store_true',
                         help='Enables debug mode')
@@ -183,6 +187,10 @@ def main(raw_arguments: list) -> None:
         init_logging(logging.DEBUG)
     else:
         init_logging(logging.INFO)
+
+    if args.generate:
+        generate_matrices()
+        print("New data successfully generated")
 
     pipeline: Pipeline = get_pipeline(args.pipeline)
     LOGGER.info(f"Pipeline name -> {pipeline.name}")
