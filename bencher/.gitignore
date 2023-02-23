@@ -1,16 +1,4 @@
-# VS code
-/.vscode
-/benchmark.code-workspace
-
-# compiled bin files
-/tests/prime_number/c#/bin
-/tests/prime_number/c#/obj
-/tests/prime_number/f#/bin
-/tests/prime_number/f#/obj
-/tests/prime_number/objective-c/cmd.d
-*_bin
-*.o
-*.class
-*.hi
-*.jar
-*.jpg
+tests/*/*/*.elf
+venv
+win_venv
+data/*.csv
