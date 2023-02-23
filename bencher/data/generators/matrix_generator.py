@@ -1,11 +1,12 @@
 from pathlib import Path
 import numpy as np
 
-MATRIX_SIZE: int = 100
+MATRIX_SIZE: int = 1000
+MAX_MATRIX_VALUE: int = 0xFFFFFFFF
 
 
 def generate_matrix(filepath: Path) -> None:
-    matrix = np.random.randint(0xFFFFFFFF, size=(MATRIX_SIZE, MATRIX_SIZE))
+    matrix = np.random.randint(MAX_MATRIX_VALUE, size=(MATRIX_SIZE, MATRIX_SIZE))
     np.savetxt(filepath, matrix, delimiter=',', fmt="%d")
 
 
