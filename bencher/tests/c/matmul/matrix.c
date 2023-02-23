@@ -1,10 +1,16 @@
 #include "matrix.h"
 
-int get_matrix_data(char *matrix_file_path){
-    FILE *p_file;
-    p_file = fopen(matrix_file_path, "r");
-
+void matrix_print(unsigned int **matrix, int matrix_dimension) {
+    int i,j;
+    for (i = 0; i < matrix_dimension; i++) {
+        for (j = 0; j < matrix_dimension; j++) {
+            printf("%u\t", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
 }
+
 
 unsigned int **matrix_init(int matrix_dimension) {
     unsigned int **matrix;
@@ -15,53 +21,30 @@ unsigned int **matrix_init(int matrix_dimension) {
     return matrix;
 }
 
-void mm_destroy(int n, double **m) {
+void matrix_free(int matrix_dimension, unsigned int **matrix) {
     int i;
-    for (i = 0; i < n; ++i)
-        free(m[i]);
-    free(m);
+    for (i = 0; i < matrix_dimension; ++i)
+        free(matrix[i]);
+    free(matrix);
 }
 
-double **matrix_gen(int n, double seed) {
-    double **m, tmp = seed / n / n;
-    int i, j;
-    m = matrix_init(n);
-    for (i = 0; i < n; ++i)
-        for (j = 0; j < n; ++j)
-            m[i][j] = tmp * (i - j) * (i + j);
-    return m;
-}
-
-// better cache performance by transposing the second matrix
-double **mm_mul(int n, double *const *a, double *const *b) {
+unsigned int **matrix_multiply(int matrix_dimension, unsigned int **matrix_a, unsigned int **matrix_b) {
     int i, j, k;
-    double **m, **c;
-    m = matrix_init(n);
-    c = matrix_init(n);
-    for (i = 0; i < n; ++i) // transpose
-        for (j = 0; j < n; ++j)
-            c[i][j] = b[j][i];
-    for (i = 0; i < n; ++i) {
-        double *p = a[i], *q = m[i];
-        for (j = 0; j < n; ++j) {
-            double t = 0.0, *r = c[j];
-            for (k = 0; k < n; ++k)
+    unsigned int **matrix_result, **t_matrix_b;
+    matrix_result = matrix_init(matrix_dimension);
+    t_matrix_b = matrix_init(matrix_dimension);
+    for (i = 0; i < matrix_dimension; ++i)
+        for (j = 0; j < matrix_dimension; ++j)
+            t_matrix_b[i][j] = matrix_b[j][i];
+    for (i = 0; i < matrix_dimension; ++i) {
+        unsigned int *p = matrix_a[i], *q = matrix_result[i];
+        for (j = 0; j < matrix_dimension; ++j) {
+            unsigned int t = 0.0, *r = t_matrix_b[j];
+            for (k = 0; k < matrix_dimension; ++k)
                 t += p[k] * r[k];
             q[j] = t;
         }
     }
-    mm_destroy(n, c);
-    return m;
-}
-
-double calc(int number) {
-    number = number / 2 * 2;
-    double **matrix_a = matrix_gen(number, 1.0);
-    double **matrix_b = matrix_gen(number, 2.0);
-    double **matrix_result = mm_mul(number, matrix_a, matrix_b);
-    double result = matrix_result[number / 2][number / 2];
-    mm_destroy(number, matrix_a);
-    mm_destroy(number, matrix_b);
-    mm_destroy(number, matrix_result);
-    return result;
+    matrix_free(matrix_dimension, t_matrix_b);
+    return matrix_result;
 }
