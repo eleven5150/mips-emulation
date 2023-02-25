@@ -7,9 +7,9 @@ internal static class Constants
 
 internal static class Program
 {
-    private static int[,] create_matrix(string filePath)
+    private static uint[,] create_matrix(string filePath)
     {
-        var matrix = new int[Constants.MatrixDimension, Constants.MatrixDimension];
+        var matrix = new uint[Constants.MatrixDimension, Constants.MatrixDimension];
         var lines = File.ReadAllLines(filePath);
 
         var i = 0;
@@ -19,7 +19,7 @@ internal static class Program
             var lineRecords = line.Split(",");
             foreach (var record in lineRecords)
             {
-                matrix[i, j] = int.Parse(record);
+                matrix[i, j] = uint.Parse(record);
                 j++;
             }
 
@@ -27,7 +27,7 @@ internal static class Program
             j = 0;
         }
         
-        Matrix.Print(matrix, Constants.MatrixDimension);
+        // Matrix.Print(matrix, Constants.MatrixDimension);
 
         return matrix;
     }
@@ -40,14 +40,14 @@ internal static class Program
             Environment.Exit(1);
         }
 
-        var matrixAFile = args[1];
-        var matrixBFile = args[2];
+        var matrixAFile = args[0];
+        var matrixBFile = args[1];
 
         var matrixA = create_matrix(matrixAFile);
         var matrixB = create_matrix(matrixBFile);
 
         var matrixResult = Matrix.Multiply(Constants.MatrixDimension, ref matrixA, ref matrixB);
         
-        Matrix.Print(matrixResult, Constants.MatrixDimension);
+        // Matrix.Print(matrixResult, Constants.MatrixDimension);
     }
 }
