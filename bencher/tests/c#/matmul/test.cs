@@ -1,83 +1,53 @@
-﻿using System;
-using System.Diagnostics;
+﻿namespace matmul;
 
-class Prog
+internal static class Constants
 {
-    static double[,] MatGen(int n, double seed)
+    public const int MatrixDimension = 1000;
+}
+
+internal static class Program
+{
+    private static int[,] create_matrix(string filePath)
     {
-        var tmp = seed / n / n;
-        var a = new double[n, n];
-        for (var i = 0; i < n; ++i)
-            for (var j = 0; j < n; ++j)
-                a[i,j] = tmp * (i - j) * (i + j);
-        return a;
-    }
+        var matrix = new int[Constants.MatrixDimension, Constants.MatrixDimension];
+        var lines = File.ReadAllLines(filePath);
 
-    static double[,] MatMul(ref double[,] a, ref double[,] b)
-    {
-        var m = a.GetLength(0);
-        var n = a.GetLength(1);
-        var p = b.GetLength(1);
-        var x = new double[m, p];
-        var c = new double[p, n];
-
-        // transpose
-        for (var i = 0; i < n; ++i)
-            for (var j = 0; j < p; ++j)
-                c[j,i] = b[i, j];
-
-        for (var i = 0; i < m; ++i)
-            for (var j = 0; j < p; ++j)
+        var i = 0;
+        var j = 0;
+        foreach (var line in lines)
+        {
+            var lineRecords = line.Split(",");
+            foreach (var record in lineRecords)
             {
-                var s = 0.0;
-                for (var k = 0; k < n; ++k)
-                    s += a[i, k] * c[j, k];
-                x[i, j] = s;
+                matrix[i, j] = int.Parse(record);
+                j++;
             }
 
-        return x;
-    }
-
-    private static void Notify(string msg) {
-        try {
-            using (var s = new System.Net.Sockets.TcpClient("localhost", 9001)) {
-                var data = System.Text.Encoding.UTF8.GetBytes(msg);
-                s.Client.Send(data);
-            }
-        } catch {
-            // standalone usage
+            i++;
+            j = 0;
         }
+        
+        Matrix.Print(matrix, Constants.MatrixDimension);
+
+        return matrix;
     }
 
-    private static double Calc(int n) {
-        n = n / 2 * 2;
-        var a = MatGen(n, 1.0);
-        var b = MatGen(n, 2.0);
-        var x = MatMul(ref a, ref b);
-        return x[n / 2, n / 2];
-    }
-
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
-        var n = args.Length > 0 ? int.Parse(args[0]) : 100;
-
-        var left = Calc(101);
-        var right = -18.67;
-        if (Math.Abs(left - right) > 0.1) {
-            Console.Error.WriteLine($"{left} != {right}");
-            System.Environment.Exit(1);
+        if (args.Length < 2)
+        {
+            Console.Error.WriteLine("Error! Both paths to matrix data required\n");
+            Environment.Exit(1);
         }
 
-        var runtime = Type.GetType("Mono.Runtime") != null ? "Mono" : ".NET Core";
-        Notify($"C#/{runtime}\t{Process.GetCurrentProcess().Id}");
+        var matrixAFile = args[1];
+        var matrixBFile = args[2];
 
-        var sw = Stopwatch.StartNew();
-        var results = Calc(n);
-        sw.Stop();
+        var matrixA = create_matrix(matrixAFile);
+        var matrixB = create_matrix(matrixBFile);
 
-        Notify("stop");
-
-        //Console.WriteLine(results);
-        //Console.WriteLine("time: {0}s", sw.Elapsed.TotalSeconds);
+        var matrixResult = Matrix.Multiply(Constants.MatrixDimension, ref matrixA, ref matrixB);
+        
+        Matrix.Print(matrixResult, Constants.MatrixDimension);
     }
 }

@@ -43,7 +43,7 @@
       "hello_world": {
         "path": "tests/c#/hello_world/test.cs",
         "commands": [
-          "bash -c 'time -p dotnet run /app/tests/c#/hello_world/ 2>&1'"
+          "bash -c 'time -p dotnet run --project /app/tests/c#/hello_world/ 2>&1'"
         ]
       },
       "version": {
@@ -61,7 +61,7 @@
       "matmul": {
         "path": "tests/c#/matmul/test.cs",
         "commands": [
-          "bash -c 'time -p dotnet run /app/tests/c#/matmul 1000 2>&1'"
+          "bash -c 'time -p dotnet run --project /app/tests/c#/matmul /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
       "qsort": {
