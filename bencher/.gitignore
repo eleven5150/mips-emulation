@@ -14,3 +14,5 @@ data/*.csv
 /tests/kotlin_jvm/hello_world/test.jar
 /tests/kotlin_jvm/prime_number/test.jar
 /tests/kotlin_native/hello_world/test.kexe
+/tests/c#/hello_world/bin/
+/tests/c#/matmul/bin/
