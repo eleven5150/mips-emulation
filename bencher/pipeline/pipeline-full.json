@@ -4,45 +4,52 @@
   "description": "Pipeline with full processing",
   "pipeline": {
     "c": [
+      "hello_world",
       "prime_number",
-      "qsort",
       "matmul",
-      "hello_world"
+      "qsort"
     ],
     "c#": [
+      "hello_world",
       "prime_number",
-      "qsort",
       "matmul",
-      "hello_world"
+      "qsort"
     ],
     "cython": [
       "hello_world",
+      "prime_number",
+      "matmul",
       "qsort"
     ],
     "javascript": [
       "hello_world",
       "prime_number",
-      "qsort",
-      "matmul"
+      "matmul",
+      "qsort"
     ],
     "kotlin_jvm": [
       "hello_world",
-      "prime_number"
+      "prime_number",
+      "matmul",
+      "qsort"
     ],
     "kotlin_native": [
-      "hello_world"
+      "hello_world",
+      "prime_number",
+      "matmul",
+      "qsort"
     ],
     "python": [
       "hello_world",
       "prime_number",
-      "qsort",
-      "matmul"
+      "matmul",
+      "qsort"
     ],
     "rust": [
       "hello_world",
       "prime_number",
-      "qsort",
-      "matmul"
+      "matmul",
+      "qsort"
     ]
   }
 }
