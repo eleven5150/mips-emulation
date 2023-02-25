@@ -96,7 +96,7 @@
           "cython3 --embed -3 -o /app/tests/cython/matmul/test.c /app/tests/cython/matmul/test.pyx",
           "bash -c 'gcc -o /app/tests/cython/matmul/test.o -c /app/tests/cython/matmul/test.c $(python3-config --cflags)'",
           "bash -c 'gcc -o /app/tests/cython/matmul/test.elf /app/tests/cython/matmul/test.o $(python3-config --ldflags) -lpython3.10'",
-          "bash -c 'time -p /app/tests/cython/matmul/test.elf 2>&1'"
+          "bash -c 'time -p /app/tests/cython/matmul/test.elf /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
       "version" : {
@@ -122,7 +122,7 @@
       "matmul": {
         "path": "tests/javascript/matmul/test.js",
         "commands": [
-          "bash -c 'time -p nodejs /app/tests/javascript/matmul/test.js 2>&1'"
+          "bash -c 'time -p nodejs /app/tests/javascript/matmul/test.js /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
       "version": {
