@@ -15,7 +15,7 @@ from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests import TestsConfigData, get_tests_config_data
 
 TESTS_CONFIG: str = "tests/tests-config.json"
-DOCKER_COMMAND: str = "docker run -v {}:/app bench:latest"
+DOCKER_COMMAND: str = "docker exec bencher"
 
 
 @dataclass
@@ -50,7 +50,7 @@ class Command:
 
     @classmethod
     def from_string(cls, cmd: str) -> "Command":
-        cmd_split_raw: list[str] = DOCKER_COMMAND.format(get_root_directory()).split(" ")
+        cmd_split_raw: list[str] = DOCKER_COMMAND.split(" ")
         cmd_split_raw.extend(cmd.split(" "))
         cmd_converted: list[str] = cls.convert_arguments_in_single_quotes(cmd_split_raw)
         return cls(cmd_converted)
