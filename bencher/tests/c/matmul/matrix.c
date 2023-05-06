@@ -15,9 +15,9 @@ void matrix_print(unsigned int **matrix, int matrix_dimension) {
 unsigned int **matrix_init(int matrix_dimension) {
     unsigned int **matrix;
     int i;
-    matrix = (unsigned int **) malloc(matrix_dimension * sizeof(void *));
+    matrix = (unsigned int **) malloc(matrix_dimension * sizeof(unsigned int *));
     for (i = 0; i < matrix_dimension; ++i)
-        matrix[i] = calloc(matrix_dimension, sizeof(unsigned int));
+        matrix[i] = (unsigned int *) calloc(matrix_dimension, sizeof(unsigned int));
     return matrix;
 }
 

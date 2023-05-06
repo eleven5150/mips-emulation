@@ -18,7 +18,7 @@ unsigned int **create_matrix(char *file_path) {
     int file_size = ftell(fstream);
     fseek(fstream, 0, SEEK_SET);
 
-    char *buffer = malloc(file_size * sizeof(char));
+    char *buffer = (char *) malloc(file_size * sizeof(char));
     int i = 0, j = 0;
     char *record, *line;
     while ((line = fgets(buffer, file_size, fstream)) != NULL) {
@@ -32,7 +32,7 @@ unsigned int **create_matrix(char *file_path) {
         j = 0;
     }
 
-//    matrix_print(matrix, MATRIX_DIMENSION);
+    matrix_print(matrix, MATRIX_DIMENSION);
     return matrix;
 }
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 
     unsigned int **matrix_result = matrix_multiply(MATRIX_DIMENSION, matrix_a, matrix_b);
 
-//    matrix_print(matrix_result, MATRIX_DIMENSION);
+    matrix_print(matrix_result, MATRIX_DIMENSION);
 
     matrix_free(MATRIX_DIMENSION, matrix_a);
     matrix_free(MATRIX_DIMENSION, matrix_b);
