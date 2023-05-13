@@ -6,7 +6,7 @@
     "c": {
       "hello_world": {
         "path": "tests/c/hello_world/test.c",
-        "commands": [ 
+        "commands": [
           "gcc -Ofast /app/tests/c/hello_world/test.c -o /app/tests/c/hello_world/test.elf",
           "bash -c 'time -p /app/tests/c/hello_world/test.elf 2>&1'"
         ]
@@ -99,12 +99,12 @@
           "bash -c 'time -p /app/tests/cython/matmul/test.elf /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
-      "version" : {
-      "path": "tests/cython/hello_world/test.pyx",
+      "version": {
+        "path": "tests/cython/hello_world/test.pyx",
         "commands": [
           "cython3 --version"
         ]
-    }
+      }
     },
     "javascript": {
       "hello_world": {
@@ -144,6 +144,13 @@
         "commands": [
           "kotlinc /app/tests/kotlin_jvm/hello_world/test.kt -include-runtime -d /app/tests/kotlin_jvm/hello_world/test.jar",
           "bash -c 'time -p java -jar /app/tests/kotlin_jvm/hello_world/test.jar 2>&1'"
+        ]
+      },
+      "matmul": {
+        "path": "tests/kotlin_jvm/matmul/test.kt",
+        "commands": [
+          "kotlinc /app/tests/kotlin_jvm/matmul/test.kt -include-runtime -d /app/tests/kotlin_jvm/matmul/test.jar",
+          "bash -c 'time -p java -jar /app/tests/kotlin_jvm/matmul/test.jar /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
       "version": {
