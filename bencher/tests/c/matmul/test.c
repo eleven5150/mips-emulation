@@ -32,7 +32,7 @@ unsigned int **create_matrix(char *file_path) {
         j = 0;
     }
 
-    matrix_print(matrix, MATRIX_DIMENSION);
+//    matrix_print(matrix, MATRIX_DIMENSION);
     return matrix;
 }
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 
     unsigned int **matrix_result = matrix_multiply(MATRIX_DIMENSION, matrix_a, matrix_b);
 
-    matrix_print(matrix_result, MATRIX_DIMENSION);
+//    matrix_print(matrix_result, MATRIX_DIMENSION);
 
     matrix_free(MATRIX_DIMENSION, matrix_a);
     matrix_free(MATRIX_DIMENSION, matrix_b);
