@@ -21,7 +21,7 @@
         "path": "tests/c/prime_number/test.c",
         "commands": [
           "gcc -Ofast /app/tests/c/prime_number/test.c -o /app/tests/c/prime_number/test.elf",
-          "bash -c 'time -p /app/tests/c/prime_number/test.elf 1000 2>&1'"
+          "bash -c 'time -p /app/tests/c/prime_number/test.elf /app/data/prime_number_count.txt 2>&1'"
         ]
       },
       "matmul": {
