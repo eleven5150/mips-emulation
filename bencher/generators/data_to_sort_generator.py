@@ -3,7 +3,7 @@ from pathlib import Path
 
 import numpy as np
 
-SORT_DATA_PATH: Path = Path("data/sort_data.txt")
+SORT_DATA_PATH: Path = Path("data/data_to_srt.txt")
 GENERATORS_CONFIG: Path = Path("generators/generators-config.json")
 
 
