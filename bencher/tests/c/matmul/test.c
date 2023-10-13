@@ -35,6 +35,8 @@ unsigned int **create_matrix(char *file_path) {
         j = 0;
     }
 
+    free(buffer);
+
 //    matrix_print(matrix, MATRIX_DIMENSION);
     return matrix;
 }
