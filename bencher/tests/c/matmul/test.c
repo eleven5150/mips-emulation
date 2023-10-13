@@ -3,7 +3,11 @@
 #include "string.h"
 #include "stdlib.h"
 
+#define RECORD_SIZE 12
+#define DIMENSION_OFFSET 2
+
 unsigned int MATRIX_DIMENSION = 0;
+
 
 unsigned int **create_matrix(char *file_path) {
     FILE *fstream = fopen(file_path, "r");
@@ -12,19 +16,18 @@ unsigned int **create_matrix(char *file_path) {
         exit(EXIT_FAILURE);
     }
 
-    fseek(fstream, 0, SEEK_END);
-    int file_size = ftell(fstream);
-    fseek(fstream, 0, SEEK_SET);
+    char header[RECORD_SIZE] = {0};
 
-    char *buffer = (char *) malloc(file_size * sizeof(char));
+    fgets(header, RECORD_SIZE, fstream);
+    MATRIX_DIMENSION = (unsigned int)atoi(&header[DIMENSION_OFFSET]);
+    unsigned int **matrix = matrix_init(MATRIX_DIMENSION);
+
+    unsigned int line_size = MATRIX_DIMENSION * RECORD_SIZE;
+    char *buffer = (char *) malloc(line_size * sizeof(char));
     int i = 0, j = 0;
     char *record, *line;
 
-    line = fgets(buffer, file_size, fstream);
-    MATRIX_DIMENSION = (unsigned int)atoi(&line[2]);
-    unsigned int **matrix = matrix_init(MATRIX_DIMENSION);
-
-    while ((line = fgets(buffer, file_size, fstream)) != NULL) {
+    while ((line = fgets(buffer, line_size, fstream)) != NULL) {
         record = strtok(line, ",");
         while (record != NULL) {
             matrix[i][j] = (unsigned int) atoi(record);
