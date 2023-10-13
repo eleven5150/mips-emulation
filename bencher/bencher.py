@@ -1,5 +1,6 @@
 import argparse
 import logging
+import os
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -8,13 +9,16 @@ from typing import Optional
 import matplotlib.pyplot as plt
 import numpy as np
 
-from data.generators.matrix_generator import generate_matrices
+from generators.data_to_sort_generator import generate_data_to_sort
+from generators.matrix_generator import generate_matrices
 from extensions.logging_extensions import Color, init_logging, LOGGER
 from extensions.path_extensions import path_must_exist, get_root_directory
+from generators.prime_number_count_generator import generate_prime_number_count
 from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests import TestsConfigData, get_tests_config_data
 
 TESTS_CONFIG: str = "tests/tests-config.json"
+DATA_DIR: Path = Path("data")
 DOCKER_COMMAND: str = "docker exec bencher"
 
 
@@ -165,7 +169,7 @@ def parse_args(arguments: list):
                         required=True,
                         choices=get_all_pipeline_names(),
                         help='Pipeline for testing')
-    parser.add_argument('-o', '--output_file',
+    parser.add_argument('-o', '--output-file',
                         type=str,
                         help='Path to file with test result')
     parser.add_argument('-i', '--image',
@@ -188,9 +192,15 @@ def main(raw_arguments: list) -> None:
     else:
         init_logging(logging.INFO)
 
-    if args.generate:
+    is_data_exists: bool = DATA_DIR.exists()
+    if args.generate or not is_data_exists:
+        if not is_data_exists:
+            os.mkdir(DATA_DIR)
+        LOGGER.info("Generating new data")
+        generate_prime_number_count()
         generate_matrices()
-        print("New data successfully generated")
+        generate_data_to_sort()
+        LOGGER.info("New data successfully generated")
 
     pipeline: Pipeline = get_pipeline(args.pipeline)
     LOGGER.info(f"Pipeline name -> {pipeline.name}")

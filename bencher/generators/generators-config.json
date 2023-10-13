@@ -1,0 +1,14 @@
+{
+  "prime_number_count": {
+    "min_value": 100,
+    "max_value": 65536
+  },
+  "matrix": {
+    "size": 1000,
+    "max_value": 4294967295
+  },
+  "data_to_sort" :{
+    "size": 1000,
+    "max_value": 4294967295
+  }
+}

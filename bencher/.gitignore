@@ -1,7 +1,7 @@
 tests/*/*/*.elf
 venv
 win_venv
-data/*.csv
+data/*
 /tests/c/matmul/cmake-build-debug/
 /tests/c/matmul/CMakeLists.txt
 /tests/c#/hello_world/bin/Debug/net6.0/
