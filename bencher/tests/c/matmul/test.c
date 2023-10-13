@@ -3,11 +3,9 @@
 #include "string.h"
 #include "stdlib.h"
 
-#define MATRIX_DIMENSION 1000
+unsigned int MATRIX_DIMENSION = 0;
 
 unsigned int **create_matrix(char *file_path) {
-    unsigned int **matrix = matrix_init(MATRIX_DIMENSION);
-
     FILE *fstream = fopen(file_path, "r");
     if (fstream == NULL) {
         printf("file %s opening failed\n", file_path);
@@ -21,6 +19,11 @@ unsigned int **create_matrix(char *file_path) {
     char *buffer = (char *) malloc(file_size * sizeof(char));
     int i = 0, j = 0;
     char *record, *line;
+
+    line = fgets(buffer, file_size, fstream);
+    MATRIX_DIMENSION = (unsigned int)atoi(&line[2]);
+    unsigned int **matrix = matrix_init(MATRIX_DIMENSION);
+
     while ((line = fgets(buffer, file_size, fstream)) != NULL) {
         record = strtok(line, ",");
         while (record != NULL) {
