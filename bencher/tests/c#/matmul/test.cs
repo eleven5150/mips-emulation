@@ -2,19 +2,22 @@
 
 internal static class Constants
 {
-    public const int MatrixDimension = 1000;
+    public static uint MatrixDimension = 0;
 }
 
 internal static class Program
 {
     private static uint[,] create_matrix(string filePath)
     {
-        var matrix = new uint[Constants.MatrixDimension, Constants.MatrixDimension];
         var lines = File.ReadAllLines(filePath);
 
+        var matrixDimensionString = lines[0];
+        Constants.MatrixDimension = uint.Parse(matrixDimensionString[2..]);
+        
+        var matrix = new uint[Constants.MatrixDimension, Constants.MatrixDimension];
         var i = 0;
         var j = 0;
-        foreach (var line in lines)
+        foreach (var line in lines[1..])
         {
             var lineRecords = line.Split(",");
             foreach (var record in lineRecords)
@@ -27,7 +30,7 @@ internal static class Program
             j = 0;
         }
         
-        // Matrix.Print(matrix, Constants.MatrixDimension);
+        Matrix.Print(matrix, Constants.MatrixDimension);
 
         return matrix;
     }
@@ -48,6 +51,6 @@ internal static class Program
 
         var matrixResult = Matrix.Multiply(Constants.MatrixDimension, ref matrixA, ref matrixB);
         
-        // Matrix.Print(matrixResult, Constants.MatrixDimension);
+        Matrix.Print(matrixResult, Constants.MatrixDimension);
     }
 }

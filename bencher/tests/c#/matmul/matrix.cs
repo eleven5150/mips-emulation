@@ -15,7 +15,7 @@ internal abstract class Matrix
         Console.WriteLine("\n");
     }
 
-    public static uint[,] Multiply(int matrixDimension, ref uint[,] matrixA, ref uint[,] matrixB)
+    public static uint[,] Multiply(uint matrixDimension, ref uint[,] matrixA, ref uint[,] matrixB)
     {
         var matrixResult = new uint[matrixDimension, matrixDimension];
         var tMatrixB = new uint[matrixDimension, matrixDimension];
