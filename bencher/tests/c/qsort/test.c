@@ -1,27 +1,41 @@
-#include "src.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "qsort.h"
 
-int main(int argc, char** argv)
-{
-    int data_size = atoi(argv[1]);  // User writes the size of array to sort as 1-st argument in terminal
-    int dataset[data_size];
+#define RECORD_SIZE 12
+#define DIMENSION_OFFSET 2
 
+unsigned int DATA_TO_SORT_SIZE;
 
-    // Understanding current directory for debug
-    /*char cwd[1000];
-    if (getcwd(cwd, sizeof(cwd)) != NULL) {
-       printf("Current working dir: %s\n", cwd);
-    } else {
-       perror("getcwd() error");
-       return 1;
-    }*/
+int main(int argc, char** argv) {
+    if (argc < 2) {
+        printf("Error! File with data to sort must be specified\n");
+        exit(EXIT_FAILURE);
+    }
 
-    char* file_name = "app/tests/c/qsort/dataset.txt";
+    char *file_path = argv[1];
+    FILE *fstream = fopen(file_path, "r");
+    if (fstream == NULL) {
+        printf("file %s opening failed\n", file_path);
+        exit(EXIT_FAILURE);
+    }
 
-    get_data(file_name, dataset, data_size);  // Reading data from file, then copying it in array
+    char buffer[RECORD_SIZE] = {0};
 
-    quick_sort(dataset, 0, data_size - 1);  // Sorting the array
+    fgets(buffer, RECORD_SIZE, fstream);
+    DATA_TO_SORT_SIZE = (unsigned int)atoi(&buffer[DIMENSION_OFFSET]);
 
-    //print_array(dataset, data_size);
+    unsigned int *data_to_sort = (unsigned int *)calloc(DATA_TO_SORT_SIZE, sizeof(unsigned int));
+
+    int i = 0;
+    while ((fgets(buffer, RECORD_SIZE, fstream)) != NULL) {
+        data_to_sort[i] = (unsigned int)atoi(buffer);
+        i++;
+    }
+
+    quick_sort(data_to_sort, 0, DATA_TO_SORT_SIZE - 1);
+
+//    data_print(data_to_sort, DATA_TO_SORT_SIZE);
 
     return 0;
 }

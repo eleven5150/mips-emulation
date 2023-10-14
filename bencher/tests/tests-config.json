@@ -34,8 +34,8 @@
       "qsort": {
         "path": "tests/c/qsort/test.c",
         "commands": [
-          "gcc -Ofast /app/tests/c/qsort/src.c /app/tests/c/qsort/test.c -o /app/tests/c/qsort/test.elf",
-          "bash -c 'time -p /app/tests/c/qsort/test.elf 1000000 2>&1'"
+          "gcc -Ofast /app/tests/c/qsort/qsort.c /app/tests/c/qsort/test.c -o /app/tests/c/qsort/test.elf",
+          "bash -c 'time -p /app/tests/c/qsort/test.elf /app/data/data_to_sort.txt 2>&1'"
         ]
       }
     },
