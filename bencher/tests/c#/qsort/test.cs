@@ -1,75 +1,37 @@
-using System;
-using System.IO;
+namespace qsort;
 
-class Prog 
+internal static class Constants
 {
-    static public void quick_sort(int[] array, int leftIndex, int rightIndex)
+    public static int DataToSortSize = 0;
+}
+
+internal static class Program 
+{
+    private static void Main(string[] args)
     {
-        var i = leftIndex;
-        var j = rightIndex;
-        var pivot = array[leftIndex];
-        while (i <= j)
+        if (args.Length < 1)
         {
-            while (array[i] < pivot)
-            {
-                i++;
-            }
-            
-            while (array[j] > pivot)
-            {
-                j--;
-            }
-            if (i <= j)
-            {
-                int temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-                i++;
-                j--;
-            }
-        }
-        
-        if (leftIndex < j)
-            quick_sort(array, leftIndex, j);
-        if (i < rightIndex)
-            quick_sort(array, i, rightIndex);
-    }
-
-    // Prints the content of an int[] array
-    static public void print_array(int[] array, int size) {
-
-        for (int i = 0; i < size; ++i) {
-            Console.Write("{0} ", array[i]);
+            Console.Error.WriteLine("Error! File with data to sort must be specified\n");
+            Environment.Exit(1);
         }
 
-        Console.WriteLine(" ");
-    }
+        var dataToSortFile = args[0];
 
-    static void Main(string[] args)
-    {
-        // Reading the size of array to be sorted
-        var data_size = args.Length > 0 ? int.Parse(args[0]) : 100;
+        var lines = File.ReadAllLines(dataToSortFile);
 
-        int[] dataset = new int[data_size];
+        Constants.DataToSortSize = int.Parse(lines[0][2..]);
 
-        string file_name = "dataset.txt";
-
-        // Writing values from file to string - needs to be converted in int further
-        string raw_data = File.ReadAllText(file_name);
-
-        // Splitting string into substrings considiring the space symbol as splitter
-        string[] split_raw_data = raw_data.Split(new char[] {' '});
-
-        // Converting into int[] array
-        for (int i = 0; i < data_size; ++i) {
-
-            dataset[i] = Int32.Parse(split_raw_data[i]);
-
+        var dataToSort = new uint[Constants.DataToSortSize];
+        var i = 0;
+        foreach (var line in lines[1..])
+        {
+            dataToSort[i] = uint.Parse(line);
+            i++;
         }
 
-        quick_sort(dataset, 0, data_size - 1);
+        QuickSort.Sort(dataToSort, 0,  Constants.DataToSortSize - 1);
 
-        //print_array(dataset, data_size);
+        // QuickSort.DataPrint(dataToSort, Constants.DataToSortSize);
 
     }
 }

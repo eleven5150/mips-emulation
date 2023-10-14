@@ -1,14 +1,9 @@
 tests/*/*/*.elf
-venv
-win_venv
-data/*
-/tests/c/matmul/cmake-build-debug/
-/tests/c/matmul/CMakeLists.txt
-/tests/c#/hello_world/bin/Debug/net6.0/
-/tests/c#/hello_world/obj/
-/tests/c#/matmul/bin/Debug/net6.0/
-/tests/c#/matmul/obj/
-/tests/c#/matmul/Folder.DotSettings.user
+/tests/*/*/.idea
+/tests/c/*/cmake-build-debug/
+/tests/c/*/CMakeLists.txt
+/tests/c#/*/bin
+/tests/c#/*/obj
 /tests/cython/hello_world/test.c
 /tests/cython/hello_world/test.o
 /tests/kotlin_jvm/hello_world/test.jar
@@ -16,3 +11,6 @@ data/*
 /tests/kotlin_native/hello_world/test.kexe
 /tests/c#/hello_world/bin/
 /tests/c#/matmul/bin/
+venv
+win_venv
+data/*

@@ -67,7 +67,7 @@
       "qsort": {
         "path": "tests/c#/qsort/test.cs",
         "commands": [
-          "bash -c 'time -p dotnet run /app/tests/c#/qsort 1000000 2>&1'"
+          "bash -c 'time -p dotnet run --project /app/tests/c#/qsort /app/data/data_to_sort.txt 2>&1'"
         ]
       }
     },
