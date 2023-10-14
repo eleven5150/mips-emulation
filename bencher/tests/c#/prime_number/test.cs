@@ -1,30 +1,38 @@
-using System;
-
-namespace c_
+internal static class Program
 {
-    class test
+    private static void Main(string[] args)
     {
-        static void Main(string[] args)
+        if (args.Length < 1)
         {
-            int primeNumberCount = (args.Length == 1) ? int.Parse(args[0]) : 100;
+            Console.Error.WriteLine("Error! File with prime number count must be specified\n");
+            Environment.Exit(1);
+        }
 
-            int number = 0;
-            while (primeNumberCount > 0) {
-                number++;
-                int j = 0;
+        var primeNumberCountPath = args[0];
 
-                for (int i = 1; i <= number; i++) {
-                    if (number % i == 0) {
-                        j++;
-                    }
-                }
+        var primeNumberCountString = File.ReadAllLines(primeNumberCountPath);
+        var primeNumberCount = uint.Parse(primeNumberCountString[0]);
 
-                if (j == 2) {
-                    primeNumberCount--;
+        var currNumber = 0;
+        while (primeNumberCount > 0)
+        {
+            currNumber++;
+            var j = 0;
+
+            for (var i = 1; i <= currNumber; i++)
+            {
+                if (currNumber % i == 0)
+                {
+                    j++;
                 }
             }
 
-            Console.WriteLine("The latest prime number: " + number + "\n");
+            if (j == 2)
+            {
+                primeNumberCount--;
+            }
         }
+
+        Console.Write($"The latest prime number: {currNumber}\n");
     }
 }

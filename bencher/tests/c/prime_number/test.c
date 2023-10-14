@@ -4,7 +4,7 @@
 int main(int argc, char **argv)
 {
     if (argc < 2) {
-        printf("Error! File with prime curr_number count must be specified\n");
+        printf("Error! File with prime number count must be specified\n");
         exit(EXIT_FAILURE);
     }
 

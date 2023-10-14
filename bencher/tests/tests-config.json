@@ -55,7 +55,7 @@
       "prime_number": {
         "path": "tests/c#/prime_number/test.cs",
         "commands": [
-          "bash -c 'time -p dotnet run /app/tests/c#/prime_number 1000 2>&1'"
+          "bash -c 'time -p dotnet run --project /app/tests/c#/prime_number /app/data/prime_number_count.txt 2>&1'"
         ]
       },
       "matmul": {
