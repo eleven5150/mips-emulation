@@ -43,13 +43,13 @@
       "hello_world": {
         "path": "tests/c#/hello_world/test.cs",
         "commands": [
-          "bash -c 'time -p dotnet run --project /app/tests/c#/hello_world/ 2>&1'"
+          "bash -c 'time -p dotnet run --project /app/tests/c#/hello_world 2>&1'"
         ]
       },
       "version": {
         "path": "tests/c#/hello_world/test.cs",
         "commands": [
-          "dotnet --list-sdks 2>&1"
+          "dotnet --info"
         ]
       },
       "prime_number": {
