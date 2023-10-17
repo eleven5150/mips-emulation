@@ -1,10 +1,12 @@
 cimport libc.stdio as c
 from libc.stdlib cimport malloc, calloc, free, atoi
-from libc.string cimport strtok
+from libc.string cimport strtok, memset
 
 import sys
 
-MATRIX_DIMENSION = 1000
+RECORD_SIZE = 12
+MATRIX_DIMENSION = 0
+DIMENSION_OFFSET = 2
 
 
 cdef void matrix_print(unsigned int **matrix, int matrix_dimension):
@@ -29,21 +31,26 @@ cdef void matrix_free(int matrix_dimension, unsigned int **matrix):
 
 
 cdef unsigned int **create_matrix(char *file_name):
-    cdef unsigned int **matrix = matrix_init(<unsigned int> MATRIX_DIMENSION)
+    global MATRIX_DIMENSION
+
     cdef c.FILE *fstream = c.fopen(file_name, "r")
     if fstream == NULL:
         c.printf("file %s opening failed\n", file_name)
         exit(1)
 
-    c.fseek(fstream, 0, c.SEEK_END)
-    cdef unsigned int file_size = c.ftell(fstream)
-    c.fseek(fstream, 0, c.SEEK_SET)
+    cdef char *header = <char *> calloc(<int> RECORD_SIZE, sizeof(char))
 
-    cdef char *buffer = <char *> malloc(file_size * sizeof(char))
+    c.fgets(header, <int> RECORD_SIZE, fstream)
+    MATRIX_DIMENSION = <unsigned int> atoi(&header[<int> DIMENSION_OFFSET])
+    cdef unsigned int **matrix = matrix_init(<unsigned int> MATRIX_DIMENSION)
+
+    cdef unsigned int line_size = <unsigned int> (MATRIX_DIMENSION * RECORD_SIZE)
+    cdef char *buffer = <char *> malloc(line_size * sizeof(char))
+
     cdef char *record
     cdef int i = 0
     cdef int j = 0
-    while c.fgets(buffer, file_size, fstream) != NULL:
+    while c.fgets(buffer, line_size, fstream) != NULL:
         record = strtok(buffer, ",")
         while record != NULL:
             matrix[i][j] = <unsigned int> atoi(record)
@@ -53,6 +60,9 @@ cdef unsigned int **create_matrix(char *file_name):
         j = 0
 
     matrix_print(matrix, <int> MATRIX_DIMENSION)
+    c.fclose(fstream)
+    free(header)
+    free(buffer)
     return matrix
 
 
