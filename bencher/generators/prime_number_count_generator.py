@@ -19,3 +19,4 @@ def generate_prime_number_count() -> None:
 
     with open(PRIME_NUMBER_COUNT_PATH, "wt") as prime_number_count_file:
         prime_number_count_file.write(str(prime_number_count))
+        prime_number_count_file.write("\n")
