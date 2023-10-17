@@ -4,8 +4,8 @@ tests/*/*/*.elf
 /tests/c/*/CMakeLists.txt
 /tests/c#/*/bin
 /tests/c#/*/obj
-/tests/cython/hello_world/test.c
-/tests/cython/hello_world/test.o
+/tests/cython/*/*.c
+/tests/cython/*/*.o
 /tests/kotlin_jvm/hello_world/test.jar
 /tests/kotlin_jvm/prime_number/test.jar
 /tests/kotlin_native/hello_world/test.kexe
