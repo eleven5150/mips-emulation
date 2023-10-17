@@ -1,6 +1,6 @@
 #include "qsort.h"
 
-unsigned int partition(unsigned int *data,int low, int high) {
+unsigned int partition(unsigned int *data, int low, int high) {
     unsigned int temp;
     unsigned int pivot = data[high];
     unsigned int i = (low - 1);
