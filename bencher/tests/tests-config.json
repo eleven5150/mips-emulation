@@ -4,17 +4,17 @@
   "description": "Configuration for speed comparison of programming languages for emulator development",
   "languages": {
     "c": {
+      "version": {
+        "path": "tests/c/hello_world/test.c",
+        "commands": [
+          "gcc --version 2>&1"
+        ]
+      },
       "hello_world": {
         "path": "tests/c/hello_world/test.c",
         "commands": [
           "gcc -Ofast /app/tests/c/hello_world/test.c -o /app/tests/c/hello_world/test.elf",
           "bash -c 'time -p /app/tests/c/hello_world/test.elf 2>&1'"
-        ]
-      },
-      "version": {
-        "path": "tests/c/hello_world/test.c",
-        "commands": [
-          "gcc --version 2>&1"
         ]
       },
       "prime_number": {
@@ -40,16 +40,16 @@
       }
     },
     "c#": {
-      "hello_world": {
-        "path": "tests/c#/hello_world/test.cs",
-        "commands": [
-          "bash -c 'time -p dotnet run --project /app/tests/c#/hello_world 2>&1'"
-        ]
-      },
       "version": {
         "path": "tests/c#/hello_world/test.cs",
         "commands": [
           "dotnet --info"
+        ]
+      },
+      "hello_world": {
+        "path": "tests/c#/hello_world/test.cs",
+        "commands": [
+          "bash -c 'time -p dotnet run --project /app/tests/c#/hello_world 2>&1'"
         ]
       },
       "prime_number": {
@@ -72,6 +72,12 @@
       }
     },
     "cython": {
+      "version": {
+        "path": "tests/cython/hello_world/test.pyx",
+        "commands": [
+          "cython3 --version"
+        ]
+      },
       "hello_world": {
         "path": "tests/cython/hello_world/test.pyx",
         "commands": [
@@ -81,13 +87,13 @@
           "bash -c 'time -p /app/tests/cython/hello_world/test.elf 2>&1'"
         ]
       },
-      "qsort": {
-        "path": "tests/cython/qsort/test.pyx",
+      "prime_number": {
+        "path": "tests/cython/prime_number/test.pyx",
         "commands": [
-          "cython3 --embed -3 -o /app/tests/cython/qsort/test.c /app/tests/cython/qsort/test.pyx",
-          "bash -c 'gcc -o /app/tests/cython/qsort/test.o -c /app/tests/cython/qsort/test.c $(python3-config --cflags)'",
-          "bash -c 'gcc -o /app/tests/cython/qsort/test.elf /app/tests/cython/qsort/test.o $(python3-config --ldflags) -lpython3.10'",
-          "bash -c 'time -p /app/tests/cython/qsort/test.elf 2>&1'"
+          "cython3 --embed -3 -o /app/tests/cython/prime_number/test.c /app/tests/cython/prime_number/test.pyx",
+          "bash -c 'gcc -o /app/tests/cython/prime_number/test.o -c /app/tests/cython/prime_number/test.c $(python3-config --cflags)'",
+          "bash -c 'gcc -o /app/tests/cython/prime_number/test.elf /app/tests/cython/prime_number/test.o $(python3-config --ldflags) -lpython3.10'",
+          "bash -c 'time -p /app/tests/cython/prime_number/test.elf /app/data/prime_number_count.txt 2>&1'"
         ]
       },
       "matmul": {
@@ -99,24 +105,33 @@
           "bash -c 'time -p /app/tests/cython/matmul/test.elf /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
-      "version": {
-        "path": "tests/cython/hello_world/test.pyx",
+      "qsort": {
+        "path": "tests/cython/qsort/test.pyx",
         "commands": [
-          "cython3 --version"
+          "cython3 --embed -3 -o /app/tests/cython/qsort/test.c /app/tests/cython/qsort/test.pyx",
+          "bash -c 'gcc -o /app/tests/cython/qsort/test.o -c /app/tests/cython/qsort/test.c $(python3-config --cflags)'",
+          "bash -c 'gcc -o /app/tests/cython/qsort/test.elf /app/tests/cython/qsort/test.o $(python3-config --ldflags) -lpython3.10'",
+          "bash -c 'time -p /app/tests/cython/qsort/test.elf /app/data/data_to_sort.txt 2>&1'"
         ]
       }
     },
     "javascript": {
+      "version": {
+        "path": "tests/javascript/hello_world/test.js",
+        "commands": [
+          "nodejs --version 2>&1"
+        ]
+      },
       "hello_world": {
         "path": "tests/javascript/hello_world/test.js",
         "commands": [
           "bash -c 'time -p nodejs /app/tests/javascript/hello_world/test.js 2>&1'"
         ]
       },
-      "qsort": {
-        "path": "tests/javascript/qsort/test.js",
+      "prime_number": {
+        "path": "tests/javascript/prime_number/test.js",
         "commands": [
-          "bash -c 'time -p nodejs /app/tests/javascript/qsort/test.js 2>&1'"
+          "bash -c 'time -p nodejs /app/tests/javascript/prime_number/test.js /app/data/prime_number_count.txt 2>&1'"
         ]
       },
       "matmul": {
@@ -125,25 +140,32 @@
           "bash -c 'time -p nodejs /app/tests/javascript/matmul/test.js /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
-      "version": {
-        "path": "tests/javascript/hello_world/test.js",
+      "qsort": {
+        "path": "tests/javascript/qsort/test.js",
         "commands": [
-          "nodejs --version 2>&1"
-        ]
-      },
-      "prime_number": {
-        "path": "tests/javascript/prime_number/test.js",
-        "commands": [
-          "bash -c 'time -p nodejs /app/tests/javascript/prime_number/test.js 10 2>&1'"
+          "bash -c 'time -p nodejs /app/tests/javascript/qsort/test.js /app/data/data_to_sort.txt 2>&1'"
         ]
       }
     },
     "kotlin_jvm": {
+      "version": {
+        "path": "tests/kotlin_jvm/hello_world/test.kt",
+        "commands": [
+          "kotlinc -version"
+        ]
+      },
       "hello_world": {
         "path": "tests/kotlin_jvm/hello_world/test.kt",
         "commands": [
           "kotlinc /app/tests/kotlin_jvm/hello_world/test.kt -include-runtime -d /app/tests/kotlin_jvm/hello_world/test.jar",
           "bash -c 'time -p java -jar /app/tests/kotlin_jvm/hello_world/test.jar 2>&1'"
+        ]
+      },
+      "prime_number": {
+        "path": "tests/kotlin_jvm/prime_number/test.kt",
+        "commands": [
+          "kotlinc /app/tests/kotlin_jvm/prime_number/test.kt -include-runtime -d /app/tests/kotlin_jvm/prime_number/test.jar",
+          "bash -c 'time -p java -jar /app/tests/kotlin_jvm/prime_number/test.jar /app/data/prime_number_count.txt 2>&1'"
         ]
       },
       "matmul": {
@@ -153,68 +175,89 @@
           "bash -c 'time -p java -jar /app/tests/kotlin_jvm/matmul/test.jar /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
-      "version": {
-        "path": "tests/kotlin_jvm/hello_world/test.kt",
+      "qsort": {
+        "path": "tests/kotlin_jvm/qsort/test.kt",
         "commands": [
-          "kotlinc -version"
-        ]
-      },
-      "prime_number": {
-        "path": "tests/kotlin_jvm/prime_number/test.kt",
-        "commands": [
-          "kotlinc /app/tests/kotlin_jvm/prime_number/test.kt -include-runtime -d /app/tests/kotlin_jvm/prime_number/test.jar",
-          "bash -c 'time -p java -jar /app/tests/kotlin_jvm/prime_number/test.jar 10 2>&1'"
+          "kotlinc /app/tests/kotlin_jvm/qsort/test.kt -include-runtime -d /app/tests/kotlin_jvm/qsort/test.jar",
+          "bash -c 'time -p java -jar /app/tests/kotlin_jvm/qsort/test.jar /app/data/data_to_sort.txt 2>&1'"
         ]
       }
     },
     "kotlin_native": {
-      "hello_world": {
-        "path": "tests/kotlin_native/hello_world/test.kt",
-        "commands": [
-          "kotlinc-native /app/tests/kotlin_native/hello_world/test.kt -o /app/tests/kotlin_native/hello_world/test",
-          "bash -c 'time -p /app/tests/kotlin_native/hello_world/test.kexe'"
-        ]
-      },
       "version": {
         "path": "tests/kotlin_native/hello_world/test.kt",
         "commands": [
           "kotlinc-native -version"
         ]
-      }
-    },
-    "python": {
+      },
       "hello_world": {
-        "path": "tests/python/hello_world/test.py",
+        "path": "tests/kotlin_native/hello_world/test.kt",
         "commands": [
-          "bash -c 'time -p python3 /app/tests/python/hello_world/test.py 2>&1'"
+          "kotlinc-native /app/tests/kotlin_native/hello_world/test.kt -o /app/tests/kotlin_native/hello_world/test",
+          "bash -c 'time -p /app/tests/kotlin_native/hello_world/test.kexe 2>&1'"
         ]
       },
-      "qsort": {
-        "path": "tests/python/qsort/test.py",
+      "prime_number": {
+        "path": "tests/kotlin_native/prime_number/test.kt",
         "commands": [
-          "bash -c 'time -p python3 /app/tests/python/qsort/test.py 2>&1'"
+          "kotlinc-native /app/tests/kotlin_native/prime_number/test.kt -o /app/tests/kotlin_native/prime_number/test",
+          "bash -c 'time -p /app/tests/kotlin_native/prime_number/test.kexe /app/data/prime_number_count.txt 2>&1'"
         ]
       },
       "matmul": {
-        "path": "tests/python/matmul/test.py",
+        "path": "tests/kotlin_native/matmul/test.kt",
         "commands": [
-          "bash -c 'time -p python3 /app/tests/python/matmul/test.py 2>&1'"
+          "kotlinc-native /app/tests/kotlin_native/matmul/test.kt -o /app/tests/kotlin_native/matmul/test",
+          "bash -c 'time -p /app/tests/kotlin_native/matmul/test.kexe /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
+      "qsort": {
+        "path": "tests/kotlin_native/qsort/test.kt",
+        "commands": [
+          "kotlinc-native /app/tests/kotlin_native/qsort/test.kt -o /app/tests/kotlin_native/qsort/test",
+          "bash -c 'time -p /app/tests/kotlin_native/qsort/test.kexe /app/data/data_to_sort.txt 2>&1'"
+        ]
+      }
+    },
+    "python": {
       "version": {
         "path": "tests/python/hello_world/test.py",
         "commands": [
           "python3 --version 2>&1"
         ]
       },
+      "hello_world": {
+        "path": "tests/python/hello_world/test.py",
+        "commands": [
+          "bash -c 'time -p python3 /app/tests/python/hello_world/test.py 2>&1'"
+        ]
+      },
       "prime_number": {
         "path": "tests/python/prime_number/test.py",
         "commands": [
-          "bash -c 'time -p python3 /app/tests/python/prime_number/test.py 10 2>&1'"
+          "bash -c 'time -p python3 /app/tests/python/prime_number/test.py /app/data/prime_number_count.txt 2>&1'"
+        ]
+      },
+      "matmul": {
+        "path": "tests/python/matmul/test.py",
+        "commands": [
+          "bash -c 'time -p python3 /app/tests/python/matmul/test.py /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
+        ]
+      },
+      "qsort": {
+        "path": "tests/python/qsort/test.py",
+        "commands": [
+          "bash -c 'time -p python3 /app/tests/python/qsort/test.py /app/data/data_to_sort.txt 2>&1'"
         ]
       }
     },
     "rust": {
+      "version": {
+        "path": "tests/rust/hello_world/test.rs",
+        "commands": [
+          "rustc --version 2>&1"
+        ]
+      },
       "hello_world": {
         "path": "tests/rust/hello_world/test.rs",
         "commands": [
@@ -222,31 +265,25 @@
           "bash -c 'time -p /app/tests/rust/hello_world/test.elf 2>&1'"
         ]
       },
-      "version": {
-        "path": "tests/rust/hello_world/test.rs",
-        "commands": [
-          "rustc --version 2>&1"
-        ]
-      },
       "prime_number": {
         "path": "tests/rust/prime_number/test.rs",
         "commands": [
           "rustc -C opt-level=3 /app/tests/rust/prime_number/test.rs -o /app/tests/rust/prime_number/test.elf",
-          "bash -c 'time -p /app/tests/rust/prime_number/test.elf 2>&1'"
-        ]
-      },
-      "qsort": {
-        "path": "tests/rust/hello_world/test.rs",
-        "commands": [
-          "rustc -C opt-level=3 /app/tests/rust/qsort/test.rs -o /app/tests/rust/qsort/test.elf",
-          "bash -c 'time -p /app/tests/rust/qsort/test.elf 2>&1'"
+          "bash -c 'time -p /app/tests/rust/prime_number/test.elf /app/data/prime_number_count.txt 2>&1'"
         ]
       },
       "matmul": {
         "path": "tests/rust/matmul/test.rs",
         "commands": [
           "rustc -C opt-level=3 /app/tests/rust/matmul/test.rs -o /app/tests/rust/matmul/test.elf",
-          "bash -c 'time -p /app/tests/rust/matmul/test.elf 2>&1'"
+          "bash -c 'time -p /app/tests/rust/matmul/test.elf /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
+        ]
+      },
+      "qsort": {
+        "path": "tests/rust/hello_world/test.rs",
+        "commands": [
+          "rustc -C opt-level=3 /app/tests/rust/qsort/test.rs -o /app/tests/rust/qsort/test.elf",
+          "bash -c 'time -p /app/tests/rust/qsort/test.elf /app/data/data_to_sort.txt 2>&1'"
         ]
       }
     }
