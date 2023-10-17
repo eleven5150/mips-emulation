@@ -59,7 +59,7 @@ cdef unsigned int **create_matrix(char *file_name):
         i += 1
         j = 0
 
-    matrix_print(matrix, <int> MATRIX_DIMENSION)
+    # matrix_print(matrix, <int> MATRIX_DIMENSION)
     c.fclose(fstream)
     free(header)
     free(buffer)
@@ -112,7 +112,7 @@ def main(raw_args):
 
     cdef unsigned int **matrix_result = matrix_multiply(<int> MATRIX_DIMENSION, matrix_a, matrix_b)
 
-    matrix_print(matrix_result, MATRIX_DIMENSION)
+    # matrix_print(matrix_result, MATRIX_DIMENSION)
 
     matrix_free(MATRIX_DIMENSION, matrix_a)
     matrix_free(MATRIX_DIMENSION, matrix_b)

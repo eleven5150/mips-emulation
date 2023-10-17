@@ -29,8 +29,8 @@ internal static class Program
             i++;
             j = 0;
         }
-        
-        Matrix.Print(matrix, Constants.MatrixDimension);
+
+//        Matrix.Print(matrix, Constants.MatrixDimension);
 
         return matrix;
     }
@@ -51,6 +51,6 @@ internal static class Program
 
         var matrixResult = Matrix.Multiply(Constants.MatrixDimension, ref matrixA, ref matrixB);
         
-        Matrix.Print(matrixResult, Constants.MatrixDimension);
+//        Matrix.Print(matrixResult, Constants.MatrixDimension);
     }
 }

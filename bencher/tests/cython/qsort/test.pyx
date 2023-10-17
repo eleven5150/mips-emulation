@@ -70,7 +70,7 @@ def main(raw_args):
         i += 1
 
     quick_sort(data_to_sort, 0, DATA_TO_SORT_SIZE - 1)
-    data_print(data_to_sort, DATA_TO_SORT_SIZE)
+    # data_print(data_to_sort, DATA_TO_SORT_SIZE)
     c.fclose(fstream)
     free(data_to_sort)
 
