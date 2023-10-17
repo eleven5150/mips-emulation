@@ -37,7 +37,6 @@ def main(raw_args):
 
         j = 0
         for i in range(1, curr_number + 1):
-            # print(f"i -> {i}")
             if curr_number % i == 0:
                 j += 1
 
