@@ -1,61 +1,78 @@
 cimport libc.stdio as c
+from libc.stdlib cimport malloc, calloc, free, atoi
 
-DEF CUTOFF = 17
-cdef size_t size = 1000000 
-cdef int array[1000000]
-cdef c.FILE *file_ptr = c.fopen("tests/datasets/qsort/dataset.txt", "r")
-cdef size_t i = 0
-while(i < size):
-    if (c.fscanf(file_ptr, "%d", &array[i]) == c.EOF):
-        c.printf("Error while reading from file.\n")
-    i=i+1    
-c.fclose(file_ptr)
-qsort(array, 0, size)
-print(array)
+import sys
 
-cdef void qsort(int* a, Py_ssize_t start, Py_ssize_t end):
-    if (end - start) < CUTOFF:
-        insertion_sort(a, start, end)
-        return
-    cdef Py_ssize_t boundary = partition(a, start, end)
-    qsort(a, start, boundary)
-    qsort(a, boundary+1, end)
+RECORD_SIZE = 12
+DIMENSION_OFFSET = 2
+DATA_TO_SORT_SIZE = 0
 
-cdef Py_ssize_t partition(int* a, Py_ssize_t start, Py_ssize_t end):
-    assert end > start
-    cdef Py_ssize_t i = start, j = end-1
-    cdef int pivot = a[j]
-    while True:
-        # assert all(x < pivot for x in a[start:i])
-        # assert all(x >= pivot for x in a[j:end])
+cdef unsigned int partition(unsigned int *data, int low, int high):
+    cdef unsigned int temp
+    cdef unsigned int pivot = data[high]
+    cdef unsigned int i = low - 1
 
-        while a[i] < pivot:
+    for j in range(low, high):
+        if data[j] <= pivot:
             i += 1
-        while i < j and pivot <= a[j]:
-            j -= 1
-        if i >= j:
-            break
-        assert a[j] < pivot <= a[i]
-        swap(a, i, j)
-        assert a[i] < pivot <= a[j]
-    assert i >= j and i < end
-    swap(a, i, end-1)
-    assert a[i] == pivot
-    # assert all(x < pivot for x in a[start:i])
-    # assert all(x >= pivot for x in a[i:end])
-    return i
+            temp = data[i]
+            data[i] = data[j]
+            data[j] = temp
 
-cdef inline void swap(int* a, Py_ssize_t i, Py_ssize_t j):
-    a[i], a[j] = a[j], a[i]
-            
-cdef void insertion_sort(int* a, Py_ssize_t start, Py_ssize_t end):
-    cdef Py_ssize_t i, j
-    cdef int v
-    for i in range(start, end):
-        #invariant: [start:i) is sorted
-        v = a[i]; j = i-1
-        while j >= start:
-            if a[j] <= v: break
-            a[j+1] = a[j]
-            j -= 1
-        a[j+1] = v            
+    temp = data[i + 1]
+    data[i + 1] = data[high]
+    data[high] = temp
+
+    return i + 1
+
+
+cdef void quick_sort(unsigned int *data, int low, int high):
+    cdef unsigned int pi = 0
+    if low < high:
+        pi = partition(data, low, high)
+
+        quick_sort(data, low, pi - 1)
+        quick_sort(data, pi + 1, high)
+
+
+cdef void data_print(unsigned int *data, unsigned int size):
+    for i in range(0, size):
+        c.printf("%u ", data[i])
+
+
+def main(raw_args):
+    global DATA_TO_SORT_SIZE
+
+    if len(raw_args) < 1:
+        print("Error! File with data to sort must be specified\n")
+        exit(1)
+
+    data_to_sort_path: str = raw_args[1]
+
+    data_to_sort_path_encoded = data_to_sort_path.encode("ascii")
+    cdef char *data_to_sort_file = <char *>data_to_sort_path_encoded
+
+    cdef c.FILE *fstream = c.fopen(data_to_sort_file, "r")
+    if fstream == NULL:
+        c.printf("file %s opening failed\n", data_to_sort_file)
+        exit(1)
+
+    cdef char *buffer = <char *> calloc(<int> RECORD_SIZE, sizeof(char))
+
+    c.fgets(buffer, <int> RECORD_SIZE, fstream)
+    DATA_TO_SORT_SIZE = <unsigned int> atoi(&buffer[<int> DIMENSION_OFFSET])
+
+    cdef unsigned int *data_to_sort = <unsigned int *>calloc(DATA_TO_SORT_SIZE, sizeof(unsigned int));
+
+    cdef unsigned int i = 0
+    while (c.fgets(buffer, RECORD_SIZE, fstream)) != NULL:
+        data_to_sort[i] = <unsigned int>atoi(buffer)
+        i += 1
+
+    quick_sort(data_to_sort, 0, DATA_TO_SORT_SIZE - 1)
+    data_print(data_to_sort, DATA_TO_SORT_SIZE)
+    c.fclose(fstream)
+    free(data_to_sort)
+
+
+main(sys.argv)
