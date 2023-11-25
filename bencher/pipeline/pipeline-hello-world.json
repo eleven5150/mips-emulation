@@ -2,6 +2,7 @@
   "$schema": "pipeline.schema.json",
   "name": "Hello world",
   "description": "Pipeline with hello world tests",
+  "test": "hello_world",
   "pipeline": {
     "c": [
       "hello_world"

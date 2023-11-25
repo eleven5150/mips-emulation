@@ -2,6 +2,7 @@
   "$schema": "pipeline.schema.json",
   "name": "Versions",
   "description": "Pipeline with printing languages versions",
+  "test": "versions",
   "pipeline": {
     "c": [
       "version"

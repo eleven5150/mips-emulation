@@ -7,14 +7,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 import matplotlib.pyplot as plt
-import numpy as np
 
 from generators.data_to_sort_generator import generate_data_to_sort
 from generators.matrix_generator import generate_matrices
 from extensions.logging_extensions import Color, init_logging, LOGGER
 from extensions.path_extensions import path_must_exist, get_root_directory
 from generators.prime_number_count_generator import generate_prime_number_count
-from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
+from pipeline import Pipeline, get_pipeline, get_all_pipeline_names, NotTestPipelineException, NOT_TEST_PIPELINES
 from tests import TestsConfigData, get_tests_config_data
 
 TESTS_CONFIG: str = "tests/tests-config.json"
@@ -154,12 +153,8 @@ class TestsConfig:
             languages=target_languages
         )
 
-    def get_results_by_test_and_lang(self, test: str, languages: tuple[str]) -> tuple[str]:
-        test_results: list[str] = list()
-        for lang in languages:
-            test_results.append(str(self.languages[lang].tests[test].result.real_time))
-
-        return tuple(test_results)
+    def get_result_by_lang_and_test(self, lang: str, test: str) -> float:
+        return self.languages[lang].tests[test].result.real_time
 
 
 def parse_args(arguments: list):
@@ -211,21 +206,25 @@ def main(raw_arguments: list) -> None:
     tests_config.exec_pipeline(pipeline)
 
     if args.image:
+        if pipeline.test in NOT_TEST_PIPELINES:
+            raise NotTestPipelineException(f"Can't generate graph for this pipeline {pipeline.name}")
+
         plt.rcdefaults()
-        unique_tests: set[str] = pipeline.get_unique_tests()
-        fig, ax = plt.subplots(len(unique_tests))
-        for idx, test in enumerate(unique_tests):
-            languages_names: tuple[str] = pipeline.get_languages_names_for_test(test)
+        languages: list[str] = list(pipeline.pipeline.keys())
 
-            y_pos = np.arange(len(languages_names))
-            time_result = tests_config.get_results_by_test_and_lang(test, languages_names)
+        results: dict[str, float] = dict()
+        for lang in languages:
+            results.update({lang: tests_config.get_result_by_lang_and_test(lang, pipeline.test)})
 
-            ax[idx].barh(y_pos, time_result, align='center')
-            ax[idx].set_yticks(y_pos, labels=languages_names)
-            ax[idx].invert_yaxis()
-            ax[idx].set_xlabel('Time')
-            ax[idx].set_title(f'Results for test: {test}')
+        results = dict(sorted(results.items(), key=lambda item: item[1]))
 
+        plt.bar(results.keys(), results.values(), align="center")
+
+        plt.xlabel("Programming language")
+        plt.xticks(rotation=30)
+        plt.ylabel("Time, s")
+        plt.title(f"Results for {pipeline.test}")
+        plt.tight_layout()
         plt.savefig("output.jpg", dpi=600)
 
 

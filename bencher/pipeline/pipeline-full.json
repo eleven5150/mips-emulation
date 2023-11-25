@@ -2,6 +2,7 @@
   "$schema": "pipeline.schema.json",
   "name": "Full",
   "description": "Pipeline with full processing",
+  "test": "full",
   "pipeline": {
     "c": [
       "hello_world",

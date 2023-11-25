@@ -1,4 +1,4 @@
-import dataclasses
+from dataclasses import dataclass
 import re
 from pathlib import Path
 
@@ -11,10 +11,22 @@ if not SCHEMA_JSON_FILEPATH.exists():
     raise RuntimeError(f"File {SCHEMA_JSON_FILEPATH} does not exist")
 
 
-@dataclasses.dataclass
+NOT_TEST_PIPELINES: list[str] = [
+    "full",
+    "versions",
+    "local"
+]
+
+
+class NotTestPipelineException(Exception):
+    pass
+
+
+@dataclass
 class Pipeline(DataclassDaciteStrictMixin):
     name: str
     description: str
+    test: str
     pipeline: dict[str, list]
 
     def print_pipeline(self) -> None:
@@ -32,12 +44,12 @@ class Pipeline(DataclassDaciteStrictMixin):
                 languages_names.append(language_name)
         return tuple(languages_names)
 
-    def get_unique_tests(self) -> set[str]:
+    def get_unique_languages(self) -> set[str]:
         unique_languages: set[str] = set()
         for language_name in self.pipeline:
-            for test in self.pipeline[language_name]:
-                unique_languages.add(test)
+            unique_languages.add(language_name)
         return unique_languages
+
 
 def __get_pipeline_path(name: str) -> Path:
     return PIPELINE_CONFIG_ROOT_DIR / f'pipeline-{name}.json'
@@ -64,4 +76,3 @@ def get_pipeline(name: str) -> Pipeline:
         data_path=path,
         schema_path=SCHEMA_JSON_FILEPATH
     )
-
