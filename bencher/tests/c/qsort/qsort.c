@@ -1,9 +1,9 @@
 #include "qsort.h"
 
-SortItem_t partition(SortData_t data, long long low, long long high) {
+long long partition(SortData_t data, long long low, long long high) {
     SortItem_t temp;
     SortItem_t pivot = data[high];
-    SortItem_t i = (low - 1);
+    long long i = (low - 1);
 
     for (SortItem_t j = low; j <= high - 1; j++) {
         if (data[j] <= pivot) {
@@ -23,7 +23,7 @@ SortItem_t partition(SortData_t data, long long low, long long high) {
 
 void quick_sort(SortData_t data, long long low, long long high) {
     if (low < high) {
-        SortItem_t pi = partition(data, low, high);
+        long long pi = partition(data, low, high);
 
         quick_sort(data, low, pi - 1);
         quick_sort(data, pi + 1, high);
