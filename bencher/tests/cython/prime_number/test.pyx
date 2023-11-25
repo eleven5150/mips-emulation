@@ -1,7 +1,9 @@
 cimport libc.stdio as c
-from libc.stdlib cimport malloc, calloc, free, atoi
+from libc.stdlib cimport malloc, calloc, free, strtoull
 
 import sys
+
+ctypedef unsigned long long PrimeNumberItem_t
 
 def main(raw_args):
     if len(raw_args) < 1:
@@ -27,11 +29,11 @@ def main(raw_args):
 
     c.fclose(fstream)
 
-    cdef unsigned int prime_number_count = <unsigned int> atoi(buffer)
+    cdef PrimeNumberItem_t prime_number_count = <PrimeNumberItem_t> strtoull(buffer, NULL, 10)
     free(buffer)
 
-    cdef unsigned int curr_number = 0
-    cdef unsigned int j = 0
+    cdef PrimeNumberItem_t curr_number = 0
+    cdef PrimeNumberItem_t j = 0
     while prime_number_count > 0:
         curr_number += 1
 
@@ -43,7 +45,7 @@ def main(raw_args):
         if j == 2:
             prime_number_count -= 1
 
-    c.printf("The latest prime number: %d\n", curr_number)
+    c.printf("The latest prime number: %llu\n", curr_number)
 
 
 main(sys.argv)

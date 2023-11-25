@@ -1,5 +1,5 @@
 cimport libc.stdio as c
-from libc.stdlib cimport malloc, calloc, free, atoi
+from libc.stdlib cimport malloc, calloc, free, strtoull, strtoul
 
 import sys
 
@@ -7,10 +7,13 @@ RECORD_SIZE = 12
 DIMENSION_OFFSET = 2
 DATA_TO_SORT_SIZE = 0
 
-cdef unsigned int partition(unsigned int *data, int low, int high):
-    cdef unsigned int temp
-    cdef unsigned int pivot = data[high]
-    cdef unsigned int i = low - 1
+ctypedef unsigned long long SortItem_t
+ctypedef SortItem_t * SortData_t
+
+cdef long long partition(SortData_t data, long long low, long long high):
+    cdef SortItem_t temp
+    cdef SortItem_t pivot = data[high]
+    cdef long long i = low - 1
 
     for j in range(low, high):
         if data[j] <= pivot:
@@ -26,8 +29,8 @@ cdef unsigned int partition(unsigned int *data, int low, int high):
     return i + 1
 
 
-cdef void quick_sort(unsigned int *data, int low, int high):
-    cdef unsigned int pi = 0
+cdef void quick_sort(SortData_t data, long long low, long long high):
+    cdef long long pi = 0
     if low < high:
         pi = partition(data, low, high)
 
@@ -35,9 +38,9 @@ cdef void quick_sort(unsigned int *data, int low, int high):
         quick_sort(data, pi + 1, high)
 
 
-cdef void data_print(unsigned int *data, unsigned int size):
+cdef void data_print(SortData_t data, unsigned int size):
     for i in range(0, size):
-        c.printf("%u ", data[i])
+        c.printf("%llu ", data[i])
 
 
 def main(raw_args):
@@ -60,17 +63,17 @@ def main(raw_args):
     cdef char *buffer = <char *> calloc(<int> RECORD_SIZE, sizeof(char))
 
     c.fgets(buffer, <int> RECORD_SIZE, fstream)
-    DATA_TO_SORT_SIZE = <unsigned int> atoi(&buffer[<int> DIMENSION_OFFSET])
+    DATA_TO_SORT_SIZE = <unsigned int> strtoul(&buffer[<int> DIMENSION_OFFSET], NULL, 10)
 
-    cdef unsigned int *data_to_sort = <unsigned int *>calloc(DATA_TO_SORT_SIZE, sizeof(unsigned int));
+    cdef SortData_t data_to_sort = <SortData_t>calloc(DATA_TO_SORT_SIZE, sizeof(SortItem_t));
 
     cdef unsigned int i = 0
     while (c.fgets(buffer, RECORD_SIZE, fstream)) != NULL:
-        data_to_sort[i] = <unsigned int>atoi(buffer)
+        data_to_sort[i] = <SortItem_t>strtoull(buffer, NULL, 10)
         i += 1
 
     quick_sort(data_to_sort, 0, DATA_TO_SORT_SIZE - 1)
-    # data_print(data_to_sort, DATA_TO_SORT_SIZE)
+    # data_print(data_to_sort, <unsigned int> DATA_TO_SORT_SIZE)
     c.fclose(fstream)
     free(data_to_sort)
 

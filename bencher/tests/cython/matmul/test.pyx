@@ -1,5 +1,5 @@
 cimport libc.stdio as c
-from libc.stdlib cimport malloc, calloc, free, atoi
+from libc.stdlib cimport malloc, calloc, free, strtoull, strtoul
 from libc.string cimport strtok, memset
 
 import sys
@@ -8,29 +8,33 @@ RECORD_SIZE = 12
 MATRIX_DIMENSION = 0
 DIMENSION_OFFSET = 2
 
+ctypedef unsigned long long MatrixItem_t
+ctypedef MatrixItem_t * MatrixRow_t
+ctypedef MatrixItem_t ** Matrix_t
 
-cdef void matrix_print(unsigned int **matrix, int matrix_dimension):
+
+cdef void matrix_print(Matrix_t matrix, unsigned int matrix_dimension):
     for i in range(0, matrix_dimension):
         for j in range(0, matrix_dimension):
-            c.printf("%u\t", matrix[i][j])
+            c.printf("%llu\t", matrix[i][j])
         c.printf("\n")
     c.printf("\n")
 
 
-cdef unsigned int **matrix_init(unsigned int matrix_dimension):
-    cdef unsigned int **matrix = <unsigned int **> malloc(matrix_dimension * sizeof(unsigned int *))
+cdef Matrix_t matrix_init(unsigned int matrix_dimension):
+    cdef Matrix_t matrix = <Matrix_t> malloc(matrix_dimension * sizeof(MatrixRow_t))
     for i in range(0, matrix_dimension):
-        matrix[i] = <unsigned int *> calloc(matrix_dimension, sizeof(unsigned int))
+        matrix[i] = <MatrixRow_t> calloc(matrix_dimension, sizeof(MatrixItem_t))
     return matrix
 
 
-cdef void matrix_free(int matrix_dimension, unsigned int **matrix):
+cdef void matrix_free(unsigned int matrix_dimension, Matrix_t matrix):
     for i in range(0, matrix_dimension):
         free(matrix[i])
     free(matrix)
 
 
-cdef unsigned int **create_matrix(char *file_name):
+cdef Matrix_t create_matrix(char *file_name):
     global MATRIX_DIMENSION
 
     cdef c.FILE *fstream = c.fopen(file_name, "r")
@@ -41,8 +45,8 @@ cdef unsigned int **create_matrix(char *file_name):
     cdef char *header = <char *> calloc(<int> RECORD_SIZE, sizeof(char))
 
     c.fgets(header, <int> RECORD_SIZE, fstream)
-    MATRIX_DIMENSION = <unsigned int> atoi(&header[<int> DIMENSION_OFFSET])
-    cdef unsigned int **matrix = matrix_init(<unsigned int> MATRIX_DIMENSION)
+    MATRIX_DIMENSION = <unsigned int> strtoul(&header[<int> DIMENSION_OFFSET], NULL, 10)
+    cdef Matrix_t matrix = matrix_init(<MatrixItem_t> MATRIX_DIMENSION)
 
     cdef unsigned int line_size = <unsigned int> (MATRIX_DIMENSION * RECORD_SIZE)
     cdef char *buffer = <char *> malloc(line_size * sizeof(char))
@@ -53,32 +57,32 @@ cdef unsigned int **create_matrix(char *file_name):
     while c.fgets(buffer, line_size, fstream) != NULL:
         record = strtok(buffer, ",")
         while record != NULL:
-            matrix[i][j] = <unsigned int> atoi(record)
+            matrix[i][j] = <MatrixItem_t> strtoull(record, NULL, 10)
             record = strtok(NULL, ",")
             j += 1
         i += 1
         j = 0
 
-    # matrix_print(matrix, <int> MATRIX_DIMENSION)
+    # matrix_print(matrix, <unsigned int> MATRIX_DIMENSION)
     c.fclose(fstream)
     free(header)
     free(buffer)
     return matrix
 
 
-cdef unsigned int **matrix_multiply(int matrix_dimension, unsigned int **matrix_a, unsigned int **matrix_b):
-    cdef unsigned int **matrix_result
-    cdef unsigned int **t_matrix_b
+cdef Matrix_t matrix_multiply(unsigned int matrix_dimension, Matrix_t matrix_a, Matrix_t matrix_b):
+    cdef Matrix_t matrix_result
+    cdef Matrix_t t_matrix_b
     matrix_result = matrix_init(matrix_dimension)
     t_matrix_b = matrix_init(matrix_dimension)
     for i in range(0, matrix_dimension):
         for j in range(0, matrix_dimension):
             t_matrix_b[i][j] = matrix_b[j][i]
 
-    cdef unsigned int *p
-    cdef unsigned int *q
-    cdef unsigned int *r
-    cdef unsigned int t
+    cdef MatrixRow_t p
+    cdef MatrixRow_t q
+    cdef MatrixRow_t r
+    cdef MatrixItem_t t
     for i in range(0, matrix_dimension):
         p = matrix_a[i]
         q = matrix_result[i]
@@ -107,12 +111,12 @@ def main(raw_args):
     matrix_b_path_encoded = matrix_b_path.encode("ascii")
     cdef char *matrix_b_file = <char *>matrix_b_path_encoded
 
-    cdef unsigned int **matrix_a = create_matrix(matrix_a_file)
-    cdef unsigned int **matrix_b = create_matrix(matrix_b_file)
+    cdef Matrix_t matrix_a = create_matrix(matrix_a_file)
+    cdef Matrix_t matrix_b = create_matrix(matrix_b_file)
 
-    cdef unsigned int **matrix_result = matrix_multiply(<int> MATRIX_DIMENSION, matrix_a, matrix_b)
+    cdef Matrix_t matrix_result = matrix_multiply(<int> MATRIX_DIMENSION, matrix_a, matrix_b)
 
-    # matrix_print(matrix_result, MATRIX_DIMENSION)
+    # matrix_print(matrix_result, <unsigned int> MATRIX_DIMENSION)
 
     matrix_free(MATRIX_DIMENSION, matrix_a)
     matrix_free(MATRIX_DIMENSION, matrix_b)
