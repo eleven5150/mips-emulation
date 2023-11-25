@@ -17,20 +17,20 @@ function main(argc, argv) {
         return 0;
     }
 
-    let prime_number_count = parseInt(data);
+    let prime_number_count = BigInt(parseInt(data));
 
-    let curr_number = 0;
+    let curr_number = 0n;
     while (prime_number_count > 0) {
         curr_number++;
-        let j = 0;
+        let j = 0n;
 
-        for (let i = 1; i <= curr_number; i++) {
-            if (curr_number % i === 0) {
+        for (let i = 1n; i <= curr_number; i++) {
+            if (curr_number % i === 0n) {
                 j++;
             }
         }
 
-        if (j === 2) {
+        if (j === 2n) {
             prime_number_count--;
         }
     }
