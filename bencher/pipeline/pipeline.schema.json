@@ -15,7 +15,13 @@
       "type": "string"
     },
     "test": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "full",
+        "hello_world",
+        "versions",
+        "local"
+      ]
     },
     "pipeline": {
       "$ref": "#/definitions/Pipeline"
