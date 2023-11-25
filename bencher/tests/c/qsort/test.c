@@ -23,13 +23,13 @@ int main(int argc, char** argv) {
     char buffer[RECORD_SIZE] = {0};
 
     fgets(buffer, RECORD_SIZE, fstream);
-    DATA_TO_SORT_SIZE = (unsigned int)atoi(&buffer[DIMENSION_OFFSET]);
+    DATA_TO_SORT_SIZE = (unsigned int)strtoul(&buffer[DIMENSION_OFFSET], NULL, 10);
 
-    unsigned int *data_to_sort = (unsigned int *)calloc(DATA_TO_SORT_SIZE, sizeof(unsigned int));
+    SortData_t data_to_sort = (SortData_t)calloc(DATA_TO_SORT_SIZE, sizeof(SortItem_t));
 
     int i = 0;
     while ((fgets(buffer, RECORD_SIZE, fstream)) != NULL) {
-        data_to_sort[i] = (unsigned int)atoi(buffer);
+        data_to_sort[i] = (SortItem_t)strtoull(buffer, NULL, 10);
         i++;
     }
 

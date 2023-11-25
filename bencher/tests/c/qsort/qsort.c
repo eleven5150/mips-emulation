@@ -1,11 +1,11 @@
 #include "qsort.h"
 
-unsigned int partition(unsigned int *data, int low, int high) {
-    unsigned int temp;
-    unsigned int pivot = data[high];
-    unsigned int i = (low - 1);
+SortItem_t partition(SortData_t data, long long low, long long high) {
+    SortItem_t temp;
+    SortItem_t pivot = data[high];
+    SortItem_t i = (low - 1);
 
-    for (unsigned int j = low; j <= high - 1; j++) {
+    for (SortItem_t j = low; j <= high - 1; j++) {
         if (data[j] <= pivot) {
             i++;
             temp = data[i];
@@ -21,17 +21,17 @@ unsigned int partition(unsigned int *data, int low, int high) {
     return (i + 1); 
 }
 
-void quick_sort(unsigned int *data, int low, int high) {
+void quick_sort(SortData_t data, long long low, long long high) {
     if (low < high) {
-        unsigned int pi = partition(data, low, high);
+        SortItem_t pi = partition(data, low, high);
 
         quick_sort(data, low, pi - 1);
         quick_sort(data, pi + 1, high);
     }
 }
 
-void data_print(unsigned int *data, unsigned int size) {
+void data_print(SortData_t data, unsigned int size) {
     for(int i = 0; i < size; i++) {
-        printf("%u ", data[i]);
+        printf("%llu ", data[i]);
     }
 }
