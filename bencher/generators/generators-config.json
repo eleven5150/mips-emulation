@@ -1,7 +1,7 @@
 {
   "prime_number_count": {
     "min_value": 100,
-    "max_value": 65535
+    "max_value": 16384
   },
   "matrix": {
     "size": 500,
