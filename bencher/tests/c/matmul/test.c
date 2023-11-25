@@ -9,7 +9,7 @@
 unsigned int MATRIX_DIMENSION = 0;
 
 
-unsigned int **create_matrix(char *file_path) {
+Matrix_t create_matrix(char *file_path) {
     FILE *fstream = fopen(file_path, "r");
     if (fstream == NULL) {
         printf("file %s opening failed\n", file_path);
@@ -19,8 +19,8 @@ unsigned int **create_matrix(char *file_path) {
     char header[RECORD_SIZE] = {0};
 
     fgets(header, RECORD_SIZE, fstream);
-    MATRIX_DIMENSION = (unsigned int)atoi(&header[DIMENSION_OFFSET]);
-    unsigned int **matrix = matrix_init(MATRIX_DIMENSION);
+    MATRIX_DIMENSION = (unsigned int)strtol(&header[DIMENSION_OFFSET], NULL, 10);
+    Matrix_t matrix = matrix_init(MATRIX_DIMENSION);
 
     unsigned int line_size = MATRIX_DIMENSION * RECORD_SIZE;
     char *buffer = (char *) malloc(line_size * sizeof(char));
@@ -30,7 +30,7 @@ unsigned int **create_matrix(char *file_path) {
     while ((line = fgets(buffer, line_size, fstream)) != NULL) {
         record = strtok(line, ",");
         while (record != NULL) {
-            matrix[i][j] = (unsigned int) atoi(record);
+            matrix[i][j] = (MatrixItem_t) strtoull(record, NULL, 10);
             record = strtok(NULL, ",");
             j++;
         }
@@ -53,11 +53,12 @@ int main(int argc, char *argv[]) {
     char *matrix_a_file = argv[1];
     char *matrix_b_file = argv[2];
 
-    unsigned int **matrix_a = create_matrix(matrix_a_file);
-    unsigned int **matrix_b = create_matrix(matrix_b_file);
+    Matrix_t matrix_a = create_matrix(matrix_a_file);
+    Matrix_t matrix_b = create_matrix(matrix_b_file);
 
-    unsigned int **matrix_result = matrix_multiply(MATRIX_DIMENSION, matrix_a, matrix_b);
+    Matrix_t matrix_result = matrix_multiply(MATRIX_DIMENSION, matrix_a, matrix_b);
 
+    printf("%llu\t", matrix_result[1][1]);
 //    matrix_print(matrix_result, MATRIX_DIMENSION);
 
     matrix_free(MATRIX_DIMENSION, matrix_a);

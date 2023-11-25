@@ -1,10 +1,10 @@
 #include "matrix.h"
 
-void matrix_print(unsigned int **matrix, int matrix_dimension) {
+void matrix_print(Matrix_t matrix, unsigned int matrix_dimension) {
     int i,j;
     for (i = 0; i < matrix_dimension; i++) {
         for (j = 0; j < matrix_dimension; j++) {
-            printf("%u\t", matrix[i][j]);
+            printf("%llu\t", matrix[i][j]);
         }
         printf("\n");
     }
@@ -12,36 +12,39 @@ void matrix_print(unsigned int **matrix, int matrix_dimension) {
 }
 
 
-unsigned int **matrix_init(int matrix_dimension) {
-    unsigned int **matrix;
+Matrix_t matrix_init(unsigned int matrix_dimension) {
+    Matrix_t matrix;
     int i;
-    matrix = (unsigned int **) malloc(matrix_dimension * sizeof(unsigned int *));
+    matrix = (Matrix_t) malloc(matrix_dimension * sizeof(MatrixRow_t));
     for (i = 0; i < matrix_dimension; ++i)
-        matrix[i] = (unsigned int *) calloc(matrix_dimension, sizeof(unsigned int));
+        matrix[i] = (MatrixRow_t) calloc(matrix_dimension, sizeof(MatrixItem_t));
     return matrix;
 }
 
-void matrix_free(int matrix_dimension, unsigned int **matrix) {
+void matrix_free(unsigned int matrix_dimension, Matrix_t matrix) {
     int i;
     for (i = 0; i < matrix_dimension; ++i)
         free(matrix[i]);
     free(matrix);
 }
 
-unsigned int **matrix_multiply(int matrix_dimension, unsigned int **matrix_a, unsigned int **matrix_b) {
+Matrix_t matrix_multiply(unsigned int matrix_dimension, Matrix_t matrix_a, Matrix_t matrix_b) {
     int i, j, k;
-    unsigned int **matrix_result, **t_matrix_b;
+    Matrix_t matrix_result, t_matrix_b;
     matrix_result = matrix_init(matrix_dimension);
     t_matrix_b = matrix_init(matrix_dimension);
     for (i = 0; i < matrix_dimension; ++i)
         for (j = 0; j < matrix_dimension; ++j)
             t_matrix_b[i][j] = matrix_b[j][i];
     for (i = 0; i < matrix_dimension; ++i) {
-        unsigned int *p = matrix_a[i], *q = matrix_result[i];
+        MatrixRow_t p = matrix_a[i], q = matrix_result[i];
         for (j = 0; j < matrix_dimension; ++j) {
-            unsigned int t = 0, *r = t_matrix_b[j];
-            for (k = 0; k < matrix_dimension; ++k)
+            MatrixItem_t t = 0;
+            MatrixRow_t r = t_matrix_b[j];
+            for (k = 0; k < matrix_dimension; ++k) {
                 t += p[k] * r[k];
+            }
+
             q[j] = t;
         }
     }

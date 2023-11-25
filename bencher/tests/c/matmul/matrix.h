@@ -2,10 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void matrix_print(unsigned int **matrix, int matrix_dimension);
+typedef unsigned long long MatrixItem_t;
+typedef MatrixItem_t * MatrixRow_t;
+typedef MatrixItem_t ** Matrix_t;
 
-unsigned int **matrix_init(int matrix_dimension);
 
-void matrix_free(int matrix_dimension, unsigned int **matrix);
+void matrix_print(Matrix_t matrix, unsigned int matrix_dimension);
 
-unsigned int **matrix_multiply(int matrix_dimension, unsigned int **matrix_a, unsigned int **matrix_b);
+Matrix_t matrix_init(unsigned int matrix_dimension);
+
+void matrix_free(unsigned int matrix_dimension, Matrix_t matrix);
+
+Matrix_t matrix_multiply(unsigned int matrix_dimension, Matrix_t matrix_a, Matrix_t matrix_b);
