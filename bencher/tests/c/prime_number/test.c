@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef unsigned long long PrimeNumberItem_t;
+
 int main(int argc, char **argv)
 {
     if (argc < 2) {
@@ -24,15 +26,15 @@ int main(int argc, char **argv)
 
     fclose(fstream);
 
-    unsigned int prime_number_count = (unsigned int)atoi(buffer);
+    PrimeNumberItem_t prime_number_count = (PrimeNumberItem_t)strtoll(buffer, NULL, 10);
     free(buffer);
 
-    unsigned int curr_number = 0;
+    PrimeNumberItem_t curr_number = 0;
     while (prime_number_count > 0) {
         curr_number++;
 
-        unsigned int j = 0;
-        for (unsigned int i = 1; i <= curr_number; i++) {
+        PrimeNumberItem_t j = 0;
+        for (PrimeNumberItem_t i = 1; i <= curr_number; i++) {
             if (curr_number % i == 0) {
                 j++;
             }
@@ -43,6 +45,6 @@ int main(int argc, char **argv)
         }
     }
 
-    printf("The latest prime number: %d\n", curr_number);
+    printf("The latest prime number: %llu\n", curr_number);
     return 0;
 }
