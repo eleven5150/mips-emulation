@@ -2,7 +2,7 @@
 
 internal abstract class Matrix
 {
-    public static void Print(uint[,] matrix, uint matrixDimension)
+    public static void Print(ulong[,] matrix, uint matrixDimension)
     {
         for (var i = 0; i < matrixDimension; i++)
         {
@@ -15,10 +15,10 @@ internal abstract class Matrix
         Console.WriteLine("\n");
     }
 
-    public static uint[,] Multiply(uint matrixDimension, ref uint[,] matrixA, ref uint[,] matrixB)
+    public static ulong[,] Multiply(uint matrixDimension, ref ulong[,] matrixA, ref ulong[,] matrixB)
     {
-        var matrixResult = new uint[matrixDimension, matrixDimension];
-        var tMatrixB = new uint[matrixDimension, matrixDimension];
+        var matrixResult = new ulong[matrixDimension, matrixDimension];
+        var tMatrixB = new ulong[matrixDimension, matrixDimension];
         
         for (var i = 0; i < matrixDimension; ++i)
         for (var j = 0; j < matrixDimension; ++j)
@@ -27,7 +27,7 @@ internal abstract class Matrix
         for (var i = 0; i < matrixDimension; ++i)
         for (var j = 0; j < matrixDimension; ++j)
         {
-            var s = 0u;
+            var s = 0ul;
             for (var k = 0; k < matrixDimension; ++k)
                 s += matrixA[i, k] * tMatrixB[j, k];
             matrixResult[i, j] = s;

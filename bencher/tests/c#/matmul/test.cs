@@ -7,14 +7,14 @@ internal static class Constants
 
 internal static class Program
 {
-    private static uint[,] create_matrix(string filePath)
+    private static ulong[,] create_matrix(string filePath)
     {
         var lines = File.ReadAllLines(filePath);
 
         var matrixDimensionString = lines[0];
         Constants.MatrixDimension = uint.Parse(matrixDimensionString[2..]);
         
-        var matrix = new uint[Constants.MatrixDimension, Constants.MatrixDimension];
+        var matrix = new ulong[Constants.MatrixDimension, Constants.MatrixDimension];
         var i = 0;
         var j = 0;
         foreach (var line in lines[1..])
@@ -22,7 +22,7 @@ internal static class Program
             var lineRecords = line.Split(",");
             foreach (var record in lineRecords)
             {
-                matrix[i, j] = uint.Parse(record);
+                matrix[i, j] = ulong.Parse(record);
                 j++;
             }
 

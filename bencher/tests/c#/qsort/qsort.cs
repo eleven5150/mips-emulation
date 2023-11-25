@@ -2,7 +2,7 @@ namespace qsort;
 
 internal abstract class QuickSort
 {
-    private static int Partition(uint[] data, int low, int high)
+    private static long Partition(ulong[] data, long low, long high)
     {
         var pivot = data[high];
         var i = low - 1;
@@ -21,7 +21,7 @@ internal abstract class QuickSort
         return i + 1;
     }
 
-    public static void Sort(uint[] data, int low, int high)
+    public static void Sort(ulong[] data, long low, long high)
     {
         if (low < high) {
             var pi = Partition(data, low, high);
@@ -31,7 +31,7 @@ internal abstract class QuickSort
         }
     }
 
-    public static void DataPrint(uint[] data, int size)
+    public static void DataPrint(ulong[] data, uint size)
     {
         for (var i = 0; i < size; i++)
         {

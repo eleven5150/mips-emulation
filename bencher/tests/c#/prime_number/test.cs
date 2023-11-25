@@ -11,15 +11,15 @@ internal static class Program
         var primeNumberCountPath = args[0];
 
         var primeNumberCountString = File.ReadAllLines(primeNumberCountPath);
-        var primeNumberCount = uint.Parse(primeNumberCountString[0]);
+        var primeNumberCount = ulong.Parse(primeNumberCountString[0]);
 
-        var currNumber = 0;
+        var currNumber = 0ul;
         while (primeNumberCount > 0)
         {
             currNumber++;
             var j = 0;
 
-            for (var i = 1; i <= currNumber; i++)
+            for (var i = 1ul; i <= currNumber; i++)
             {
                 if (currNumber % i == 0)
                 {

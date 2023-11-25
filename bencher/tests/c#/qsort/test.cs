@@ -2,7 +2,7 @@ namespace qsort;
 
 internal static class Constants
 {
-    public static int DataToSortSize = 0;
+    public static uint DataToSortSize = 0;
 }
 
 internal static class Program 
@@ -19,13 +19,13 @@ internal static class Program
 
         var lines = File.ReadAllLines(dataToSortFile);
 
-        Constants.DataToSortSize = int.Parse(lines[0][2..]);
+        Constants.DataToSortSize = uint.Parse(lines[0][2..]);
 
-        var dataToSort = new uint[Constants.DataToSortSize];
+        var dataToSort = new ulong[Constants.DataToSortSize];
         var i = 0;
         foreach (var line in lines[1..])
         {
-            dataToSort[i] = uint.Parse(line);
+            dataToSort[i] = ulong.Parse(line);
             i++;
         }
 
