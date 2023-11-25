@@ -19,7 +19,7 @@ Matrix_t create_matrix(char *file_path) {
     char header[RECORD_SIZE] = {0};
 
     fgets(header, RECORD_SIZE, fstream);
-    MATRIX_DIMENSION = (unsigned int)strtol(&header[DIMENSION_OFFSET], NULL, 10);
+    MATRIX_DIMENSION = (unsigned int)strtoul(&header[DIMENSION_OFFSET], NULL, 10);
     Matrix_t matrix = matrix_init(MATRIX_DIMENSION);
 
     unsigned int line_size = MATRIX_DIMENSION * RECORD_SIZE;

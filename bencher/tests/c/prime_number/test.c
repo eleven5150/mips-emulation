@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 
     fclose(fstream);
 
-    PrimeNumberItem_t prime_number_count = (PrimeNumberItem_t)strtoll(buffer, NULL, 10);
+    PrimeNumberItem_t prime_number_count = (PrimeNumberItem_t)strtoull(buffer, NULL, 10);
     free(buffer);
 
     PrimeNumberItem_t curr_number = 0;
