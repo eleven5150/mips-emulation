@@ -63,7 +63,7 @@ fun createMatrix(filePath: String): Array<ULongArray> {
         }
     }
 
-    Matrix.print(matrix, Constants.MATRIX_DIMENSION);
+//    Matrix.print(matrix, Constants.MATRIX_DIMENSION);
     return matrix;
 }
 
@@ -80,5 +80,5 @@ fun main(args: Array<String>){
 
     val matrixResult: Array<ULongArray> = Matrix.matrixMultiply(Constants.MATRIX_DIMENSION, matrixA, matrixB);
 
-    Matrix.print(matrixResult, Constants.MATRIX_DIMENSION);
+//    Matrix.print(matrixResult, Constants.MATRIX_DIMENSION);
 }
