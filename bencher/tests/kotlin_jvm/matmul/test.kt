@@ -66,7 +66,7 @@ fun createMatrix(filePath: String): Array<ULongArray> {
 
 fun main(args: Array<String>){
     if (args.size < 2) {
-        println("Error! Both paths to matrix data required\\n")
+        println("Error! Both paths to matrix data required\n")
         exitProcess(1)
     }
     val matrixAPath: String = args[0];
