@@ -164,21 +164,21 @@
       "prime_number": {
         "path": "tests/kotlin_jvm/prime_number/test.kt",
         "commands": [
-          "kotlinc /app/tests/kotlin_jvm/prime_number/test.kt -include-runtime -d /app/tests/kotlin_jvm/prime_number/test.jar",
+          "kotlinc /app/tests/kotlin_jvm/prime_number/test.kt -include-runtime -d /app/tests/kotlin_jvm/prime_number/test.jar -opt-in=kotlin.ExperimentalUnsignedTypes",
           "bash -c 'time -p java -jar /app/tests/kotlin_jvm/prime_number/test.jar /app/data/prime_number_count.txt 2>&1'"
         ]
       },
       "matmul": {
         "path": "tests/kotlin_jvm/matmul/test.kt",
         "commands": [
-          "kotlinc /app/tests/kotlin_jvm/matmul/test.kt -include-runtime -d /app/tests/kotlin_jvm/matmul/test.jar",
+          "kotlinc /app/tests/kotlin_jvm/matmul/test.kt -include-runtime -d /app/tests/kotlin_jvm/matmul/test.jar -opt-in=kotlin.ExperimentalUnsignedTypes",
           "bash -c 'time -p java -jar /app/tests/kotlin_jvm/matmul/test.jar /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
         ]
       },
       "qsort": {
         "path": "tests/kotlin_jvm/qsort/test.kt",
         "commands": [
-          "kotlinc /app/tests/kotlin_jvm/qsort/test.kt -include-runtime -d /app/tests/kotlin_jvm/qsort/test.jar",
+          "kotlinc /app/tests/kotlin_jvm/qsort/test.kt -include-runtime -d /app/tests/kotlin_jvm/qsort/test.jar -opt-in=kotlin.ExperimentalUnsignedTypes",
           "bash -c 'time -p java -jar /app/tests/kotlin_jvm/qsort/test.jar /app/data/data_to_sort.txt 2>&1'"
         ]
       }
