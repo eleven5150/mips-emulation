@@ -18,7 +18,6 @@ object Matrix {
     }
 
     fun matrixMultiply(matrixDimension: Int, matrixA: Array<ULongArray>, matrixB: Array<ULongArray>): Array<ULongArray> {
-
         val matrixResult: Array<ULongArray> = Array(Constants.MATRIX_DIMENSION) { ULongArray(Constants.MATRIX_DIMENSION) };
         val tMatrixB: Array<ULongArray> = Array(Constants.MATRIX_DIMENSION) { ULongArray(Constants.MATRIX_DIMENSION) };
         for (i in 0..matrixDimension - 1) {
@@ -42,8 +41,6 @@ object Matrix {
 
 
 fun createMatrix(filePath: String): Array<ULongArray> {
-
-
     val data: String = File(filePath).inputStream().readBytes().toString(Charsets.UTF_8)
     val lines: MutableList<String> = data.split("\n").toMutableList();
 

@@ -1,21 +1,38 @@
-fun main(args : Array<String>) {
-    var primeNumberCount = if (args.size == 1) args[0].toInt() else 100;
+import kotlin.system.exitProcess
+import java.io.File
 
-    var number = 0;
-    while (primeNumberCount > 0) {
+fun main(args: Array<String>) {
+    if (args.size < 1) {
+        println("Error! File with prime number count must be specified\n")
+        exitProcess(1)
+    }
+
+    var primeNumberCountPath: String = args[0];
+
+    val data: String = File(primeNumberCountPath).inputStream().readBytes().toString(Charsets.UTF_8);
+    val lines: MutableList<String> = data.split("\n").toMutableList();
+
+    lines.removeLast();
+
+    var primeNumberCount: ULong = lines[0].toULong();
+
+    var number: ULong = 0uL;
+    while (primeNumberCount > 0uL) {
         number++;
-        var j = 0;
+        var j: ULong = 0uL;
 
-        for (i in 1..number) {
-            if (number % i == 0) {
+        var i: ULong = 1uL;
+        while (i <= number) {
+            if (number % i.toULong() == 0uL) {
                 j++;
             }
+            i++;
         }
 
-        if (j == 2) {
+        if (j == 2uL) {
             primeNumberCount--;
         }
     }
 
-    println("The latest prime number: " + number.toString());
+    println("The latest prime number: ${number}\n");
 }
