@@ -9,15 +9,15 @@ object QuickSort {
 
     fun Print(data: ULongArray, size: Int) {
         for (i in 0..size - 1) {
-            print("${data[i]} ");
+            print("${data[i]}\n");
         }
     }
 
-    fun Partition(data: ULongArray, low: Long, high: Long): Long {
+    fun Partition(data: ULongArray, low: Int, high: Int): Int {
         val pivot: ULong = data[high];
-        var i: Long = low - 1;
+        var i: Int = low - 1;
 
-        for (j in low..high) {
+        for (j in low..high - 1) {
             if (data[j] <= pivot) {
                 i++;
                 data[i] = data[j].also { data[j] = data[i] };
@@ -29,9 +29,9 @@ object QuickSort {
         return i + 1;
     }
 
-    fun Sort(data: ULongArray, low: Long, high: Long) {
+    fun Sort(data: ULongArray, low: Int, high: Int) {
         if (low < high) {
-            val pi = QuickSort.Partition(data, low, high);
+            val pi: Int = QuickSort.Partition(data, low, high);
 
             Sort(data, low, pi - 1);
             Sort(data, pi + 1, high);
@@ -61,7 +61,7 @@ fun main(args: Array<String>){
         dataToSort[it] = line.toULong();
     }
 
-    QuickSort.Sort(dataToSort, 0, Constants.DATA_TO_SORT_SIZE);
+    QuickSort.Sort(dataToSort, 0, Constants.DATA_TO_SORT_SIZE - 1);
 
     QuickSort.Print(dataToSort, Constants.DATA_TO_SORT_SIZE);
 }

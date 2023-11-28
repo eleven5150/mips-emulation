@@ -32,6 +32,6 @@ void quick_sort(SortData_t data, long long low, long long high) {
 
 void data_print(SortData_t data, unsigned int size) {
     for(int i = 0; i < size; i++) {
-        printf("%llu ", data[i]);
+        printf("%llu\n", data[i]);
     }
 }
