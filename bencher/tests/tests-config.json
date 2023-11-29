@@ -183,42 +183,6 @@
         ]
       }
     },
-    "kotlin_native": {
-      "version": {
-        "path": "tests/kotlin_native/hello_world/test.kt",
-        "commands": [
-          "kotlinc-native -version"
-        ]
-      },
-      "hello_world": {
-        "path": "tests/kotlin_native/hello_world/test.kt",
-        "commands": [
-          "kotlinc-native /app/tests/kotlin_native/hello_world/test.kt -o /app/tests/kotlin_native/hello_world/test",
-          "bash -c 'time -p /app/tests/kotlin_native/hello_world/test.kexe 2>&1'"
-        ]
-      },
-      "prime_number": {
-        "path": "tests/kotlin_native/prime_number/test.kt",
-        "commands": [
-          "kotlinc-native /app/tests/kotlin_native/prime_number/test.kt -o /app/tests/kotlin_native/prime_number/test",
-          "bash -c 'time -p /app/tests/kotlin_native/prime_number/test.kexe /app/data/prime_number_count.txt 2>&1'"
-        ]
-      },
-      "matmul": {
-        "path": "tests/kotlin_native/matmul/test.kt",
-        "commands": [
-          "kotlinc-native /app/tests/kotlin_native/matmul/test.kt -o /app/tests/kotlin_native/matmul/test",
-          "bash -c 'time -p /app/tests/kotlin_native/matmul/test.kexe /app/data/matrix_a.csv /app/data/matrix_b.csv 2>&1'"
-        ]
-      },
-      "qsort": {
-        "path": "tests/kotlin_native/qsort/test.kt",
-        "commands": [
-          "kotlinc-native /app/tests/kotlin_native/qsort/test.kt -o /app/tests/kotlin_native/qsort/test",
-          "bash -c 'time -p /app/tests/kotlin_native/qsort/test.kexe /app/data/data_to_sort.txt 2>&1'"
-        ]
-      }
-    },
     "python": {
       "version": {
         "path": "tests/python/hello_world/test.py",

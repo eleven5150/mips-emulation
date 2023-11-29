@@ -34,12 +34,6 @@
       "matmul",
       "qsort"
     ],
-    "kotlin_native": [
-      "hello_world",
-      "prime_number",
-      "matmul",
-      "qsort"
-    ],
     "python": [
       "hello_world",
       "prime_number",

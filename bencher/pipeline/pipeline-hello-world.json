@@ -19,9 +19,6 @@
     "kotlin_jvm": [
       "hello_world"
     ],
-    "kotlin_native": [
-      "hello_world"
-    ],
     "python": [
       "hello_world"
     ],
