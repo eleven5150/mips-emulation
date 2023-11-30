@@ -28,12 +28,7 @@ const Matrix = {
             for (let j = 0; j < matrix_dimension; j++) {
                 let sum = BigInt(0);
                 for (let k = 0; k < matrix_dimension; k++) {
-                    // console.log(sum)
-                    // console.log(matrix_a[i][k])
-                    // console.log(t_matrix_b[j][k])
                     sum = sum + matrix_a[i][k] * t_matrix_b[j][k];
-                    // console.log(sum)
-                    // console.log("")
                 }
                 matrix_result[i][j] = sum;
             }
