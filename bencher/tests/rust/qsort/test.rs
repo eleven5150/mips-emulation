@@ -1,49 +1,71 @@
+use std::env;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+use std::process::exit;
 
-use std::fs;
-fn main() {
-    let data = fs::read_to_string("tests/datasets/qsort/dataset.txt").expect("Unable to read file");
-    let array = data.split_whitespace();
-    let mut vec = Vec::<i32>::new();
-    for x in array{
-        let y = x.parse::<i32>().unwrap();
-        vec.push(y);
+static mut DATA_TO_SORT_SIZE: u64 = 0;
+
+fn partition(data: &mut Vec<u64>, low: i64, high: i64) -> i64 {
+    let pivot = data[high as usize];
+    let mut i: i64 = low - 1;
+
+    for j in low as usize..high as usize {
+        if data[j] <= pivot {
+            i += 1;
+            (data[i as usize], data[j]) = (data[j], data[i as usize]);
         }
-    quick_sort(&mut vec);
+    }
+
+    (data[i as usize + 1], data[high as usize]) = (data[high as usize], data[i as usize + 1]);
+
+    return i + 1;
 }
 
- fn quick_sort<T: Ord>(arr: &mut [T]) {
-    let len = arr.len();
-    _quick_sort(arr, 0, (len - 1) as isize);
-}
 
-fn _quick_sort<T: Ord>(arr: &mut [T], low: isize, high: isize) {
+fn quick_sort(data_to_sort: &mut Vec<u64>, low: i64, high: i64) {
     if low < high {
-        let p = partition(arr, low, high);
-        _quick_sort(arr, low, p - 1);
-        _quick_sort(arr, p + 1, high);
+        let pi: i64 = partition(data_to_sort, low, high);
+
+        quick_sort(data_to_sort, low, pi - 1);
+        quick_sort(data_to_sort, pi, high);
     }
 }
 
-fn partition<T: Ord>(arr: &mut [T], low: isize, high: isize) -> isize {
-    let pivot = high as usize;
-    let mut store_index = low - 1;
-    let mut last_index = high;
-
-    loop {
-        store_index += 1;
-        while arr[store_index as usize] < arr[pivot] {
-            store_index += 1;
-        }
-        last_index -= 1;
-        while last_index >= 0 && arr[last_index as usize] > arr[pivot] {
-            last_index -= 1;
-        }
-        if store_index >= last_index {
-            break;
-        } else {
-            arr.swap(store_index as usize, last_index as usize);
-        }
+fn data_print(data_to_sort: &Vec<u64>) {
+    for it in data_to_sort {
+        println!("{}", it);
     }
-    arr.swap(store_index as usize, pivot as usize);
-    store_index
+}
+
+
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    if args.len() < 1 {
+        println!("Error! File with data to sort must be specified\n");
+        exit(1);
+    }
+
+    let file_path: &String = &args[1];
+    let file: File = File::open(file_path).unwrap();
+    let mut reader: BufReader<File> = BufReader::new(file);
+
+    let mut first_line: String = String::new();
+    let len: usize = reader.read_line(&mut first_line).unwrap();
+
+    unsafe {
+        DATA_TO_SORT_SIZE = first_line[2..].trim().parse::<u64>().unwrap();
+    }
+
+    let mut data_to_sort: Vec<u64> = Vec::new();
+    for line in reader.lines() {
+        data_to_sort.push(line.unwrap().trim().parse::<u64>().unwrap());
+    }
+
+    unsafe {
+        quick_sort(&mut data_to_sort, 0, (DATA_TO_SORT_SIZE - 1) as i64);
+    }
+
+    data_print(&data_to_sort);
 }
