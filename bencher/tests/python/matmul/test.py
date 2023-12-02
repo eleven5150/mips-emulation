@@ -61,7 +61,7 @@ def main(args: list[str]) -> None:
 
     matrix_result: list[list[int]] = matrix_multiply(MATRIX_DIMENSION, matrix_a, matrix_b)
 
-    matrix_print(matrix_result)
+    # matrix_print(matrix_result)
 
 
 if __name__ == '__main__':

@@ -63,5 +63,5 @@ fun main(args: Array<String>){
 
     QuickSort.Sort(dataToSort, 0, Constants.DATA_TO_SORT_SIZE - 1);
 
-    QuickSort.Print(dataToSort, Constants.DATA_TO_SORT_SIZE);
+    // QuickSort.Print(dataToSort, Constants.DATA_TO_SORT_SIZE);
 }

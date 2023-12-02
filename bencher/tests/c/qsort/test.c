@@ -32,10 +32,11 @@ int main(int argc, char** argv) {
         data_to_sort[i] = (SortItem_t)strtoull(buffer, NULL, 10);
         i++;
     }
+    fclose(fstream);
 
     quick_sort(data_to_sort, 0, DATA_TO_SORT_SIZE - 1);
 //    data_print(data_to_sort, DATA_TO_SORT_SIZE);
-    fclose(fstream);
+
     free(data_to_sort);
 
     return 0;

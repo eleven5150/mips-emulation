@@ -53,7 +53,7 @@ def main(args: list[str]) -> None:
 
     sorted_data: list[int] = quick_sort(data_to_sort, 0, DATA_TO_SORT_SIZE - 1)
 
-    data_print(sorted_data)
+    # data_print(sorted_data)
 
 
 if __name__ == '__main__':

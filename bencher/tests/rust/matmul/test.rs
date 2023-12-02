@@ -89,6 +89,6 @@ fn main() {
 
     unsafe {
        let matrix_result: Vec<Vec<u64>> = matrix_multiply(MATRIX_DIMENSION, matrix_a, matrix_b);
-        print_matrix(&matrix_result);
+//         print_matrix(&matrix_result);
     }
 }

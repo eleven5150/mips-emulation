@@ -67,5 +67,5 @@ fn main() {
         quick_sort(&mut data_to_sort, 0, (DATA_TO_SORT_SIZE - 1) as i64);
     }
 
-    data_print(&data_to_sort);
+//     data_print(&data_to_sort);
 }
