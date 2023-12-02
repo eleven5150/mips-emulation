@@ -1,9 +1,10 @@
+import os
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
 from extensions.logging_extensions import LOGGER, Color
-from extensions.path_extensions import get_root_directory, path_must_exist
+from extensions.path_extensions import get_root_directory, path_must_exist, path_safe_mkdir
 from pipeline import Pipeline
 from tests.settings import DOCKER_COMMAND
 from tests.tests_config_data import TestsConfigData
@@ -124,14 +125,15 @@ class TestsConfig:
                     self.languages[language_name].tests[test_name].exec_test(pipeline.name, language_name)
                     if pipeline.name != "Versions":
                         LOGGER.info(self.get_test_result(language_name, test_name, it))
+                        self.save_test_result(language_name, test_name, it)
 
     def get_test_result(self, language_name: str, test_name: str, number: int) -> str:
-
-        result = self.languages[language_name].tests[test_name].result[number].get_format_result()
+        result: TestResult = self.languages[language_name].tests[test_name].result[number]
+        result_string: str = result.get_format_result()
         return f"Language -> {language_name}\n" \
                f"Test -> {test_name}\n" \
                f"Number -> {number + 1}\n" \
-               f"{result}"
+               f"{result_string}"
 
     @classmethod
     def data_to_tests_config(cls, data: TestsConfigData) -> "TestsConfig":
@@ -150,3 +152,17 @@ class TestsConfig:
             sum_of_times += result.real_time
 
         return sum_of_times/len(self.languages[lang].tests[test].result)
+
+    def save_test_result(self, language_name: str, test_name: str, number: int) -> None:
+        output_dir: Path = Path(get_root_directory() / "output")
+        path_safe_mkdir(output_dir)
+        language_dir: Path = Path(output_dir / language_name)
+        path_safe_mkdir(language_dir)
+        test_dir: Path = Path(language_dir / test_name)
+        path_safe_mkdir(test_dir)
+        output_file_path: Path = Path(test_dir / "output.txt")
+        if number == 0 and os.path.exists(output_file_path):
+            os.remove(output_file_path)
+        result: TestResult = self.languages[language_name].tests[test_name].result[number]
+        with open(output_file_path, "a") as output_file:
+            output_file.write(f"{number + 1}:{result.real_time}\n")

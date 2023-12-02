@@ -1,5 +1,8 @@
+from pathlib import Path
+
 from matplotlib import pyplot as plt
 
+from extensions.path_extensions import path_safe_mkdir, get_root_directory
 from pipeline import Pipeline, NOT_TEST_PIPELINES, NotTestPipelineException
 from tests.tests_config import TestsConfig
 
@@ -24,4 +27,6 @@ def generate_bar_graph(pipeline: Pipeline, tests_config: TestsConfig) -> None:
     plt.ylabel("Time, s")
     plt.title(f"Results for {pipeline.test}")
     plt.tight_layout()
-    plt.savefig("output.jpg", dpi=600)
+    output_dir: Path = Path(get_root_directory() / "output")
+    path_safe_mkdir(output_dir)
+    plt.savefig(Path(output_dir / "output.jpg"), dpi=600)

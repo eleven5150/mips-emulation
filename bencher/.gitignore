@@ -14,3 +14,4 @@ tests/*/*/*.elf
 venv
 win_venv
 data/*
+output

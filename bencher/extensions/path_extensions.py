@@ -34,3 +34,8 @@ def path_listdir(my_path: str | Path) -> Iterable[Path]:
     for p in os.listdir(my_path):
         yield my_path / p
 
+
+def path_safe_mkdir(path: str | Path) -> None:
+    Path(path).mkdir(parents=True, exist_ok=True)
+
+
