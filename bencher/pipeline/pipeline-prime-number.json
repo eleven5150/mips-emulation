@@ -1,0 +1,29 @@
+{
+  "$schema": "pipeline.schema.json",
+  "name": "Prime number",
+  "description": "Pipeline with calculating prime numbers tests",
+  "test": "prime_number",
+  "pipeline": {
+    "c": [
+      "prime_number"
+    ],
+    "c#": [
+      "prime_number"
+    ],
+    "cython": [
+      "prime_number"
+    ],
+    "javascript": [
+      "prime_number"
+    ],
+    "kotlin_jvm": [
+      "prime_number"
+    ],
+    "python": [
+      "prime_number"
+    ],
+    "rust": [
+      "prime_number"
+    ]
+  }
+}

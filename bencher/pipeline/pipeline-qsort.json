@@ -1,0 +1,29 @@
+{
+  "$schema": "pipeline.schema.json",
+  "name": "Quick sort",
+  "description": "Pipeline with quick sort tests",
+  "test": "qsort",
+  "pipeline": {
+    "c": [
+      "qsort"
+    ],
+    "c#": [
+      "qsort"
+    ],
+    "cython": [
+      "qsort"
+    ],
+    "javascript": [
+      "qsort"
+    ],
+    "kotlin_jvm": [
+      "qsort"
+    ],
+    "python": [
+      "qsort"
+    ],
+    "rust": [
+      "qsort"
+    ]
+  }
+}

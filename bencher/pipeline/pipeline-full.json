@@ -5,43 +5,36 @@
   "test": "full",
   "pipeline": {
     "c": [
-      "hello_world",
       "prime_number",
       "matmul",
       "qsort"
     ],
     "c#": [
-      "hello_world",
       "prime_number",
       "matmul",
       "qsort"
     ],
     "cython": [
-      "hello_world",
       "prime_number",
       "matmul",
       "qsort"
     ],
     "javascript": [
-      "hello_world",
       "prime_number",
       "matmul",
       "qsort"
     ],
     "kotlin_jvm": [
-      "hello_world",
       "prime_number",
       "matmul",
       "qsort"
     ],
     "python": [
-      "hello_world",
       "prime_number",
       "matmul",
       "qsort"
     ],
     "rust": [
-      "hello_world",
       "prime_number",
       "matmul",
       "qsort"

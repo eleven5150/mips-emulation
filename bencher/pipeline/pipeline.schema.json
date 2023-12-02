@@ -20,7 +20,10 @@
         "full",
         "hello_world",
         "versions",
-        "local"
+        "local",
+        "matmul",
+        "prime_number",
+        "qsort"
       ]
     },
     "pipeline": {
