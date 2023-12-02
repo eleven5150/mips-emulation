@@ -16,23 +16,27 @@ from tests.tests_config import TestsConfig
 
 def parse_args(arguments: list):
     parser = argparse.ArgumentParser(description="Bench tool or comparing the speed of programming languages")
-    parser.add_argument('-p', '--pipeline',
+    parser.add_argument("-p", "--pipeline",
                         type=str,
                         required=True,
                         choices=get_all_pipeline_names(),
-                        help='Pipeline for testing')
-    parser.add_argument('-o', '--output-file',
+                        help="Pipeline for testing")
+    parser.add_argument("-o", "--output-file",
                         type=str,
-                        help='Path to file with test result')
-    parser.add_argument('-i', '--image',
-                        action='store_true',
-                        help='Creates an image graph.jpeg with a graph comparing execution speeds')
-    parser.add_argument('-g', '--generate',
-                        action='store_true',
-                        help='Generates a new data for tests')
-    parser.add_argument('-d', '--debug',
-                        action='store_true',
-                        help='Enables debug mode')
+                        help="Path to file with test result")
+    parser.add_argument("-i", "--image",
+                        action="store_true",
+                        help="Creates an image graph.jpeg with a graph comparing execution speeds")
+    parser.add_argument("-g", "--generate",
+                        action="store_true",
+                        help="Generates a new data for tests")
+    parser.add_argument("-c", "--count",
+                        type=int,
+                        default=1,
+                        help="Number of time to repeat tests")
+    parser.add_argument("-d", "--debug",
+                        action="store_true",
+                        help="Enables debug mode")
     return parser.parse_args(arguments)
 
 
@@ -57,10 +61,11 @@ def main(raw_arguments: list) -> None:
     pipeline: Pipeline = get_pipeline(args.pipeline)
     LOGGER.info(f"Pipeline name -> {pipeline.name}")
     LOGGER.info(f"Pipeline description -> {pipeline.description}")
+    LOGGER.info(f"Number of repeats -> {args.count}")
     pipeline.print_pipeline()
     tests_config_data: TestsConfigData = get_tests_config_data()
     tests_config: TestsConfig = TestsConfig.data_to_tests_config(tests_config_data)
-    tests_config.exec_pipeline(pipeline)
+    tests_config.exec_pipeline(pipeline, args.count)
 
     if args.image:
         generate_bar_graph(pipeline, tests_config)

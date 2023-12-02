@@ -76,7 +76,7 @@ class Command:
 class Test:
     path: Path
     commands: list[Command]
-    result: TestResult = None
+    result: list[TestResult]
 
     @classmethod
     def from_config(cls, data: dict[str, any]) -> "Test":
@@ -85,6 +85,7 @@ class Test:
         return Test(
             path=test_path,
             commands=[Command.from_string(it) for it in data["commands"]],
+            result=list()
         )
 
     def exec_test(self, pipeline_name: str, language_name: str) -> None:
@@ -94,7 +95,7 @@ class Test:
             LOGGER.info(f"Version:\n"
                         f"{results[-1].decode('ascii')}")
         else:
-            self.result = TestResult.from_stdout(results[-1])
+            self.result.append(TestResult.from_stdout(results[-1]))
 
 
 @dataclass
@@ -115,19 +116,21 @@ class TestsConfig:
     description: str
     languages: dict[str, ProgLang]
 
-    def exec_pipeline(self, pipeline: Pipeline):
-        for language_name in pipeline.pipeline:
-            for test_name in pipeline.pipeline[language_name]:
-                LOGGER.debug(f"{language_name} -> {test_name}")
-                self.languages[language_name].tests[test_name].exec_test(pipeline.name, language_name)
-                if pipeline.name != "Versions":
-                    LOGGER.info(self.get_test_result(language_name, test_name))
+    def exec_pipeline(self, pipeline: Pipeline, count: int):
+        for it in range(count):
+            for language_name in pipeline.pipeline:
+                for test_name in pipeline.pipeline[language_name]:
+                    LOGGER.debug(f"{language_name} -> {test_name}")
+                    self.languages[language_name].tests[test_name].exec_test(pipeline.name, language_name)
+                    if pipeline.name != "Versions":
+                        LOGGER.info(self.get_test_result(language_name, test_name, it))
 
-    def get_test_result(self, language_name: str, test_name: str) -> str:
+    def get_test_result(self, language_name: str, test_name: str, number: int) -> str:
 
-        result = self.languages[language_name].tests[test_name].result.get_format_result()
+        result = self.languages[language_name].tests[test_name].result[number].get_format_result()
         return f"Language -> {language_name}\n" \
                f"Test -> {test_name}\n" \
+               f"Number -> {number + 1}\n" \
                f"{result}"
 
     @classmethod
@@ -142,4 +145,8 @@ class TestsConfig:
         )
 
     def get_result_by_lang_and_test(self, lang: str, test: str) -> float:
-        return self.languages[lang].tests[test].result.real_time
+        sum_of_times: int = 0
+        for result in self.languages[lang].tests[test].result:
+            sum_of_times += result.real_time
+
+        return sum_of_times/len(self.languages[lang].tests[test].result)
