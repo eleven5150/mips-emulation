@@ -58,8 +58,7 @@ int main(int argc, char *argv[]) {
 
     Matrix_t matrix_result = matrix_multiply(MATRIX_DIMENSION, matrix_a, matrix_b);
 
-    printf("%llu\t", matrix_result[1][1]);
-//    matrix_print(matrix_result, MATRIX_DIMENSION);
+    // matrix_print(matrix_result, MATRIX_DIMENSION);
 
     matrix_free(MATRIX_DIMENSION, matrix_a);
     matrix_free(MATRIX_DIMENSION, matrix_b);

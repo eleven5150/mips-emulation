@@ -5,7 +5,7 @@ long long partition(SortData_t data, long long low, long long high) {
     SortItem_t pivot = data[high];
     long long i = (low - 1);
 
-    for (SortItem_t j = low; j <= high - 1; j++) {
+    for (SortItem_t j = low; j < high; j++) {
         if (data[j] <= pivot) {
             i++;
             temp = data[i];

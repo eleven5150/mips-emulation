@@ -36,6 +36,7 @@ Matrix_t matrix_multiply(unsigned int matrix_dimension, Matrix_t matrix_a, Matri
     for (i = 0; i < matrix_dimension; ++i)
         for (j = 0; j < matrix_dimension; ++j)
             t_matrix_b[i][j] = matrix_b[j][i];
+
     for (i = 0; i < matrix_dimension; ++i) {
         MatrixRow_t p = matrix_a[i], q = matrix_result[i];
         for (j = 0; j < matrix_dimension; ++j) {
