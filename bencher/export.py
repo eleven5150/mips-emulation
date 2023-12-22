@@ -8,6 +8,10 @@ from tests.tests_config import TestsConfig
 
 
 def generate_bar_graph(pipeline: Pipeline, tests_config: TestsConfig) -> None:
+    def addlabels(x, y):
+        for i in range(len(x)):
+            plt.text(i, y[i], y[i], ha="center")
+
     if pipeline.test in NOT_TEST_PIPELINES:
         raise NotTestPipelineException(f"Can't generate graph for this pipeline {pipeline.name}")
 
@@ -21,6 +25,7 @@ def generate_bar_graph(pipeline: Pipeline, tests_config: TestsConfig) -> None:
     results = dict(sorted(results.items(), key=lambda item: item[1]))
 
     plt.bar(results.keys(), results.values(), align="center")
+    addlabels(results.keys(), list(results.values()))
 
     plt.xlabel("Programming language")
     plt.xticks(rotation=30)
