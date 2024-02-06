@@ -5,46 +5,47 @@ const fs = require('fs');
 
 let MATRIX_DIMENSION = 0;
 
-const Matrix = {
-    init: function (matrix_dimension) {
-        const matrix = new Array(matrix_dimension);
-        for (let i = 0; i < matrix_dimension; i++)
-            matrix[i] = new BigUint64Array(matrix_dimension);
-        return matrix;
-    },
-    transpose: function (matrix, matrix_dimension) {
-        let t_matrix = Matrix.init(matrix_dimension);
-        for (let i = 0; i < matrix_dimension; i++) {
-            for (let j = 0; j < matrix_dimension; j++) {
-                t_matrix[i][j] = matrix[j][i];
-            }
+function matrix_init(matrix_dimension) {
+    const matrix = new Array(matrix_dimension);
+    for (let i = 0; i < matrix_dimension; i++)
+        matrix[i] = new BigUint64Array(matrix_dimension);
+    return matrix;
+}
+
+function matrix_transpose(matrix, matrix_dimension) {
+    let t_matrix = matrix_init(matrix_dimension);
+    for (let i = 0; i < matrix_dimension; i++) {
+        for (let j = 0; j < matrix_dimension; j++) {
+            t_matrix[i][j] = matrix[j][i];
         }
-        return t_matrix;
-    },
-    multiply: function (matrix_a, matrix_b, matrix_dimension) {
-        let matrix_result = Matrix.init(matrix_dimension);
-        const t_matrix_b = Matrix.transpose(matrix_b, matrix_dimension);
-        for (let i = 0; i < matrix_dimension; i++) {
-            for (let j = 0; j < matrix_dimension; j++) {
-                let sum = BigInt(0);
-                for (let k = 0; k < matrix_dimension; k++) {
-                    sum = sum + matrix_a[i][k] * t_matrix_b[j][k];
-                }
-                matrix_result[i][j] = sum;
-            }
-        }
-        return matrix_result;
-    },
-    print: function (matrix, matrix_dimension) {
-        for (let i = 0; i < matrix_dimension; i++) {
-            for (let j = 0; j < matrix_dimension; j++) {
-                process.stdout.write(`${matrix[i][j]}\t`);
-            }
-            console.log("")
-        }
-        console.log("\n")
     }
-};
+    return t_matrix;
+}
+
+function matrix_multiply(matrix_a, matrix_b, matrix_dimension) {
+    let matrix_result = matrix_init(matrix_dimension);
+    const t_matrix_b = matrix_transpose(matrix_b, matrix_dimension);
+    for (let i = 0; i < matrix_dimension; i++) {
+        for (let j = 0; j < matrix_dimension; j++) {
+            let sum = BigInt(0);
+            for (let k = 0; k < matrix_dimension; k++) {
+                sum = sum + matrix_a[i][k] * t_matrix_b[j][k];
+            }
+            matrix_result[i][j] = sum;
+        }
+    }
+    return matrix_result;
+}
+
+function matrix_print(matrix, matrix_dimension) {
+    for (let i = 0; i < matrix_dimension; i++) {
+        for (let j = 0; j < matrix_dimension; j++) {
+            process.stdout.write(`${matrix[i][j]}\t`);
+        }
+        console.log("")
+    }
+    console.log("\n")
+}
 
 function create_matrix(file_path) {
 
@@ -59,7 +60,7 @@ function create_matrix(file_path) {
     strings.pop();
     let matrix_dimension_string = strings[0];
     MATRIX_DIMENSION = matrix_dimension_string.slice(2);
-    let matrix = Matrix.init(MATRIX_DIMENSION);
+    let matrix = matrix_init(MATRIX_DIMENSION);
     strings = strings.slice(1)
     for (const line_num in strings) {
         let records = strings[line_num].split(/,/);
@@ -71,7 +72,8 @@ function create_matrix(file_path) {
         j = 0;
     }
 
-    // Matrix.print(matrix, MATRIX_DIMENSION)
+    // matrix_print(matrix, MATRIX_DIMENSION)
+    process.stdout.write(`${matrix[0][0]}\n`);
     return matrix;
 }
 
@@ -91,9 +93,10 @@ function main(argc, argv) {
         return 1;
     }
 
-    let matrix_result = Matrix.multiply(matrix_a, matrix_b, MATRIX_DIMENSION);
+    let matrix_result = matrix_multiply(matrix_a, matrix_b, MATRIX_DIMENSION);
 
-    // Matrix.print(matrix_result, MATRIX_DIMENSION)
+    // matrix_print(matrix_result, MATRIX_DIMENSION)
+    process.stdout.write(`${matrix_result[0][0]}\n`);
 }
 
 main(process.argv.length, process.argv);
