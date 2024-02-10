@@ -7,8 +7,7 @@ tests/*/*/*.elf
 /tests/c#/*/obj
 /tests/cython/*/*.c
 /tests/cython/*/*.o
-/tests/kotlin_jvm/hello_world/test.jar
-/tests/kotlin_jvm/prime_number/test.jar
+/tests/kotlin_jvm/*/*.jar
 /tests/c#/hello_world/bin/
 /tests/c#/matmul/bin/
 venv
