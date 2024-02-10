@@ -1,0 +1,43 @@
+{
+  "$schema": "pipeline.schema.json",
+  "name": "Full",
+  "description": "Pipeline with full processing",
+  "test": "full",
+  "pipeline": {
+    "c": [
+      "prime_number",
+      "matmul",
+      "qsort"
+    ],
+    "c#": [
+      "prime_number",
+      "matmul",
+      "qsort"
+    ],
+    "cython": [
+      "prime_number",
+      "matmul",
+      "qsort"
+    ],
+    "javascript": [
+      "prime_number",
+      "matmul",
+      "qsort"
+    ],
+    "kotlin_jvm": [
+      "prime_number",
+      "matmul",
+      "qsort"
+    ],
+    "python": [
+      "prime_number",
+      "matmul",
+      "qsort"
+    ],
+    "rust": [
+      "prime_number",
+      "matmul",
+      "qsort"
+    ]
+  }
+}

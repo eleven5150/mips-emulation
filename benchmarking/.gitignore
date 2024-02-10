@@ -1,0 +1,16 @@
+tests/*/*/*.elf
+/tests/*/*/.idea
+/tests/*/*/target
+/tests/c/*/cmake-build-debug/
+/tests/c/*/CMakeLists.txt
+/tests/c#/*/bin
+/tests/c#/*/obj
+/tests/cython/*/*.c
+/tests/cython/*/*.o
+/tests/kotlin_jvm/*/*.jar
+/tests/c#/hello_world/bin/
+/tests/c#/matmul/bin/
+venv
+win_venv
+data/*
+output

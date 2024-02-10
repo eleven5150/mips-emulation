@@ -1,0 +1,29 @@
+{
+  "$schema": "pipeline.schema.json",
+  "name": "Versions",
+  "description": "Pipeline with printing languages versions",
+  "test": "versions",
+  "pipeline": {
+    "c": [
+      "version"
+    ],
+    "c#": [
+      "version"
+    ],
+    "cython": [
+      "version"
+    ],
+    "javascript": [
+      "version"
+    ],
+    "kotlin_jvm": [
+      "version"
+    ],
+    "python": [
+      "version"
+    ],
+    "rust": [
+      "version"
+    ]
+  }
+}

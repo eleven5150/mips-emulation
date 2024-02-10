@@ -1,0 +1,29 @@
+{
+  "$schema": "pipeline.schema.json",
+  "name": "Matrix multiplication",
+  "description": "Pipeline with matrix multiplication tests",
+  "test": "matmul",
+  "pipeline": {
+    "c": [
+      "matmul"
+    ],
+    "c#": [
+      "matmul"
+    ],
+    "cython": [
+      "matmul"
+    ],
+    "javascript": [
+      "matmul"
+    ],
+    "kotlin_jvm": [
+      "matmul"
+    ],
+    "python": [
+      "matmul"
+    ],
+    "rust": [
+      "matmul"
+    ]
+  }
+}

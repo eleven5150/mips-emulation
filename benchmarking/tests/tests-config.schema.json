@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TestsConfig",
+  "description": "Config with languages and tests for them",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Schema reference"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "languages": {
+      "$ref": "#/definitions/Languages"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "languages"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Languages": {
+      "type": "object",
+      "description": "Languages list",
+      "items": {
+        "$ref": "#/definitions/Tests"
+      }
+    },
+    "Tests": {
+      "type": "object",
+      "description": "Language with tests",
+      "items": {
+        "type": "array"
+      }
+    }
+  }
+}
