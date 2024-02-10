@@ -25,7 +25,7 @@ install_docker(){
 }
 
 docker_build(){
-    sudo docker build -t FPLB .
+    sudo docker build -t fplb .
 }
 
 python_env(){
