@@ -1,0 +1,77 @@
+<mxfile host="Electron" modified="2023-09-14T19:25:04.479Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.5 Chrome/114.0.5735.243 Electron/25.3.1 Safari/537.36" etag="lq3lCDqH_rZrNpOXVpzH" version="21.6.5" type="device">
+  <diagram name="Page-1" id="jqRc2B4Isd-5mT1CqQfI">
+    <mxGraphModel dx="2026" dy="815" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-14" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="201.25" width="420" height="222.5" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="VhEDyWGdPOX37bNgk6-r-12" target="VhEDyWGdPOX37bNgk6-r-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="65" y="90" />
+              <mxPoint x="700" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-12" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-60" y="182.5" width="250" height="245" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-1" value="Разработка девайсов нужна" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-350" y="275" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-2" value="Для из разработки и отладки нужны эмуляторы" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-200" y="275" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-3" value="Нету эмулятора, который бы был и быстрым и эффективным в использовании" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-10" y="265" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-4" value="Нужно решение, обладающее обеими характеристикиами" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="287.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="VhEDyWGdPOX37bNgk6-r-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="407.5" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="855" y="407.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-5" value="Для обоих характеристик нужна соответствующая православная архитектура" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="277.5" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-7" value="Отдельная статья" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="930" y="395.5" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-8" value="Также для них важен язык программирования, на котором написан эмялятор" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="950" y="272.5" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-9" value="Нужно подобрать язык программирования, который подходит под оба критерия" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="277.5" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-10" value="Современное ПО обладает все большей ресурсоемкостью, что требует больших ресурсов для исполнения" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="267.5" width="170" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-11" value="Современное ПО становится все сложнее и комплексее, требуется больше ресурсов для конфигурации эмулятора под него" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="265" width="170" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-13" value="Проблема" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="25" y="210" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-15" value="Актуальность" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="350" y="220" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-17" value="Решение" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="365" y="58" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-19" value="Для сравнения скорости нужно провести тестирование" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="287.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VhEDyWGdPOX37bNgk6-r-20" value="Придумать тесты на основе самых частых действий эмулятора" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="288" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
