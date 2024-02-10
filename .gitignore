@@ -1,13 +1,2 @@
-
 *.pyc
-
-
 .idea/
-
-
-bencher/venv/
-
-bencher/tests/c/qsort/dataset.txt
-
-
-*.elf
