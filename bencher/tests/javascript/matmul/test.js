@@ -6,7 +6,7 @@ const fs = require('fs');
 let MATRIX_DIMENSION = 0;
 
 function matrix_init(matrix_dimension) {
-    const matrix = new Array(matrix_dimension);
+    let matrix = new Array(matrix_dimension);
     for (let i = 0; i < matrix_dimension; i++)
         matrix[i] = new BigUint64Array(matrix_dimension);
     return matrix;
@@ -62,9 +62,9 @@ function create_matrix(file_path) {
     MATRIX_DIMENSION = matrix_dimension_string.slice(2);
     let matrix = matrix_init(MATRIX_DIMENSION);
     strings = strings.slice(1)
-    for (const line_num in strings) {
+    for (let line_num in strings) {
         let records = strings[line_num].split(/,/);
-        for (const record_num in records) {
+        for (let record_num in records) {
             matrix[i][j] = BigInt(parseInt(records[record_num], 10));
             j++;
         }
@@ -88,10 +88,6 @@ function main(argc, argv) {
 
     let matrix_a = create_matrix(matrix_a_file);
     let matrix_b = create_matrix(matrix_b_file);
-
-    if (!matrix_a || !matrix_b) {
-        return 1;
-    }
 
     let matrix_result = matrix_multiply(matrix_a, matrix_b, MATRIX_DIMENSION);
 
