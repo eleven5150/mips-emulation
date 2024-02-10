@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "BencherPipeline",
-  "description": "Pipeline definition for Bencher",
+  "title": "FPLB Pipeline",
+  "description": "Pipeline definition for FPLB",
   "type": "object",
   "properties": {
     "$schema": {

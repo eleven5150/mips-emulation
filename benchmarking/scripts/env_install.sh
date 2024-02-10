@@ -25,7 +25,7 @@ install_docker(){
 }
 
 docker_build(){
-    sudo docker build -t bench .
+    sudo docker build -t FPLB .
 }
 
 python_env(){
@@ -44,7 +44,7 @@ main() {
     docker_build
     python_env
 
-    python bencher.py --help
+    python . --help
 }
 
 main

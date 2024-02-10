@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 
-LOGGER = logging.getLogger("bencher")
+LOGGER = logging.getLogger("FPLB")
 
 
 class CustomFormatter(logging.Formatter):

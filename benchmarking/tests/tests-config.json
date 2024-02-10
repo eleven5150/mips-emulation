@@ -1,7 +1,7 @@
 {
   "$schema": "tests-config.schema.json",
-  "name": "Languages Bencher",
-  "description": "Configuration for speed comparison of programming languages for emulator development",
+  "name": "Flexible Programming Language Benchmarking",
+  "description": "Configuration for speed comparison of programming languages",
   "languages": {
     "c": {
       "version": {
