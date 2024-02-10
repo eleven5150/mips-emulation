@@ -34,13 +34,16 @@ def main(raw_args):
 
     cdef PrimeNumberItem_t curr_number = 0
     cdef PrimeNumberItem_t j = 0
+    cdef PrimeNumberItem_t i = 1
     while prime_number_count > 0:
         curr_number += 1
 
         j = 0
-        for i in range(1, curr_number + 1):
+        i = 1
+        for _ in range(curr_number):
             if curr_number % i == 0:
                 j += 1
+            i += 1
 
         if j == 2:
             prime_number_count -= 1
