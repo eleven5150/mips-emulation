@@ -4,7 +4,7 @@
     "max_value": 16384
   },
   "matrix": {
-    "size": 500,
+    "size": 2000,
     "max_value": 65536
   },
   "data_to_sort" :{
