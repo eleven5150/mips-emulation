@@ -98,7 +98,10 @@ class Test:
         results_lines: list[str] = results_data.split("\n")
         results_lines.pop(-1)
         for line in results_lines:
-            time: float = float(line.split(":")[1])
+            time_str: str = line.split(":")[1]
+            if time_str == "None":
+                time_str = "0"
+            time: float = float(time_str)
             result.append(TestResult(real_time=time))
         return cls(
             path=results_file_path,
