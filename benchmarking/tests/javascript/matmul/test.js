@@ -73,7 +73,7 @@ function create_matrix(file_path) {
     }
 
     // matrix_print(matrix, MATRIX_DIMENSION)
-    process.stdout.write(`${matrix[0][0]}\n`);
+    // process.stdout.write(`${matrix[0][0]}\n`);
     return matrix;
 }
 
@@ -92,7 +92,7 @@ function main(argc, argv) {
     let matrix_result = matrix_multiply(matrix_a, matrix_b, MATRIX_DIMENSION);
 
     // matrix_print(matrix_result, MATRIX_DIMENSION)
-    process.stdout.write(`${matrix_result[0][0]}\n`);
+    // process.stdout.write(`${matrix_result[0][0]}\n`);
 }
 
 main(process.argv.length, process.argv);
