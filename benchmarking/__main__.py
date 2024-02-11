@@ -15,8 +15,8 @@ from tests.tests_config import TestsConfig
 
 
 def parse_args(arguments: list):
-    parser = argparse.ArgumentParser(description="FPLB - Flexible Programming Language Benchmarking"
-                                                 "Tool or comparing the speed of programming languages")
+    parser = argparse.ArgumentParser(description="FPLB - Flexible Programming Language Benchmarking\n"
+                                                 "Tool for comparing the speed of programming languages")
     parser.add_argument("-p", "--pipeline",
                         type=str,
                         required=True,
