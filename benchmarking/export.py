@@ -31,6 +31,7 @@ def generate_bar_graph(pipeline: Pipeline, tests_config: TestsConfig) -> None:
     plt.xticks(rotation=30)
     plt.ylabel("Time, s")
     plt.title(f"Results for {pipeline.test}")
+    plt.rc('axes', axisbelow=True)
     plt.grid()
     plt.tight_layout()
     output_dir: Path = Path(get_root_directory() / "output")
