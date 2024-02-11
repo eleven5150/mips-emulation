@@ -34,4 +34,4 @@ def generate_bar_graph(pipeline: Pipeline, tests_config: TestsConfig) -> None:
     plt.tight_layout()
     output_dir: Path = Path(get_root_directory() / "output")
     path_safe_mkdir(output_dir)
-    plt.savefig(Path(output_dir / "output.jpg"), dpi=600)
+    plt.savefig(Path(output_dir / f"output_{pipeline.name}.jpg"), dpi=600)
