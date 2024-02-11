@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from extensions.logging_extensions import LOGGER, Color
-from extensions.path_extensions import get_root_directory, path_must_exist, path_safe_mkdir
+from extensions.path_extensions import get_root_directory, path_must_exist, path_safe_mkdir, path_listdir
 from pipeline import Pipeline
 from tests.settings import DOCKER_COMMAND
 from tests.tests_config_data import TestsConfigData
@@ -83,10 +83,27 @@ class Test:
     def from_config(cls, data: dict[str, any]) -> "Test":
         test_path: Path = Path(get_root_directory() / data["path"])
         path_must_exist(Path(test_path))
-        return Test(
+        return cls(
             path=test_path,
             commands=[Command.from_string(it) for it in data["commands"]],
             result=list()
+        )
+
+    @classmethod
+    def from_results(cls, results_file_path: Path) -> "Test":
+        result: list[TestResult] = list()
+        with open(results_file_path, "rt") as results_file:
+            results_data: str = results_file.read()
+
+        results_lines: list[str] = results_data.split("\n")
+        results_lines.pop(-1)
+        for line in results_lines:
+            time: float = float(line.split(":")[1])
+            result.append(TestResult(real_time=time))
+        return cls(
+            path=results_file_path,
+            commands=list(),
+            result=result
         )
 
     def exec_test(self, pipeline_name: str, language_name: str) -> None:
@@ -108,6 +125,14 @@ class ProgLang:
         tests: dict[str, Test] = dict()
         for test_name in language_data:
             tests.update({test_name: Test.from_config(language_data[test_name])})
+        return ProgLang(tests=tests)
+
+    @classmethod
+    def results_to_prog_lang(cls, lang_dir_path: Path) -> "ProgLang":
+        tests: dict[str, Test] = dict()
+        for test_dir_path in path_listdir(lang_dir_path):
+            if os.path.isdir(test_dir_path):
+                tests.update({test_dir_path.name: Test.from_results(Path(test_dir_path / "output.txt"))})
         return ProgLang(tests=tests)
 
 
@@ -151,7 +176,7 @@ class TestsConfig:
         for result in self.languages[lang].tests[test].result:
             sum_of_times += result.real_time
 
-        return sum_of_times/len(self.languages[lang].tests[test].result)
+        return sum_of_times / len(self.languages[lang].tests[test].result)
 
     def save_test_result(self, language_name: str, test_name: str, number: int) -> None:
         output_dir: Path = Path(get_root_directory() / "output")
@@ -166,3 +191,15 @@ class TestsConfig:
         result: TestResult = self.languages[language_name].tests[test_name].result[number]
         with open(output_file_path, "a") as output_file:
             output_file.write(f"{number + 1}:{result.real_time}\n")
+
+    @classmethod
+    def results_to_test_config(cls, results_dir: Path) -> "TestsConfig":
+        target_languages: dict[str, ProgLang] = dict()
+        for lang_dir_path in path_listdir(results_dir):
+            if os.path.isdir(lang_dir_path):
+                target_languages.update({lang_dir_path.name: ProgLang.results_to_prog_lang(lang_dir_path)})
+        return cls(
+            name="Results",
+            description="Test results from logs",
+            languages=target_languages
+        )
