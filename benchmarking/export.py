@@ -20,7 +20,7 @@ def generate_bar_graph(pipeline: Pipeline, tests_config: TestsConfig) -> None:
 
     results: dict[str, float] = dict()
     for lang in languages:
-        results.update({lang: tests_config.get_result_by_lang_and_test(lang, pipeline.test)})
+        results.update({lang: round(tests_config.get_result_by_lang_and_test(lang, pipeline.test), 2)})
 
     results = dict(sorted(results.items(), key=lambda item: item[1]))
 
