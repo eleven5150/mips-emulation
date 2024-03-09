@@ -146,7 +146,7 @@ class TestsConfig:
     description: str
     languages: dict[str, ProgLang]
 
-    def exec_pipeline(self, pipeline: Pipeline, count: int):
+    def exec_pipeline(self, pipeline: Pipeline, count: int) -> None:
         for it in range(count):
             Generator.generate_all()
             for language_name in pipeline.pipeline:
