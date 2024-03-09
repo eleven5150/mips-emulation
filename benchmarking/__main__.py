@@ -4,10 +4,8 @@ import os
 import sys
 
 from export import generate_bar_graph
-from generators.data_to_sort_generator import generate_data_to_sort
-from generators.matrix_generator import generate_matrices
 from extensions.logging_extensions import init_logging, LOGGER
-from generators.prime_number_count_generator import generate_prime_number_count
+from generator import Generator, GeneratorConfig
 from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests.settings import DATA_DIR
 from tests.tests_config_data import TestsConfigData, get_tests_config_data
@@ -54,9 +52,8 @@ def main(raw_arguments: list) -> None:
         if not is_data_exists:
             os.mkdir(DATA_DIR)
         LOGGER.info("Generating new data")
-        generate_prime_number_count()
-        generate_matrices()
-        generate_data_to_sort()
+        gen_config: GeneratorConfig = GeneratorConfig.config_data_to_test_generator()
+        Generator.generate_all(gen_config)
         LOGGER.info("New data successfully generated")
 
     pipeline: Pipeline = get_pipeline(args.pipeline)
