@@ -5,6 +5,7 @@ from pathlib import Path
 
 from extensions.logging_extensions import LOGGER, Color
 from extensions.path_extensions import get_root_directory, path_must_exist, path_safe_mkdir, path_listdir
+from generator import Generator
 from pipeline import Pipeline
 from tests.settings import DOCKER_COMMAND
 from tests.tests_config_data import TestsConfigData
@@ -147,6 +148,7 @@ class TestsConfig:
 
     def exec_pipeline(self, pipeline: Pipeline, count: int):
         for it in range(count):
+            Generator.generate_all()
             for language_name in pipeline.pipeline:
                 for test_name in pipeline.pipeline[language_name]:
                     LOGGER.debug(f"{language_name} -> {test_name}")

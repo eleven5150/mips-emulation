@@ -1,11 +1,13 @@
 import json
+import os
 import random
 from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 
-from generator.settings import GENERATORS_CONFIG
+from extensions.logging_extensions import LOGGER
+from tests.settings import DATA_DIR
 
 
 @dataclass
@@ -76,20 +78,31 @@ class Generator:
     matmul: MatMulGenerator
     prime_number: PrimeNumberGenerator
 
+    GENERATORS_CONFIG: Path = Path("generator/generator-config.json")
+
     @classmethod
-    def generate_all(cls, gen_conf: GeneratorConfig) -> None:
+    def generate_all(cls) -> None:
+        is_data_exists: bool = DATA_DIR.exists()
+        if not is_data_exists:
+            os.mkdir(DATA_DIR)
+        LOGGER.info("Generating new data")
+        gen_conf: GeneratorConfig = GeneratorConfig.config_data_to_test_generator(cls.GENERATORS_CONFIG)
         cls.quick_sort.generate(gen_conf)
         cls.matmul.generate(gen_conf)
         cls.prime_number.generate(gen_conf)
+        LOGGER.info("New data successfully generated")
 
     @classmethod
-    def generate_quick_sort(cls, gen_conf: GeneratorConfig) -> None:
+    def generate_quick_sort(cls) -> None:
+        gen_conf: GeneratorConfig = GeneratorConfig.config_data_to_test_generator(cls.GENERATORS_CONFIG)
         cls.quick_sort.generate(gen_conf)
 
     @classmethod
-    def generate_matmul(cls, gen_conf: GeneratorConfig) -> None:
+    def generate_matmul(cls) -> None:
+        gen_conf: GeneratorConfig = GeneratorConfig.config_data_to_test_generator(cls.GENERATORS_CONFIG)
         cls.matmul.generate(gen_conf)
 
     @classmethod
-    def generate_prime_number(cls, gen_conf: GeneratorConfig) -> None:
+    def generate_prime_number(cls) -> None:
+        gen_conf: GeneratorConfig = GeneratorConfig.config_data_to_test_generator(cls.GENERATORS_CONFIG)
         cls.prime_number.generate(gen_conf)

@@ -5,7 +5,7 @@ import sys
 
 from export import generate_bar_graph
 from extensions.logging_extensions import init_logging, LOGGER
-from generator import Generator, GeneratorConfig
+from generator import Generator
 from pipeline import Pipeline, get_pipeline, get_all_pipeline_names
 from tests.settings import DATA_DIR
 from tests.tests_config_data import TestsConfigData, get_tests_config_data
@@ -26,9 +26,6 @@ def parse_args(arguments: list):
     parser.add_argument("-i", "--image",
                         action="store_true",
                         help="Creates an image graph.jpeg with a graph comparing execution speeds")
-    parser.add_argument("-g", "--generate",
-                        action="store_true",
-                        help="Generates a new data for tests")
     parser.add_argument("-c", "--count",
                         type=int,
                         default=1,
@@ -46,15 +43,6 @@ def main(raw_arguments: list) -> None:
         init_logging(logging.DEBUG)
     else:
         init_logging(logging.INFO)
-
-    is_data_exists: bool = DATA_DIR.exists()
-    if args.generate or not is_data_exists:
-        if not is_data_exists:
-            os.mkdir(DATA_DIR)
-        LOGGER.info("Generating new data")
-        gen_config: GeneratorConfig = GeneratorConfig.config_data_to_test_generator()
-        Generator.generate_all(gen_config)
-        LOGGER.info("New data successfully generated")
 
     pipeline: Pipeline = get_pipeline(args.pipeline)
     LOGGER.info(f"Pipeline name -> {pipeline.name}")
