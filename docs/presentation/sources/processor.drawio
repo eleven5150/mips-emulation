@@ -1,0 +1,95 @@
+<mxfile host="Electron" modified="2024-04-07T16:30:18.169Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.1.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="O3rU4PT37p042SPn-2Fi" version="24.1.0" type="device">
+  <diagram name="Page-1" id="7GZpjXfoWf8_8U6l0eF_">
+    <mxGraphModel dx="2638" dy="1023" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=1;endSize=15;startSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-2" target="V3FfrBDnp7nCxARRuD-B-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;strokeWidth=1;endSize=15;startSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="630" y="240" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="630" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;endSize=15;startSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-2" target="V3FfrBDnp7nCxARRuD-B-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="160" />
+              <mxPoint x="510" y="495" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-2" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;Устройство управления&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="290" y="60" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeWidth=1;endSize=15;startSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-3" target="V3FfrBDnp7nCxARRuD-B-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="335" y="400" />
+              <mxPoint x="335" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;endSize=15;startSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-3" target="V3FfrBDnp7nCxARRuD-B-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-3" value="&lt;font style=&quot;font-size: 27px;&quot;&gt;Арифметико-логическое устройство&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=27;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="290" y="245" width="180" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endSize=15;startSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-4" target="V3FfrBDnp7nCxARRuD-B-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="410" />
+              <mxPoint x="430" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endSize=15;startSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="160" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="250" y="495" />
+              <mxPoint x="250" y="160" />
+              <mxPoint x="290" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-4" value="Память" style="rounded=1;whiteSpace=wrap;html=1;fontSize=35;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="290" y="430" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;endArrow=none;endFill=0;strokeWidth=1;endSize=15;startSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-30" y="307.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;endSize=15;startSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-6" target="V3FfrBDnp7nCxARRuD-B-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;strokeWidth=1;endSize=15;startSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="90" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="120" y="90" />
+              <mxPoint x="290" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-6" value="Устройство ввода" style="rounded=1;whiteSpace=wrap;html=1;fontSize=31;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="30" y="245" width="180" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endSize=15;" edge="1" parent="1" source="V3FfrBDnp7nCxARRuD-B-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="770" y="307.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V3FfrBDnp7nCxARRuD-B-13" value="&lt;span style=&quot;font-size: 31px;&quot;&gt;Устройство вывода&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=31;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="550" y="245" width="180" height="125" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
