@@ -1,0 +1,64 @@
+<mxfile host="Electron" modified="2024-03-14T18:28:09.175Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="N2ETZ6WvIuD7vGyvxs0l" version="23.1.5" type="device">
+  <diagram name="Page-1" id="GqkyTC-9gRA3xMAoNcSV">
+    <mxGraphModel dx="954" dy="665" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n8MeNB1Pdb601k9qHc15-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="n8MeNB1Pdb601k9qHc15-3" target="n8MeNB1Pdb601k9qHc15-10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-3" value="Начало" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fontFamily=GOST Type B;fontStyle=2;fontSize=41;" parent="1" vertex="1">
+          <mxGeometry x="300" y="150" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="n8MeNB1Pdb601k9qHc15-4" target="n8MeNB1Pdb601k9qHc15-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-4" value="Проверка прерываний" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=GOST Type B;fontStyle=2;fontSize=26;" parent="1" vertex="1">
+          <mxGeometry x="245" y="340" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="n8MeNB1Pdb601k9qHc15-6" target="n8MeNB1Pdb601k9qHc15-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-6" value="Выборка инструкции" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=GOST Type B;fontStyle=2;fontSize=25;" parent="1" vertex="1">
+          <mxGeometry x="255" y="420" width="230" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="n8MeNB1Pdb601k9qHc15-7" target="n8MeNB1Pdb601k9qHc15-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-7" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;Декодирование инструкции&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=GOST Type B;fontStyle=2;fontSize=23;" parent="1" vertex="1">
+          <mxGeometry x="228.75" y="500" width="282.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="n8MeNB1Pdb601k9qHc15-8" target="n8MeNB1Pdb601k9qHc15-9" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-8" value="Выполнение инструкции" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=GOST Type B;fontStyle=2;fontSize=24;" parent="1" vertex="1">
+          <mxGeometry x="240" y="580" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="n8MeNB1Pdb601k9qHc15-9" target="n8MeNB1Pdb601k9qHc15-11" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-9" value="Обновление системного таймера" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=GOST Type B;fontStyle=2;fontSize=20;" parent="1" vertex="1">
+          <mxGeometry x="225" y="660" width="290" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="n8MeNB1Pdb601k9qHc15-10" target="n8MeNB1Pdb601k9qHc15-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-10" value="&lt;font style=&quot;font-size: 16px;&quot; face=&quot;GOST Type B&quot;&gt;Цикл&lt;br style=&quot;font-size: 16px;&quot;&gt;Пока не произойдет исключение&lt;/font&gt;" style="shape=loopLimit;whiteSpace=wrap;html=1;fontStyle=2;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="320" y="240" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="n8MeNB1Pdb601k9qHc15-11" target="n8MeNB1Pdb601k9qHc15-20" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-11" value="" style="shape=loopLimit;whiteSpace=wrap;html=1;rotation=-180;horizontal=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="740" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-19" value="Цикл" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=2;fontFamily=GOST Type B;fontSize=30;" parent="1" vertex="1">
+          <mxGeometry x="325" y="755" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n8MeNB1Pdb601k9qHc15-20" value="Конец" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fontFamily=GOST Type B;fontStyle=2;fontSize=41;" parent="1" vertex="1">
+          <mxGeometry x="300" y="840" width="140" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
