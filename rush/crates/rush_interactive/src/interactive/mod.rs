@@ -283,9 +283,7 @@ impl InteractiveState {
     pub(crate) fn eval_stepped_runtime(
         &mut self,
         verbose: bool,
-        result: Result<SteppedRuntime, (Runtime, RushError)>,
-        _inst: u32,
-        _original_pc: u32,
+        result: Result<SteppedRuntime, (Runtime, RushError)>
     ) -> CommandResult<bool> {
         let mut breakpoint = false;
         let mut trapped = false;
@@ -452,9 +450,7 @@ impl InteractiveState {
 
     pub(crate) fn step(&mut self, verbose: bool) -> CommandResult<bool> {
         let runtime = take(self.runtime.as_mut().unwrap());
-        let original_pc = runtime.state().pc();
-        let inst = runtime.current_inst().unwrap();
-        self.eval_stepped_runtime(verbose, runtime.step(), inst, original_pc)
+        self.eval_stepped_runtime(verbose, runtime.step())
     }
 
     pub(crate) fn run(&mut self) -> CommandResult<String> {
@@ -463,7 +459,6 @@ impl InteractiveState {
         }
 
         self.interrupted.store(false, Ordering::SeqCst);
-        println!("kek");
         self.runtime.as_mut().unwrap().system_clock.start_time = get_curr_time_as_millis();
         while !self.interrupted.load(Ordering::SeqCst) {
             if self.step(false)? {

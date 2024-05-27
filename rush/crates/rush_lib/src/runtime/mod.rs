@@ -86,7 +86,7 @@ impl Runtime {
         // self.state.print();
         let segment = self.get_pc_segment();
         match segment {
-            Segment::Text | Segment::KText => {}
+            Segment::Text => {}
             _ => {
                 let addr = self.state.pc();
                 return Err((
@@ -110,7 +110,6 @@ impl Runtime {
         };
 
         self.state.step_pc();
-
         match self.execute_in_current_state(inst) {
             Err((new_self, err)) => {
                 Err((new_self, err))

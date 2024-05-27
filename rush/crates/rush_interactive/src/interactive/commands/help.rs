@@ -29,7 +29,7 @@ pub(crate) fn help_command() -> Command {
                         })?;
 
                 let mut args = &args[1..];
-                let mut parts = vec![command.name.yellow().bold().to_string()];
+                let mut parts = vec![command.name.black().bold().to_string()];
 
                 while !args.is_empty() {
                     let subcmd = command
@@ -38,7 +38,7 @@ pub(crate) fn help_command() -> Command {
                         .find(|c| c.name == args[0] || c.aliases.contains(&args[0]));
                     if let Some(subcmd) = subcmd {
                         command = subcmd;
-                        parts.push(subcmd.name.yellow().bold().to_string());
+                        parts.push(subcmd.name.black().bold().to_string());
                     }
 
                     args = &args[1..];
@@ -54,7 +54,7 @@ pub(crate) fn help_command() -> Command {
                         command
                             .aliases
                             .iter()
-                            .map(|s| s.yellow().bold().to_string())
+                            .map(|s| s.black().bold().to_string())
                             .collect::<Vec<String>>()
                             .join(", ")
                     );
@@ -99,7 +99,7 @@ pub(crate) fn help_command() -> Command {
 
             println!("{}", "\nCOMMANDS:".green().bold());
             for command in state.commands.iter() {
-                let extra_color_len = "".yellow().bold().to_string().len()
+                let extra_color_len = "".black().bold().to_string().len()
                     + match &command.args {
                         Arguments::Exactly { required, optional } => {
                             "".magenta().to_string().len() * required.len()
@@ -114,7 +114,7 @@ pub(crate) fn help_command() -> Command {
                         }
                     };
 
-                let parts = vec![command.name.yellow().bold().to_string()];
+                let parts = vec![command.name.black().bold().to_string()];
                 let name_args = get_command_formatted(command, parts);
 
                 let char_len = name_args.len() - extra_color_len;
@@ -129,7 +129,7 @@ pub(crate) fn help_command() -> Command {
             }
             println!(
                 "{}{} - repeat the previous command",
-                "<enter>".yellow().bold(),
+                "<enter>".black().bold(),
                 " ".repeat(max_len - 7)
             );
 
