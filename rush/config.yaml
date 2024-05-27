@@ -10,5 +10,5 @@ memory:
   stack:
     top: 0x80000000
     bot: 0x7FFF0000
-executable: test_emu.bin
+executable: demo/test_emu.bin
 start_addr: 0x0040021C
