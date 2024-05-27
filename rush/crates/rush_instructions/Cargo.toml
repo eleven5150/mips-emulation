@@ -1,0 +1,12 @@
+[package]
+name = "rush_instructions"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.8.26"
+rush_lib = { path = "../rush_lib" }
+
+[features]
+rt_yaml = []

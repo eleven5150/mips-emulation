@@ -1,0 +1,281 @@
+LC0:
+        .ascii  "The latest prime number:\n\0"
+main:
+        addiu   $sp,$sp,-48
+        sw      $31,44($sp)
+        sw      $fp,40($sp)
+        move    $fp,$sp
+        sw      $4,48($fp)
+        li      $2, 0xA               # 0xa
+        sw      $2,24($fp)
+        sw      $0,28($fp)
+        b       L2
+        nop
+
+L6:
+        lw      $2,28($fp)
+        nop
+        addiu   $2,$2,1
+        sw      $2,28($fp)
+        sw      $0,32($fp)
+        li      $2,1                        # 0x1
+        sw      $2,36($fp)
+        b       L3
+        nop
+
+L5:
+        lw      $3,28($fp)
+        lw      $2,36($fp)
+        nop
+        div     $0,$3,$2
+        bne     $2,$0,1
+        nop
+        mfhi    $2
+        bne     $2,$0,L4
+        nop
+
+        lw      $2,32($fp)
+        nop
+        addiu   $2,$2,1
+        sw      $2,32($fp)
+L4:
+        lw      $2,36($fp)
+        nop
+        addiu   $2,$2,1
+        sw      $2,36($fp)
+L3:
+        lw      $3,36($fp)
+        lw      $2,28($fp)
+        nop
+        slt     $2,$2,$3
+        beq     $2,$0,L5
+        nop
+
+        lw      $3,32($fp)
+        li      $2,2                        # 0x2
+        bne     $3,$2,L2
+        nop
+
+        lw      $2,24($fp)
+        nop
+        addiu   $2,$2,-1
+        sw      $2,24($fp)
+L2:
+        lw      $2,24($fp)
+        nop
+        bgtz    $2,L6
+        nop
+
+        
+        la      $4, LC0
+        li      $v0, 4
+        syscall
+        nop
+        lw      $4,28($fp)
+        li      $v0, 1
+        syscall
+        nop
+        lw      $4,28($fp)
+        move    $v0, $4
+
+        move    $2,$0
+        move    $sp,$fp
+        lw      $31,44($sp)
+        lw      $fp,40($sp)
+        addiu   $sp,$sp,48
+        jr      $31
+        nop
+
+__udivmoddi4:
+        addiu   $sp,$sp,-32
+        sw      $fp,28($sp)
+        move    $fp,$sp
+        sw      $4,32($fp)
+        sw      $5,36($fp)
+        sw      $6,40($fp)
+        sw      $7,44($fp)
+        move    $4,$0
+        move    $5,$0
+        sw      $4,8($fp)
+        sw      $5,12($fp)
+        li      $4,1                        # 0x1
+        move    $5,$0
+        sw      $4,16($fp)
+        sw      $5,20($fp)
+        lw      $4,40($fp)
+        lw      $5,44($fp)
+        nop
+        or      $4,$4,$5
+        bne     $4,$0,L11
+        nop
+
+        lw      $2,40($fp)
+        nop
+        xori    $2,$2,0x1
+        sltu    $2,$2,1
+        andi    $2,$2,0x00ff
+        move    $14,$2
+        move    $15,$0
+        b       L10
+        nop
+
+L12:
+        lw      $4,40($fp)
+        nop
+        srl     $4,$4,31
+        lw      $5,44($fp)
+        nop
+        sll     $3,$5,1
+        or      $3,$4,$3
+        lw      $4,40($fp)
+        nop
+        sll     $2,$4,1
+        sw      $2,40($fp)
+        sw      $3,44($fp)
+        lw      $4,16($fp)
+        nop
+        srl     $4,$4,31
+        lw      $5,20($fp)
+        nop
+        sll     $13,$5,1
+        or      $13,$4,$13
+        lw      $4,16($fp)
+        nop
+        sll     $12,$4,1
+        sw      $12,16($fp)
+        sw      $13,20($fp)
+L11:
+        lw      $4,40($fp)
+        lw      $5,44($fp)
+        nop
+        bgez    $5,L12
+        nop
+
+        b       L14
+        nop
+
+L17:
+        lw      $3,44($fp)
+        lw      $2,36($fp)
+        nop
+        sltu    $2,$2,$3
+        bne     $2,$0,L15
+        nop
+
+        lw      $3,44($fp)
+        lw      $2,36($fp)
+        nop
+        bne     $3,$2,L19
+        nop
+
+        lw      $3,40($fp)
+        lw      $2,32($fp)
+        nop
+        sltu    $2,$2,$3
+        bne     $2,$0,L15
+        nop
+
+L19:
+        lw      $4,32($fp)
+        lw      $5,36($fp)
+        lw      $6,40($fp)
+        lw      $7,44($fp)
+        subu    $2,$4,$6
+        sltu    $12,$4,$2
+        subu    $3,$5,$7
+        subu    $4,$3,$12
+        move    $3,$4
+        sw      $2,32($fp)
+        sw      $3,36($fp)
+        lw      $4,8($fp)
+        lw      $5,12($fp)
+        lw      $6,16($fp)
+        lw      $7,20($fp)
+        addu    $2,$4,$6
+        sltu    $12,$2,$4
+        addu    $3,$5,$7
+        addu    $4,$12,$3
+        move    $3,$4
+        sw      $2,8($fp)
+        sw      $3,12($fp)
+L15:
+        lw      $2,44($fp)
+        nop
+        sll     $2,$2,31
+        lw      $3,40($fp)
+        nop
+        srl     $8,$3,1
+        or      $8,$2,$8
+        lw      $2,44($fp)
+        nop
+        srl     $9,$2,1
+        sw      $8,40($fp)
+        sw      $9,44($fp)
+        lw      $2,20($fp)
+        nop
+        sll     $2,$2,31
+        lw      $3,16($fp)
+        nop
+        srl     $10,$3,1
+        or      $10,$2,$10
+        lw      $2,20($fp)
+        nop
+        srl     $11,$2,1
+        sw      $10,16($fp)
+        sw      $11,20($fp)
+L14:
+        lw      $2,16($fp)
+        lw      $3,20($fp)
+        nop
+        or      $2,$2,$3
+        bne     $2,$0,L17
+        nop
+
+        lw      $2,48($fp)
+        nop
+        beq     $2,$0,L18
+        nop
+
+        lw      $4,48($fp)
+        lw      $2,32($fp)
+        lw      $3,36($fp)
+        sw      $2,0($4)
+        sw      $3,4($4)
+L18:
+        lw      $14,8($fp)
+        lw      $15,12($fp)
+L10:
+        move    $2,$14
+        move    $3,$15
+        move    $sp,$fp
+        lw      $fp,28($sp)
+        addiu   $sp,$sp,32
+        jr      $31
+        nop
+
+__umoddi3:
+        addiu   $sp,$sp,-48
+        sw      $31,44($sp)
+        sw      $fp,40($sp)
+        move    $fp,$sp
+        sw      $4,48($fp)
+        sw      $5,52($fp)
+        sw      $6,56($fp)
+        sw      $7,60($fp)
+        addiu   $2,$fp,32
+        sw      $2,16($sp)
+        lw      $6,56($fp)
+        lw      $7,60($fp)
+        lw      $4,48($fp)
+        lw      $5,52($fp)
+        jal     __udivmoddi4
+        nop
+
+        lw      $2,32($fp)
+        lw      $3,36($fp)
+        move    $sp,$fp
+        lw      $31,44($sp)
+        lw      $fp,40($sp)
+        addiu   $sp,$sp,48
+        jr      $31
+        nop

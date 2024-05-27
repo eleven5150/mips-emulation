@@ -1,0 +1,16 @@
+[package]
+name = "rush_utils"
+version = "0.0.1"
+authors = ["Kutaev <kirSM2010@gmail.com>"]
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }  # for data deserialization
+serde_yaml = "0.8.26"                                  #   - see ~/.config/rush/config.yaml
+dirs = "5.0.0"                                        # for user config directory and tilde expansion
+
+[target.'cfg(unix)'.dependencies]
+users = "0.11"                                      # for other user's home directories
