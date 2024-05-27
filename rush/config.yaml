@@ -1,0 +1,14 @@
+memory:
+  text:
+    start: 0x00400000
+    end: 0x0040C158
+  global:
+    bot: 0x0040C158
+    ptr: 0x0040E000
+  data_bot: 0x0040C158
+  heap_bot: 0x10040000
+  stack:
+    top: 0x80000000
+    bot: 0x7FFF0000
+executable: test_emu.bin
+start_addr: 0x0040021C

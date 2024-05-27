@@ -1,0 +1,21 @@
+[package]
+name = "rush_lib"
+version = "0.0.1"
+authors = ["Kutaev <kirSM2010@gmail.com>"]
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive", "rc"] }            # for data deserialization
+serde_yaml = "0.8.26"                                               #   - see mips.yaml
+strsim = "0.10"                                                     # for error-reporting - string similarity
+linked-hash-map = { version = "0.5.4", features = ["serde_impl"] }  # for labels
+colored = "2"                                                       # for ansi colors
+strip-ansi-escapes = "0.1"                                          # to strip color codes out for strlen calcs
+rush_parser = { version = "0.0.1", path = "../rush_parser" }
+rush_utils  = { version = "0.0.1", path = "../rush_utils" }
+
+[build-dependencies]
+vergen = "7.5.1"
