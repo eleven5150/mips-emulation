@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 
-results: dict[str, int] = {"QEMU": 30525, "Kopycat": 5648, "Unicorn": 24751, "MARS": 4302, "SPIM": 15824, "Rush": 25073}
+results: dict[str, int] = {"QEMU": 15826, "Kopycat": 5052, "Unicorn": 8172, "MARS": 4302, "SPIM": 7084, "Rush": 9324}
 results = dict(sorted(results.items(), key=lambda item: item[1]))
 plt.rcdefaults()
 plt.bar(results.keys(), results.values(), align="center")
@@ -14,6 +14,6 @@ plt.xlabel("Эмуляторы", fontsize=12)
 # plt.title("Выполнение ПО, реализующего алгоритм поиска простых чисел", fontsize=10)
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
-plt.ylabel("Быстродействие, IPS", fontsize=12)
+plt.ylabel("Быстродействие, KIPS", fontsize=12)
 plt.tight_layout()
 plt.savefig("./emu_compare.jpg", dpi=600)
